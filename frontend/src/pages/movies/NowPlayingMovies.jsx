@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -73,9 +74,10 @@ function NowPlayingMovies() {
           </div>
         ))}
       </div>
-    </div>
-  );
-}
+
+
+
+
 
 export default NowPlayingMovies;
 
