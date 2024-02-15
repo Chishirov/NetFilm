@@ -144,7 +144,7 @@ export function SidebarWithBurgerMenu() {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Upcoming 
+                      Upcoming
                     </ListItem>
                   </button>
                 </List>
@@ -238,7 +238,7 @@ export function SidebarWithBurgerMenu() {
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Profile
+              <a href="/login">Profile</a>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
