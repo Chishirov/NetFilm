@@ -9,6 +9,8 @@ import OnTvSeries from "../pages/series/OnTvSeries.jsx";
 import PopularSeries from "../pages/series/PopularSeries.jsx";
 import TopRatedSeries from "../pages/series/TopRatedSeries.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
+import MovieInfo from "../pages/movies/MovieInfo";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/movies-info/:id",
+        element: <MovieInfo />,
       },
     ],
   },
