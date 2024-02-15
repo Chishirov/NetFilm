@@ -1,25 +1,65 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailReg, setEmailReg] = useState("");
+  const [passwordReg, setPasswordReg] = useState("");
   const [username, setUsername] = useState("");
   const [rememberUser, setRememberUser] = useState(true);
   const [termAndCondition, setTermAndCondition] = useState(false);
+  const [user, setUser] = useState({}); //! --------- useContext
 
-  const login = true;
-  const register = true;
+  let login = true;
+  let register = true;
+
+  const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
+
+  async function handleRegister(e) {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `${backendUrl}/register`,
+        { username, email, password },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log("Error registering", error);
+    }
+    register = false;
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      if (!data) throw new Error();
+      setUser(data);
+      console.log("login user", user);
+    } catch (error) {
+      console.log("Login failed", error);
+    }
+  }
+
   return (
     <>
       <div className=" bg-blue-500">
         {login && (
-          <form className="max-w-sm mx-auto">
+          <form className="max-w-sm mx-auto" onSubmit={handleLogin}>
             <div className="mb-5">
               <label
                 for="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your email
+                Email
               </label>
               <input
                 value={email}
@@ -36,7 +76,7 @@ function LoginPage() {
                 for="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your password
+                Password
               </label>
               <input
                 value={password}
@@ -56,7 +96,6 @@ function LoginPage() {
                   id="remember"
                   type="checkbox"
                   className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                  required
                 />
               </div>
               <label
@@ -77,13 +116,30 @@ function LoginPage() {
       </div>
       <div className="bg-red-500">
         {register && (
-          <form className="max-w-sm mx-auto">
+          <form className="max-w-sm mx-auto" onSubmit={handleRegister}>
+            <div className="mb-5">
+              <label
+                for="repeat-password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Username
+              </label>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="username"
+                type="text"
+                id="username"
+                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                required
+              />
+            </div>
             <div className="mb-5">
               <label
                 for="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your email
+                Email
               </label>
               <input
                 value={email}
@@ -100,7 +156,7 @@ function LoginPage() {
                 for="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your password
+                Password
               </label>
               <input
                 value={password}
@@ -108,23 +164,6 @@ function LoginPage() {
                 type="password"
                 placeholder="********"
                 id="password"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                required
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                for="repeat-password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Username
-              </label>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="username"
-                type="text"
-                id="username"
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required
               />
