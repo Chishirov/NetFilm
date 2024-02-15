@@ -4,16 +4,10 @@ import React, { useState } from "react";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
   const [username, setUsername] = useState("");
-  const [rememberUser, setRememberUser] = useState(true);
-  const [termAndCondition, setTermAndCondition] = useState(false);
+  const [login, setLogin] = useState(true);
+
   const [user, setUser] = useState({}); //! --------- useContext
-
-  let login = true;
-  let register = true;
-
   const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
 
   async function handleRegister(e) {
@@ -27,7 +21,8 @@ function LoginPage() {
     } catch (error) {
       console.log("Error registering", error);
     }
-    register = false;
+    setLogin(false);
+    <Navigate to={"/"} />;
   }
 
   async function handleLogin(e) {
@@ -50,15 +45,12 @@ function LoginPage() {
   }
 
   return (
-    <>
-      <div className=" bg-blue-500">
+    <div>
+      <div>
         {login && (
           <form className="max-w-sm mx-auto" onSubmit={handleLogin}>
             <div className="mb-5">
-              <label
-                for="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-m font-medium text-black dark:text-black">
                 Email
               </label>
               <input
@@ -66,16 +58,13 @@ function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="shadow-sm bg-white border border-black  text-black  text-m rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black  dark:border-black  dark:placeholder-black  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 placeholder="name@email.com"
                 required
               />
             </div>
             <div className="mb-5">
-              <label
-                for="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
                 Password
               </label>
               <input
@@ -84,44 +73,32 @@ function LoginPage() {
                 placeholder="********"
                 type="password"
                 id="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="shadow-sm bg-white border border-black  text-black  text-m rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black  dark:border-black  dark:placeholder-black  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required
               />
             </div>
             <div className="flex items-start mb-5">
-              <div className="flex items-center h-5">
-                <input
-                  value={!rememberUser}
-                  onChange={(e) => setRememberUser(rememberUser)}
-                  id="remember"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                />
-              </div>
-              <label
-                for="remember"
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              <a
+                className="ms-2 text-m font-medium text-gray-500 underline  dark:text-black cursor-pointer"
+                onClick={(e) => setLogin(false)}
               >
-                Remember me
-              </label>
+                I don't have an account
+              </a>
             </div>
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-m w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
             </button>
           </form>
         )}
       </div>
-      <div className="bg-red-500">
-        {register && (
+      <div>
+        {!login && (
           <form className="max-w-sm mx-auto" onSubmit={handleRegister}>
             <div className="mb-5">
-              <label
-                for="repeat-password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
                 Username
               </label>
               <input
@@ -130,15 +107,12 @@ function LoginPage() {
                 placeholder="username"
                 type="text"
                 id="username"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                className="shadow-sm bg-white border border-black  text-black  text-m rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black  dark:border-black  dark:placeholder-black  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required
               />
             </div>
             <div className="mb-5">
-              <label
-                for="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
                 Email
               </label>
               <input
@@ -146,16 +120,13 @@ function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 id="email"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                className="shadow-sm bg-white border border-black  text-black  text-m rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black  dark:border-black  dark:placeholder-black  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 placeholder="name@email.com"
                 required
               />
             </div>
             <div className="mb-5">
-              <label
-                for="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
+              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
                 Password
               </label>
               <input
@@ -164,44 +135,28 @@ function LoginPage() {
                 type="password"
                 placeholder="********"
                 id="password"
-                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                className="shadow-sm bg-white border border-black  text-black  text-m rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black  dark:border-black  dark:placeholder-black  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required
               />
             </div>
             <div className="flex items-start mb-5">
-              <div className="flex items-center h-5">
-                <input
-                  value={termAndCondition}
-                  onChange={setTermAndCondition}
-                  id="terms"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                  required
-                />
-              </div>
-              <label
-                for="terms"
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              <a
+                className="ms-2 text-m font-medium text-gray-500  dark:text-black underline cursor-pointer"
+                onClick={(e) => setLogin(true)}
               >
-                I agree with the{" "}
-                <a
-                  href="#"
-                  className="text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  terms and conditions
-                </a>
-              </label>
+                I already have an account
+              </a>
             </div>
             <button
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-m px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Register new account
+              Register
             </button>
           </form>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
