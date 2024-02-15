@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cardcomponent from "../../components/Cardcomponent";
 
-
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
 
@@ -32,8 +31,6 @@ function NowPlayingMovies() {
     fetchData();
   }, []);
 
-  
-
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
       <h1 style={{ marginBottom: "20px" }}>Now Playing</h1>
@@ -46,20 +43,17 @@ function NowPlayingMovies() {
         }}
       >
         {play.map((movie) => (
-          <Link key={movie.id} to={`/movies-info/${movie.id}`}>
-            <Cardcomponent
-              key={movie.id}
-              src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-              
-              title={movie.title}
-              date={movie.release_date}
-            />
-          </Link>
+          <Cardcomponent
+            key={movie.id}
+            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+            title={movie.title}
+            date={movie.release_date}
+            link={`/movies-info/${movie.id}`}
+          />
         ))}
       </div>
     </div>
   );
 }
-
 
 export default NowPlayingMovies;
