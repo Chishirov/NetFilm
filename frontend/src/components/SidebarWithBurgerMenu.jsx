@@ -136,7 +136,7 @@ export function SidebarWithBurgerMenu() {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Upcoming
+                      Top Rated
                     </ListItem>
                   </button>
                   <button onClick={closeDrawer}>
@@ -144,7 +144,7 @@ export function SidebarWithBurgerMenu() {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Top Rated
+                      Upcoming 
                     </ListItem>
                   </button>
                 </List>
