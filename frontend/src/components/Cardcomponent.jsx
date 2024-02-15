@@ -13,8 +13,8 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-
-function Cardcomponent({src,title, date}) {
+import { Link } from "react-router-dom";
+function Cardcomponent({ src, title, date, link }) {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleClick = () => {
@@ -96,14 +96,20 @@ function Cardcomponent({src,title, date}) {
             </MenuList>
           </Menu>
         </CardHeader>
-        <CardBody>
-          <div className="mb-3 flex items-center justify-between">
-            <Typography variant="h5" color="blue-gray" className="font-medium">
-             {title}
-            </Typography>
-          </div>
-          <Typography color="gray">{date}</Typography>
-        </CardBody>
+        <Link to={link}>
+          <CardBody>
+            <div className="mb-3 flex items-center justify-between">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="font-medium"
+              >
+                {title}
+              </Typography>
+            </div>
+            <Typography color="gray">{date}</Typography>
+          </CardBody>
+        </Link>
       </Card>
     </div>
   );
