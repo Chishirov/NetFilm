@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [login, setLogin] = useState(true);
+  const [redirect, setRedirect] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const [user, setUser] = useState({}); //! --------- useContext
   const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
@@ -18,11 +21,11 @@ function LoginPage() {
         { username, email, password },
         { withCredentials: true }
       );
+      setLogin(false);
+      alert("Account created successfully, please ");
     } catch (error) {
       console.log("Error registering", error);
     }
-    setLogin(false);
-    <Navigate to={"/"} />;
   }
 
   async function handleLogin(e) {
@@ -38,12 +41,15 @@ function LoginPage() {
       );
       if (!data) throw new Error();
       setUser(data);
-      console.log("login user", user);
+      setRedirect(true);
     } catch (error) {
       console.log("Login failed", error);
+      alert("Login failed");
     }
   }
-
+  if (redirect) {
+    return <Navigate to={"/Popular-movies"} />;
+  }
   return (
     <div>
       <div>
@@ -161,6 +167,7 @@ function LoginPage() {
           </form>
         )}
       </div>
+      <div></div>
     </div>
   );
 }
