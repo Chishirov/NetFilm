@@ -52,16 +52,14 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
-
       <div className="flex justify-between">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />
           ) : (
-            <Bars3Icon className="h-8 w-8 stroke-2" />
+            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
           )}
         </IconButton>
-
         <div>
           <button
             type="button"
@@ -104,6 +102,8 @@ export function SidebarWithBurgerMenu() {
               aria-labelledby="dropdown"
             >
               <li>
+                {/* {const navigat = useNavigate()} */}
+                {/* {onclick=()=>navigate("/egal")} */}
                 <a
                   href="#"
                   className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
@@ -141,15 +141,15 @@ export function SidebarWithBurgerMenu() {
         open={isDrawerOpen}
         onClose={closeDrawer}
       >
-
+        {/* 
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2" />
         ) : (
           <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
         )}
-      </IconButton>
-      <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}>
+      </IconButton> */}
+        {/* <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}> */}
 
         <Card
           color="transparent"
@@ -349,7 +349,6 @@ export function SidebarWithBurgerMenu() {
               <Typography color="blue-gray" className="mr-auto font-bold">
                 Profile
               </Typography>
-
             </ListItem>
             <ListItem>
               <ListItemPrefix>
