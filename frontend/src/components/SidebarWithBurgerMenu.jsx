@@ -38,6 +38,10 @@ export function SidebarWithBurgerMenu() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [user, setUser] = React.useState({
+    username: "Max Mustermann",
+    email: "max.mustermann@dci.com",
+  });
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -48,14 +52,94 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
-        {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
-        )}
-      </IconButton>
-      <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}>
+      <div className="flex justify-between">
+        <IconButton variant="text" size="lg" onClick={openDrawer}>
+          {isDrawerOpen ? (
+            <XMarkIcon className="h-8 w-8 stroke-2" />
+          ) : (
+            <Bars3Icon className="h-8 w-8 stroke-2" />
+          )}
+        </IconButton>
+
+        <div>
+          <button
+            type="button"
+            className="p-2 flex mx-1 text-sm bg-white rounded-full md:mr-0 "
+            data-dropdown-toggle="dropdown"
+            id="user-menu-button"
+            aria-expanded="true"
+          >
+            <span className="object-center flex flex-col items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-10 h-10"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </span>
+          </button>
+          <div
+            className=" absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown"
+          >
+            <div className="py-4 px-4 text-right">
+              <span className="block text-sm text-gray-800 truncate dark:text-gray-400">
+                {user.username}
+              </span>
+              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+                {user.email}
+              </span>
+            </div>
+            <ul
+              className="py-1 text-gray-500 dark:text-gray-400 text-right"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                >
+                  My profile
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                >
+                  Account settings
+                </a>
+              </li>
+            </ul>
+            <ul
+              className="py-1 text-gray-500 dark:text-gray-400 text-right"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <Drawer
+        className="new-className"
+        open={isDrawerOpen}
+        onClose={closeDrawer}
+      >
         <Card
           color="transparent"
           shadow={false}
