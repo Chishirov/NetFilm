@@ -250,9 +250,11 @@ export function SidebarWithBurgerMenu() {
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
+
               <Typography color="blue-gray" className="mr-auto font-bold">
                 Profile
               </Typography>
+
             </ListItem>
             <ListItem>
               <ListItemPrefix>

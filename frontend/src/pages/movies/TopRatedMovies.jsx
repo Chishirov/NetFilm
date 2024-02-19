@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Cardcomponent from "../../components/Cardcomponent";
+import Pagination from "../../components/Pagination";
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const options = {
-          method: 'GET',
+          method: "GET",
           headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI'
-          }
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+          },
         };
 
-        const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
+        const response = await fetch(
+          ` https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
+          options
+        );
         const data = await response.json();
         setTop(data.results);
       } catch (error) {
@@ -24,58 +30,33 @@ function TopRatedMovies() {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
-const fetchMovieInfo = async (id) => {
-  try {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI'
-      }
-    };
-
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
-    const data = await response.json();
-  
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const handleMovieClick = (id) => {
-  fetchMovieInfo(id);
- 
-};
-
-return (
-  <div style={{ textAlign: "center", marginTop: "20px" }}>
-    <h1 style={{ marginBottom: "20px" }}>Top Rated Movies</h1>
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "20px",
-        justifyContent: "center",
-      }}
-    >
-      {top.map((movie) => (
-        <div key={movie.id} style={{ marginBottom: "20px", cursor: "pointer" }} onClick={() => handleMovieClick(top.id)}>
-          <Link to={`/movies-info/${movie.id}`}>
-            <img
-              src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-              alt={movie.title}
-              style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-            />
-            <h3 style={{ marginTop: "10px", fontSize: "18px", color: "#333" }}>{movie.title}</h3>
-          </Link>
-        </div>
-      ))}
+  return (
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "20px",
+          justifyContent: "center",
+          width: "80%",
+          margin: "0 auto",
+        }}
+      >
+        {top.map((movie) => (
+          <Cardcomponent
+            key={movie.id}
+            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+            title={movie.title}
+            date={movie.release_date}
+            link={`/movies-info/${movie.id}`}
+          />
+        ))}
+      </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
-  </div>
-);
+  );
 }
 
 export default TopRatedMovies;
-

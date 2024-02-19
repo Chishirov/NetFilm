@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Tabs,
   TabsHeader,
@@ -11,6 +12,8 @@ import TopRatedMovies from "../pages/movies/TopRatedMovies";
 import UpcomingMovies from "../pages/movies/UpcomingMovies";
 
 export function TabsCustomAnimation() {
+  const [defaultValue, setDefaultValue] = useState("Popular"); // Set default value
+
   const data = [
     {
       label: "Popular",
@@ -36,11 +39,16 @@ export function TabsCustomAnimation() {
     },
   ];
 
+  // Set the default value to the value of the first tab
+  useState(() => {
+    setDefaultValue(data[0].value);
+  }, []);
+
   return (
-    <Tabs id="custom-animation" value="html">
-      <TabsHeader className=" w-2/3 m-auto">
+    <Tabs id="custom-animation" value={defaultValue}>
+      <TabsHeader className="w-2/3 m-auto bg-transparent">
         {data.map(({ label, value }) => (
-          <Tab key={value} value={value}>
+          <Tab style={{ color: "red" }} key={value} value={value}>
             {label}
           </Tab>
         ))}
