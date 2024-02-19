@@ -33,7 +33,6 @@ function NowPlayingMovies() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Now Playing</h1>
       <div
         style={{
           display: "grid",
