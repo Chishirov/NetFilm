@@ -1,3 +1,11 @@
+import { Dropdown } from "flowbite-react";
+import {
+  HiCog,
+  HiCurrencyDollar,
+  HiLogout,
+  HiViewGrid,
+  HiOutlineUserCircle,
+} from "react-icons/hi";
 import React from "react";
 import {
   IconButton,
@@ -50,6 +58,23 @@ export function SidebarWithBurgerMenu() {
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
 
+  const userIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="black"
+      className="w-10 h-10"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+      />
+    </svg>
+  );
+
   return (
     <>
       <div className="flex justify-between">
@@ -62,77 +87,23 @@ export function SidebarWithBurgerMenu() {
         </IconButton>
 
         <div>
-          <button
-            type="button"
-            className="p-2 flex mx-1 text-sm bg-white rounded-full md:mr-0 "
-            data-dropdown-toggle="dropdown"
-            id="user-menu-button"
-            aria-expanded="true"
+          <Dropdown
+            label={userIcon}
+            style={{ border: "none" }}
+            className="border-none rounded-t-none"
           >
-            <span className="object-center flex flex-col items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
-            </span>
-          </button>
-          <div
-            className=" absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="dropdown"
-          >
-            <div className="py-4 px-4 text-right">
-              <span className="block text-sm text-gray-800 truncate dark:text-gray-400">
-                {user.username}
-              </span>
-              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+            <Dropdown.Header>
+              <span className="block text-sm">{user.username}</span>
+              <span className="block truncate text-sm font-medium">
                 {user.email}
               </span>
-            </div>
-            <ul
-              className="py-1 text-gray-500 dark:text-gray-400 text-right"
-              aria-labelledby="dropdown"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-                >
-                  My profile
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Account settings
-                </a>
-              </li>
-            </ul>
-            <ul
-              className="py-1 text-gray-500 dark:text-gray-400 text-right"
-              aria-labelledby="dropdown"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>
+            </Dropdown.Header>
+            <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
+            <Dropdown.Item icon={HiCog}>Settings</Dropdown.Item>
+            <Dropdown.Item icon={HiCurrencyDollar}>Earnings</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item icon={HiLogout}>Sign out</Dropdown.Item>
+          </Dropdown>
         </div>
       </div>
       <Drawer
