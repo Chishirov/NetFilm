@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
+
+import { Link } from "react-router-dom";
+
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
+
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
@@ -30,6 +34,7 @@ function TopRatedMovies() {
     };
 
     fetchData();
+
   }, [currentPage]);
 
   return (
@@ -55,6 +60,7 @@ function TopRatedMovies() {
         ))}
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
     </div>
   );
 }

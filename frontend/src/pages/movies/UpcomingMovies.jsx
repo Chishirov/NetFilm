@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cardcomponent from "../../components/Cardcomponent";
+
 import Pagination from "../../components/Pagination";
+
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
@@ -31,10 +33,12 @@ function UpcomingMovies() {
     };
 
     fetchData();
+
   }, [currentPage]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
+
       <div
         style={{
           display: "grid",
@@ -58,6 +62,6 @@ function UpcomingMovies() {
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
-}
+  }
 
 export default UpcomingMovies;
