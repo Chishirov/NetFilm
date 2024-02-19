@@ -38,6 +38,10 @@ export function SidebarWithBurgerMenu() {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [user, setUser] = React.useState({
+    username: "Max Mustermann",
+    email: "max.mustermann@dci.com",
+  });
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -48,35 +52,132 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
+
+      <div className="flex justify-between">
+        <IconButton variant="text" size="lg" onClick={openDrawer}>
+          {isDrawerOpen ? (
+            <XMarkIcon className="h-8 w-8 stroke-2" />
+          ) : (
+            <Bars3Icon className="h-8 w-8 stroke-2" />
+          )}
+        </IconButton>
+
+        <div>
+          <button
+            type="button"
+            className="p-2 flex mx-1 text-sm bg-white rounded-full md:mr-0 "
+            data-dropdown-toggle="dropdown"
+            id="user-menu-button"
+            aria-expanded="true"
+          >
+            <span className="object-center flex flex-col items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-10 h-10"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </span>
+          </button>
+          <div
+            className=" absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown"
+          >
+            <div className="py-4 px-4 text-right">
+              <span className="block text-sm text-gray-800 truncate dark:text-gray-400">
+                {user.username}
+              </span>
+              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+                {user.email}
+              </span>
+            </div>
+            <ul
+              className="py-1 text-gray-500 dark:text-gray-400 text-right"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                >
+                  My profile
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
+                >
+                  Account settings
+                </a>
+              </li>
+            </ul>
+            <ul
+              className="py-1 text-gray-500 dark:text-gray-400 text-right"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <Drawer
+        className="new-className"
+        open={isDrawerOpen}
+        onClose={closeDrawer}
+      >
+
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2" />
         ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
+          <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
         )}
       </IconButton>
       <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}>
+
         <Card
           color="transparent"
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
         >
-          <div className="mb-2 flex items-center gap-4 p-4 ">
-            {/* <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-              alt="brand"
-              className="h-8 w-8"
-            />
-            <Typography variant="h5" color="blue-gray">
-              Sidebar
-            </Typography> */}
-          </div>
-          {/* <div className="p-2">
-            <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Search"
-            />
-          </div> */}
+          <button>
+            <div className="mb-2 flex items-center gap-4 p-4 ">
+              <ListItemPrefix
+                onClick={() => navigate("/home")}
+                style={{ cursor: "pointer" }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                </svg>
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Home
+              </Typography>
+            </div>
+          </button>
+
           <List>
             <Accordion
               open={open === 1}
@@ -108,7 +209,7 @@ export function SidebarWithBurgerMenu() {
                       />
                     </svg>
                   </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
+                  <Typography color="blue-gray" className="mr-auto font-bold">
                     Movies
                   </Typography>
                 </AccordionHeader>
@@ -118,7 +219,10 @@ export function SidebarWithBurgerMenu() {
                   <button onClick={closeDrawer}>
                     <ListItem onClick={() => navigate("/Popular-movies")}>
                       <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        <ChevronRightIcon
+                          strokeWidth={3}
+                          className="h-3 w-5 "
+                        />
                       </ListItemPrefix>
                       Popular
                     </ListItem>
@@ -144,7 +248,7 @@ export function SidebarWithBurgerMenu() {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Upcoming 
+                      Upcoming
                     </ListItem>
                   </button>
                 </List>
@@ -176,7 +280,7 @@ export function SidebarWithBurgerMenu() {
                       <path d="M4.5 4.5a3 3 0 0 0-3 3v9a3 3 0 0 0 3 3h8.25a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3H4.5ZM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06Z" />
                     </svg>
                   </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
+                  <Typography color="blue-gray" className="mr-auto font-bold">
                     Tv show
                   </Typography>
                 </AccordionHeader>
@@ -221,36 +325,47 @@ export function SidebarWithBurgerMenu() {
             <hr className="my-2 border-blue-gray-50" />
             <ListItem>
               <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
+                <InboxIcon className="h-5 w-5 " />
               </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Inbox
+              </Typography>
+
+              {/* <ListItemSuffix>
                 <Chip
-                  value="14"
+                  value="0"
                   size="sm"
                   variant="ghost"
                   color="blue-gray"
                   className="rounded-full"
                 />
-              </ListItemSuffix>
+              </ListItemSuffix> */}
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Profile
+
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Profile
+              </Typography>
+
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Settings
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Settings
+              </Typography>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Log Out
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Log Out
+              </Typography>
             </ListItem>
           </List>
         </Card>

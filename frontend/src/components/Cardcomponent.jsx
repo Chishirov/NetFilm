@@ -31,7 +31,7 @@ function Cardcomponent({ src, title, date, link }) {
           <img
             src={src}
             alt="ui/ux review check"
-            style={{ height: "300px", objectFit: "cover" }}
+            style={{ width: "100%", height: "300px", objectFit: "cover" }}
           />
           <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
           <Menu>
@@ -98,7 +98,7 @@ function Cardcomponent({ src, title, date, link }) {
         </CardHeader>
         <Link to={link}>
           <CardBody>
-            <div className="mb-3 flex items-center justify-between">
+            <div className="h-20  flex items-center justify-between">
               <Typography
                 variant="h5"
                 color="blue-gray"
