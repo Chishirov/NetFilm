@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Cardcomponent from "../../components/Cardcomponent";
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
@@ -27,32 +28,11 @@ function UpcomingMovies() {
     fetchData();
   }, []);
 
-  const fetchMovieInfo = async (id) => {
-    try {
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI'
-        }
-      };
-
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
-      const data = await response.json();
-    
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleMovieClick = (id) => {
-    fetchMovieInfo(id);
-   
-  };
+  
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Upcoming Movies</h1>
+      <h1 style={{ marginBottom: "20px" }}>Top Rated</h1>
       <div
         style={{
           display: "grid",
@@ -62,21 +42,18 @@ function UpcomingMovies() {
         }}
       >
         {movies.map((movie) => (
-          <div key={movie.id} style={{ marginBottom: "20px", cursor: "pointer" }} onClick={() => handleMovieClick(movie.id)}>
-            <Link to={`/movies-info/${movie.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-                alt={movie.title}
-                style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-              />
-              <h3 style={{ marginTop: "10px", fontSize: "18px", color: "#333" }}>{movie.title}</h3>
-            </Link>
-          </div>
+          <Cardcomponent
+            key={movie.id}
+            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+            title={movie.title}
+            date={movie.release_date}
+            link={`/movies-info/${movie.id}`}
+          />
         ))}
       </div>
     </div>
   );
-}
+  }
 
 export default UpcomingMovies;
 
