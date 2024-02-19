@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cardcomponent from "../../components/Cardcomponent";
+import Pagination from "../../components/Pagination";
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +20,7 @@ function UpcomingMovies() {
         };
 
         const response = await fetch(
-          "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+          `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
@@ -29,7 +31,7 @@ function UpcomingMovies() {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
@@ -39,6 +41,8 @@ function UpcomingMovies() {
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "20px",
           justifyContent: "center",
+          width: "80%",
+          margin: "0 auto",
         }}
       >
         {movies.map((movie) => (
@@ -51,6 +55,7 @@ function UpcomingMovies() {
           />
         ))}
       </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
