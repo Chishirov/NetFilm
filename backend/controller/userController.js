@@ -34,7 +34,7 @@ export const postLoginUser = async (req, res) => {
             if (checkPassword) {
                 console.log('password correct');
                 jwt.sign(
-                    { email: user.email, id: user._id },
+                    { id: user._id },
                     jwtSecret,
                     {},
                     (err, token) => {
@@ -52,20 +52,22 @@ export const postLoginUser = async (req, res) => {
     }
 }
 
-export const getValidateUser = (req, res) => {
-    const { token } = req.cookies;
-    if (token) {
-        jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
-            if (err) throw err;
-            const { username, email, _id } = await userModel.findById(tokenData.id);
-            res.json({ username, email, _id });
-        });
-    } else {
-        res.json(null);
-    }
-}
-
 export const postSignoutUser = async (req, res) => {
     res.clearCookie("token")
     res.send("signout user");
 }
+
+export const getValidateUser = async (req, res) => {
+    const { token } = await req.cookies
+    if (!token) return res.status(401).send("Access denied. No token provided.");
+    try {
+        jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+            if (err) throw err;
+            const user = await userModel.findById(tokenData.id);
+            res.status(200).json(user);
+        });
+    } catch (error) {
+        res.status(400).json("error invalid token")
+    }
+}
+

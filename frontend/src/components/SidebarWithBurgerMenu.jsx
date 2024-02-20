@@ -9,7 +9,7 @@ import {
   HiOutlineVideoCamera,
   HiOutlineHome,
 } from "react-icons/hi";
-import React from "react";
+import React, { useContext } from "react";
 import {
   IconButton,
   Typography,
@@ -42,18 +42,16 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [user, setUser] = React.useState({
-    username: "Max Mustermann",
-    email: "max.mustermann@dci.com",
-  });
+  const { user, setUser } = useContext(UserContext);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -80,10 +78,15 @@ export function SidebarWithBurgerMenu() {
   );
 
   async function signout() {
-    const { data } = await axios.post("http://localhost:3000/signout");
+    const { data } = await axios.post(
+      "http://localhost:3000/signout",
+      {},
+      { withCredentials: true }
+    );
     if (data) {
       alert("You have signed out");
       navigate("/login");
+      setUser("");
     }
   }
 
@@ -104,9 +107,9 @@ export function SidebarWithBurgerMenu() {
             className="border-none rounded-t-none"
           >
             <Dropdown.Header>
-              <span className="block text-sm">{user.username}</span>
+              <span className="block text-sm">{user?.username}</span>
               <span className="block truncate text-sm font-medium">
-                {user.email}
+                {user?.email}
               </span>
             </Dropdown.Header>
             <hr />
@@ -146,26 +149,16 @@ export function SidebarWithBurgerMenu() {
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
         >
-          <button>
+          <button onClick={() => navigate("/home")}>
             <div className="mb-2 flex items-center gap-4 p-4 ">
-              <ListItemPrefix
-                onClick={() => navigate("/home")}
-                style={{ cursor: "pointer" }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-6 h-6"
-
-                >
-                  <HiOutlineHome className="w-6 h-6" />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-bold">
-                  Home
-                </Typography>
-              </div>
-            </button>
+              <ListItemPrefix style={{ cursor: "pointer" }}>
+                <HiOutlineHome className="w-6 h-6" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Home
+              </Typography>
+            </div>
+          </button>
 
           <List>
             <Accordion
@@ -311,9 +304,8 @@ export function SidebarWithBurgerMenu() {
                   className="rounded-full"
                 />
               </ListItemSuffix> */}
-
             </ListItem>
-            <ListItem>
+            <ListItem onClick={() => navigate("/profile")}>
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -322,7 +314,7 @@ export function SidebarWithBurgerMenu() {
                 Profile
               </Typography>
             </ListItem>
-            <ListItem>
+            <ListItem onClick={() => navigate("/settings")}>
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -330,7 +322,7 @@ export function SidebarWithBurgerMenu() {
                 Settings
               </Typography>
             </ListItem>
-            <ListItem>
+            <ListItem onClick={signout}>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -340,7 +332,6 @@ export function SidebarWithBurgerMenu() {
             </ListItem>
           </List>
         </Card>
-
       </Drawer>
       <Outlet />
     </>

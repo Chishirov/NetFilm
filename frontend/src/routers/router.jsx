@@ -13,10 +13,9 @@ import LoginPage from "../pages/LoginPage.jsx";
 import MovieInfo from "../pages/movies/MovieInfo";
 import SeriesInfo from "../pages/series/SeriesInfo";
 
-
 import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
-
+import UserProfile from "../pages/UserProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -73,9 +72,13 @@ const router = createBrowserRouter([
         element: <MovieInfo />,
       },
       {
-        path:"/series-info/:id",
-        element: <SeriesInfo/>
-      }
+        path: "/series-info/:id",
+        element: <SeriesInfo />,
+      },
+      {
+        path: "/profile",
+        element: <UserProfile />,
+      },
     ],
   },
 ]);

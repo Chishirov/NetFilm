@@ -8,16 +8,21 @@ export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     if (!user) {
-      axios.get("/validate").then(({ data }) => {
-        setUser(data);
-        if (!user) {
-          return <Navigate to={"/home"} />;
-        }
-        console.log("userContext:", user);
-        <Navigate to={"/login"} />;
-      });
+      axios
+        .get("http://localhost:3000/validate", { withCredentials: true })
+        .then(({ data }) => {
+          setUser(data);
+          console.log(user);
+          if (!user) {
+            return <Navigate to={"/login"} />;
+          } else {
+            console.log("userContext:", user);
+            return <Navigate to={"/home"} />;
+          }
+        });
     }
   }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

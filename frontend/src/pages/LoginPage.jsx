@@ -21,7 +21,7 @@ function LoginPage() {
         { username, email, password },
         { withCredentials: true }
       );
-      setLogin(false);
+      setLogin(true);
       alert("Account created successfully, please ");
     } catch (error) {
       console.log("Error registering", error);
