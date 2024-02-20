@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
+import { SeriesContext } from "../../context/SeriesContext";
 
 function OnTvSeries() {
-  const [onTv, setOnTv] = useState([]);
-
+  // const [onTv, setOnTv] = useState([]);
+  const { onTv, setOnTv } = useContext(SeriesContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
