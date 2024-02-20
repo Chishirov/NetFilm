@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
+import { useSeries } from "../../context/SeriesContext";
 
 function OnTvSeries() {
-  const [popular, setPopular] = useState([]);
-
+  //const [popular, setPopular] = useState([]);
+  const {popular, setPopular} = useSeries();
   useEffect(() => {
     const fetchData = async () => {
       try {
