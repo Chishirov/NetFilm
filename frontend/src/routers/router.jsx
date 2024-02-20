@@ -9,9 +9,14 @@ import OnTvSeries from "../pages/series/OnTvSeries.jsx";
 import PopularSeries from "../pages/series/PopularSeries.jsx";
 import TopRatedSeries from "../pages/series/TopRatedSeries.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
-import MovieInfo from "../pages/movies/MovieInfo.jsx";
+
+import MovieInfo from "../pages/movies/MovieInfo";
+import SeriesInfo from "../pages/series/SeriesInfo";
+
+
 import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -67,6 +72,10 @@ const router = createBrowserRouter([
         path: "/movies-info/:id",
         element: <MovieInfo />,
       },
+      {
+        path:"/series-info/:id",
+        element: <SeriesInfo/>
+      }
     ],
   },
 ]);

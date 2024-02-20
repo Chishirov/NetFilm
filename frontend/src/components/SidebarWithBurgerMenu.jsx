@@ -89,15 +89,16 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
+
       <div className="flex justify-between items-center bg-white">
+
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />
           ) : (
-            <Bars3Icon className="h-8 w-8 stroke-2" />
+            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
           )}
         </IconButton>
-
         <div>
           <Dropdown
             label={userIcon}
@@ -115,6 +116,7 @@ export function SidebarWithBurgerMenu() {
               onClick={() => navigate("/profile")}
               icon={HiOutlineUser}
             >
+
               Profile
             </Dropdown.Item>
             <Dropdown.Item onClick={() => navigate("settings")} icon={HiCog}>
@@ -125,6 +127,7 @@ export function SidebarWithBurgerMenu() {
               Sign out
             </Dropdown.Item>
           </Dropdown>
+
         </div>
       </div>
       <Drawer
@@ -132,24 +135,34 @@ export function SidebarWithBurgerMenu() {
         open={isDrawerOpen}
         onClose={closeDrawer}
       >
-        <IconButton variant="text" size="lg" onClick={openDrawer}>
-          {isDrawerOpen ? (
-            <XMarkIcon className="h-8 w-8 stroke-2" />
-          ) : (
-            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
-          )}
-        </IconButton>
-        <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}>
-          <Card
-            color="transparent"
-            shadow={false}
-            className="h-[calc(100vh-2rem)] w-full p-4  "
-          >
-            <button>
-              <div className="mb-2 flex items-center gap-4 p-4 ">
-                <ListItemPrefix
-                  onClick={() => navigate("/home")}
-                  style={{ cursor: "pointer" }}
+
+        {/* 
+      <IconButton variant="text" size="lg" onClick={openDrawer}>
+        {isDrawerOpen ? (
+          <XMarkIcon className="h-8 w-8 stroke-2" />
+        ) : (
+          <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
+        )}
+      </IconButton> */}
+        {/* <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}> */}
+
+        <Card
+          color="transparent"
+          shadow={false}
+          className="h-[calc(100vh-2rem)] w-full p-4  "
+        >
+          <button>
+            <div className="mb-2 flex items-center gap-4 p-4 ">
+              <ListItemPrefix
+                onClick={() => navigate("/home")}
+                style={{ cursor: "pointer" }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6"
+
                 >
                   <HiOutlineHome className="w-6 h-6" />
                 </ListItemPrefix>
@@ -324,35 +337,36 @@ export function SidebarWithBurgerMenu() {
                   className="rounded-full"
                 />
               </ListItemSuffix> */}
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <UserCircleIcon className="h-5 w-5" />
-                </ListItemPrefix>
 
-                <Typography color="blue-gray" className="mr-auto font-bold">
-                  Profile
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <Cog6ToothIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-bold">
-                  Settings
-                </Typography>
-              </ListItem>
-              <ListItem onClick={signout}>
-                <ListItemPrefix>
-                  <PowerIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-bold">
-                  Log Out
-                </Typography>
-              </ListItem>
-            </List>
-          </Card>
-        </Drawer>
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <UserCircleIcon className="h-5 w-5" />
+              </ListItemPrefix>
+
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Profile
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <Cog6ToothIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Settings
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <PowerIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-bold">
+                Log Out
+              </Typography>
+            </ListItem>
+          </List>
+        </Card>
+
       </Drawer>
       <Outlet />
     </>
