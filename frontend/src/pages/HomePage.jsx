@@ -8,14 +8,21 @@ import CaruselComponent from "../components/CaruselComponent.jsx";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { useSeries } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
+import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 function HomePage() {
-  const {rated,setRated, popular,setPopular, onTv,setOnTv,aring, fetchDataAring} = useSeries();
+  const {
+    rated,
+    setRated,
+    popular,
+    setPopular,
+    onTv,
+    setOnTv,
+    aring,
+    fetchDataAring,
+  } = useSeries();
   // const {id} = useParams()
-  const {seriesId, setSeriesId} = useSeries();
+  const { seriesId, setSeriesId } = useSeries();
 
-  
- 
-  
   const [seriesVideo, setSeriesVideo] = useState();
   const { movieId, setMovieId } = useContext(MoviesContext);
   console.log("movieId in home: ", movieId);
@@ -25,8 +32,6 @@ function HomePage() {
   const [upComingMovies, setUpCompingMovies] = useState([]);
   const [movieVideo, setMovieVideo] = useState();
   useEffect(() => {
-   
-
     fetchDataAring();
   }, []);
   useEffect(() => {
@@ -104,53 +109,47 @@ function HomePage() {
 
     fetchData();
   }, []);
-  
+
   const fetchSeriesByID = async () => {
     try {
-      
       const options = {
-        method: 'GET',
+        method: "GET",
         headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI'
-        }
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+        },
       };
-      
-  
-      const response = await fetch(`https://api.themoviedb.org/3/tv/${seriesId}/videos?language=en-US`, options);
+
+      const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${seriesId}/videos?language=en-US`,
+        options
+      );
       const data = await response.json();
-      console.log("SERIES ID", seriesId)
-  console.log("DATA",data);
-  if (data.results && data.results.length === 0){
-    alert("No trailer found for the series.")
-  }
+      console.log("SERIES ID", seriesId);
+      console.log("DATA", data);
+      if (data.results && data.results.length === 0) {
+        alert("No trailer found for the series.");
+      }
       if (data.results && data.results.length > 0) {
         for (const video of data.results) {
           console.log("Video", video);
-          if (video.type === "Trailer") {
-            setSeriesVideo(video.key); 
-            return;
-          }
+          setSeriesVideo(video.key);
         }
       }
-  
+
       console.error("No trailer found for the series.");
-     
     } catch (error) {
       console.error("Error fetching series by ID:", error);
     }
   };
-  
+
   console.log("Seriesvideo", seriesVideo);
 
-   
-  
-  
   //   useEffect(() => {
   //     fetchData();
   //   }, []);
 
-  
   const fetchPlayingMovies = async () => {
     try {
       const options = {
@@ -264,8 +263,7 @@ function HomePage() {
     fetchPopularMovies();
     fetchTopRatedMovies();
     fetchUpComingMovies();
-   
-    
+
     // if (movieId) {
     //   fetchMovieById();
     // }
@@ -275,6 +273,7 @@ function HomePage() {
     const handleScroll = () => {
       // Your scroll event logic here
       setMovieId("");
+      setSeriesId("");
     };
 
     // Attach the scroll event listener when the component mounts
@@ -301,8 +300,8 @@ function HomePage() {
           for (const video of response.data.results) {
             if (video.type === "Trailer") {
               setMovieVideo(video.key);
-              console.log("movie Video", movieVideo)
-             
+              console.log("movie Video", movieVideo);
+
               return;
             }
           }
@@ -317,46 +316,49 @@ function HomePage() {
 
   useEffect(() => {
     fetchMovieById();
-    
-    
   }, [movieId]);
 
   useEffect(() => {
     fetchSeriesByID();
-  },[seriesId])
- 
+  }, [seriesId]);
+
   return (
     <>
-   { (seriesId ) && (
-  <div onScroll={() => setMovieId(undefined)} className="movie-box" >
-    <ReactPlayer
-      url={`https://www.youtube.com/watch?v=${seriesVideo}`}
-      autoplay
-      controls
-    />
-  </div>
-)}
+      {movieId && (
+        <div onScroll={() => setMovieId(undefined)} className="movie-box">
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${movieVideo}`}
+            autoPlay
+            controls
+          />
+        </div>
+      )}
+      {seriesVideo && (
+        <div onScroll={() => setSeriesId(undefined)} className="movie-box">
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${seriesVideo}`}
+            autoPlay
+            controls
+          />
+        </div>
+      )}
 
-       
-      
       <div
         className="carusels-container"
         style={{
-          marginTop: seriesId  && "600px",
+          marginTop: seriesId && "600px",
         }}
-
-        
       >
         <h2>Movies playing now </h2>
-        <CaruselComponent items={nowPlayingMovies} />
+        <MoviesCaruselComponent items={nowPlayingMovies} />
         <h2>Popular Movies in our page </h2>
-        <CaruselComponent items={popularMovies} />
+        <MoviesCaruselComponent items={popularMovies} />
         <h2>Top rated Movies </h2>
-        <CaruselComponent items={topRatedMovies} />
+        <MoviesCaruselComponent items={topRatedMovies} />
         <h2>Movies comming soon </h2>
-        <CaruselComponent items={upComingMovies} />
+        <MoviesCaruselComponent items={upComingMovies} />
         <h2>Airing Today</h2>
-        <CaruselComponent items={aring}/>
+        <CaruselComponent items={aring} />
         <h2>On TV</h2>
         <CaruselComponent items={onTv} />
         <h2>Popular Series</h2>
