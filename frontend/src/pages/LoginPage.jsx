@@ -70,8 +70,13 @@ function LoginPage() {
               />
             </div>
             <div className="mb-5">
-              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
-                Password
+
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Your password
+
               </label>
               <input
                 value={password}

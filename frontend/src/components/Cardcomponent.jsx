@@ -13,8 +13,8 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-
-function Cardcomponent() {
+import { Link } from "react-router-dom";
+function Cardcomponent({ src, title, date, link }) {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleClick = () => {
@@ -29,7 +29,7 @@ function Cardcomponent() {
       >
         <CardHeader floated={false} color="blue-gray">
           <img
-            src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+            src={src}
             alt="ui/ux review check"
             style={{ height: "300px", objectFit: "cover" }}
           />
@@ -96,14 +96,20 @@ function Cardcomponent() {
             </MenuList>
           </Menu>
         </CardHeader>
-        <CardBody>
-          <div className="mb-3 flex items-center justify-between">
-            <Typography variant="h5" color="blue-gray" className="font-medium">
-              Movie name
-            </Typography>
-          </div>
-          <Typography color="gray">Date</Typography>
-        </CardBody>
+        <Link to={link}>
+          <CardBody>
+            <div className="mb-3 flex items-center justify-between">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="font-medium"
+              >
+                {title}
+              </Typography>
+            </div>
+            <Typography color="gray">{date}</Typography>
+          </CardBody>
+        </Link>
       </Card>
     </div>
   );

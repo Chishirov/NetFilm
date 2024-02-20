@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu";
+import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
 import NowPlayingMovies from "../pages/movies/NowPlayingMovies.jsx";
 import PopularMovies from "../pages/movies/PopularMovies.jsx";
 import TopRatedMovies from "../pages/movies/TopRatedMovies.jsx";
@@ -9,7 +9,9 @@ import OnTvSeries from "../pages/series/OnTvSeries.jsx";
 import PopularSeries from "../pages/series/PopularSeries.jsx";
 import TopRatedSeries from "../pages/series/TopRatedSeries.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
-import MovieInfo from "../pages/movies/MovieInfo";
+import MovieInfo from "../pages/movies/MovieInfo.jsx";
+import HomePage from "../pages/HomePage.jsx";
+import MoviesPage from "../pages/MoviesPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,13 +19,22 @@ const router = createBrowserRouter([
     element: <SidebarWithBurgerMenu />,
     children: [
       {
-        path: "/Popular-movies",
-        element: <PopularMovies />,
+        path: "/home",
+        element: <HomePage />,
+      },
+      {
+        path: "/movies",
+        element: <MoviesPage />,
       },
       {
         path: "/now-playing-movies",
         element: <NowPlayingMovies />,
       },
+      {
+        path: "/Popular-movies",
+        element: <PopularMovies />,
+      },
+
       {
         path: "/top-rated-movies",
         element: <TopRatedMovies />,
