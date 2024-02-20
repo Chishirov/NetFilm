@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
+import { useSeries } from "../../context/SeriesContext";
 
 function AiringTodaySeries() {
-  const [aring, setAring] = useState([]);
+  //const [aring, setAring] = useState([]);
+  const { aring, setAring } = useSeries();
 
   useEffect(() => {
     const fetchData = async () => {

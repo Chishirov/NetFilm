@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSeries } from "../../context/SeriesContext";
 
 function SeriesInfo() {
-  const [seriesInfo, setSeriesInfo] = useState(null);
+ 
+ const {seriesInfo, setSeriesInfo} = useSeries();
   const { id } = useParams() ;
 
   useEffect(() => {
@@ -19,6 +21,7 @@ function SeriesInfo() {
         const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?language=en-US`, options);
         const data = await response.json();
         setSeriesInfo(data);
+        console.log(data)
       } catch (error) {
         console.error(error);
       }
