@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -8,9 +9,8 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [login, setLogin] = useState(true);
   const [redirect, setRedirect] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
 
-  const [user, setUser] = useState({}); //! --------- useContext
+  const { setUser } = useContext(UserContext);
   const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
 
   async function handleRegister(e) {
@@ -48,7 +48,7 @@ function LoginPage() {
     }
   }
   if (redirect) {
-    return <Navigate to={"/Popular-movies"} />;
+    return <Navigate to={"/home"} />;
   }
   return (
     <div>
@@ -56,7 +56,7 @@ function LoginPage() {
         {login && (
           <form className="max-w-sm mx-auto" onSubmit={handleLogin}>
             <div className="mb-5">
-              <label className="block mb-2 text-m font-medium text-black dark:text-black">
+              <label className="block mb-2 text-m font-medium text-white">
                 Email
               </label>
               <input
@@ -70,13 +70,11 @@ function LoginPage() {
               />
             </div>
             <div className="mb-5">
-
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-m font-medium text-white"
               >
                 Your password
-
               </label>
               <input
                 value={password}
@@ -109,7 +107,7 @@ function LoginPage() {
         {!login && (
           <form className="max-w-sm mx-auto" onSubmit={handleRegister}>
             <div className="mb-5">
-              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
+              <label className="block mb-2 text-m font-medium text-white">
                 Username
               </label>
               <input
@@ -123,7 +121,7 @@ function LoginPage() {
               />
             </div>
             <div className="mb-5">
-              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
+              <label className="block mb-2 text-m font-medium text-white">
                 Email
               </label>
               <input
@@ -137,7 +135,7 @@ function LoginPage() {
               />
             </div>
             <div className="mb-5">
-              <label className="block mb-2 text-m font-medium text-black  dark:text-black">
+              <label className="block mb-2 text-m font-medium text-white">
                 Password
               </label>
               <input

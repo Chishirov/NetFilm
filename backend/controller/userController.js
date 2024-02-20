@@ -51,3 +51,21 @@ export const postLoginUser = async (req, res) => {
         res.status(401).json("user not found");
     }
 }
+
+export const getValidateUser = (req, res) => {
+    const { token } = req.cookies;
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+            if (err) throw err;
+            const { username, email, _id } = await userModel.findById(tokenData.id);
+            res.json({ username, email, _id });
+        });
+    } else {
+        res.json(null);
+    }
+}
+
+export const postSignoutUser = async (req, res) => {
+    res.clearCookie("token")
+    res.send("signout user");
+}
