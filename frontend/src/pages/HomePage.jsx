@@ -6,7 +6,7 @@ import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
 import { Outlet } from "react-router-dom";
 import CaruselComponent from "../components/CaruselComponent.jsx";
 import { MoviesContext } from "../context/MoviesContext.jsx";
-import { useSeries } from "../context/SeriesContext.jsx";
+import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
 import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 function HomePage() {
@@ -19,9 +19,9 @@ function HomePage() {
     setOnTv,
     aring,
     fetchDataAring,
-  } = useSeries();
+  } = useContext(SeriesContext);
   // const {id} = useParams()
-  const { seriesId, setSeriesId } = useSeries();
+  const { seriesId, setSeriesId } = useContext(SeriesContext);
 
   const [seriesVideo, setSeriesVideo] = useState();
   const { movieId, setMovieId } = useContext(MoviesContext);
@@ -112,39 +112,40 @@ function HomePage() {
 
   const fetchSeriesByID = async () => {
     try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-        },
-      };
+      if (seriesId) {
+        const options = {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+          },
+        };
 
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${seriesId}/videos?language=en-US`,
-        options
-      );
-      const data = await response.json();
-      console.log("SERIES ID", seriesId);
-      console.log("DATA", data);
-      if (data.results && data.results.length === 0) {
-        alert("No trailer found for the series.");
-      }
-      if (data.results && data.results.length > 0) {
-        for (const video of data.results) {
-          console.log("Video", video);
-          setSeriesVideo(video.key);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/tv/${seriesId}/videos?language=en-US`,
+          options
+        );
+        const data = await response.json();
+
+        console.log("SERIES ID", seriesId);
+        console.log("DATA", data);
+        if (data.results && data.results.length === 0) {
+          alert("No trailer found for the series.");
+        }
+        if (data.results && data.results.length > 0) {
+          for (const video of data.results) {
+            console.log("Video", video);
+            setSeriesVideo(video.key);
+          }
         }
       }
-
-      console.error("No trailer found for the series.");
     } catch (error) {
       console.error("Error fetching series by ID:", error);
     }
   };
 
-  console.log("Seriesvideo", seriesVideo);
+  // console.log("Seriesvideo", seriesVideo);
 
   //   useEffect(() => {
   //     fetchData();
@@ -274,6 +275,8 @@ function HomePage() {
       // Your scroll event logic here
       setMovieId("");
       setSeriesId("");
+      setMovieVideo(undefined);
+      setSeriesVideo(undefined);
     };
 
     // Attach the scroll event listener when the component mounts
@@ -295,7 +298,7 @@ function HomePage() {
         };
 
         const response = await axios.get(url, { headers });
-
+        console.log("response", response);
         if (response.data.results && response.data.results.length > 0) {
           for (const video of response.data.results) {
             if (video.type === "Trailer") {
@@ -315,12 +318,12 @@ function HomePage() {
   };
 
   useEffect(() => {
-    fetchMovieById();
-  }, [movieId]);
-
-  useEffect(() => {
     fetchSeriesByID();
   }, [seriesId]);
+
+  useEffect(() => {
+    fetchMovieById();
+  }, [movieId]);
 
   return (
     <>
@@ -333,8 +336,8 @@ function HomePage() {
           />
         </div>
       )}
-      {seriesVideo && (
-        <div onScroll={() => setSeriesId(undefined)} className="movie-box">
+      {seriesId && seriesVideo && (
+        <div onScroll={() => setSeriesId()} className="movie-box">
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${seriesVideo}`}
             autoPlay

@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useSeries } from "../../context/SeriesContext";
+import { SeriesContext } from "../../context/SeriesContext";
 
 function SeriesInfo() {
- 
- const {seriesInfo, setSeriesInfo} = useSeries();
-  const { id } = useParams() ;
+  const { seriesInfo, setSeriesInfo } = useContext(SeriesContext);
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const options = {
-          method: 'GET',
+          method: "GET",
           headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI'
-          }
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+          },
         };
 
-        const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?language=en-US`, options);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+          options
+        );
         const data = await response.json();
         setSeriesInfo(data);
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -29,11 +32,6 @@ function SeriesInfo() {
 
     fetchData();
   }, [id]);
-
-
-
-  
-
 
   const goBack = () => {
     window.history.back();
@@ -51,11 +49,8 @@ function SeriesInfo() {
           />
           <h3>{seriesInfo.name}</h3>
           <p>{seriesInfo.first_air_date}</p>
-         <p>{seriesInfo.overview}</p>
-         
-        
-        
-     
+          <p>{seriesInfo.overview}</p>
+
           <button onClick={() => goBack()}>Go Back</button>
         </div>
       ) : (

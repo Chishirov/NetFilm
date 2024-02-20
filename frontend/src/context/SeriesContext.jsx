@@ -40,6 +40,6 @@ export const SeriesProvider = ({ children }) => {
   );
 };
 
-export function useSeries() {
-    return useContext(SeriesContext);
-  }
+// export function useSeries() {
+//     return useContext(SeriesContext);
+//   }
