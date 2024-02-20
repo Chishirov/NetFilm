@@ -34,7 +34,7 @@ export const postLoginUser = async (req, res) => {
             if (checkPassword) {
                 console.log('password correct');
                 jwt.sign(
-                    { email: user.email, id: user._id },
+                    { id: user._id },
                     jwtSecret,
                     {},
                     (err, token) => {
@@ -51,3 +51,23 @@ export const postLoginUser = async (req, res) => {
         res.status(401).json("user not found");
     }
 }
+
+export const postSignoutUser = async (req, res) => {
+    res.clearCookie("token")
+    res.send("signout user");
+}
+
+export const getValidateUser = async (req, res) => {
+    const { token } = await req.cookies
+    if (!token) return res.status(401).send("Access denied. No token provided.");
+    try {
+        jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+            if (err) throw err;
+            const user = await userModel.findById(tokenData.id);
+            res.status(200).json(user);
+        });
+    } catch (error) {
+        res.status(400).json("error invalid token")
+    }
+}
+

@@ -1,4 +1,15 @@
-import React from "react";
+import { Dropdown } from "flowbite-react";
+import {
+  HiCog,
+  HiCurrencyDollar,
+  HiLogout,
+  HiOutlineUser,
+  HiOutlineUserCircle,
+  HiOutlineFilm,
+  HiOutlineVideoCamera,
+  HiOutlineHome,
+} from "react-icons/hi";
+import React, { useContext } from "react";
 import {
   IconButton,
   Typography,
@@ -32,16 +43,15 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Outlet, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [user, setUser] = React.useState({
-    username: "Max Mustermann",
-    email: "max.mustermann@dci.com",
-  });
+  const { user, setUser } = useContext(UserContext);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -50,9 +60,39 @@ export function SidebarWithBurgerMenu() {
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
 
+  const userIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="black"
+      className="w-10 h-10"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+      />
+    </svg>
+  );
+
+  async function signout() {
+    const { data } = await axios.post(
+      "http://localhost:3000/signout",
+      {},
+      { withCredentials: true }
+    );
+    if (data) {
+      alert("You have signed out");
+      navigate("/login");
+      setUser("");
+    }
+  }
+
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center bg-white">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />
@@ -61,79 +101,32 @@ export function SidebarWithBurgerMenu() {
           )}
         </IconButton>
         <div>
-          <button
-            type="button"
-            className="p-2 flex mx-1 text-sm bg-white rounded-full md:mr-0 "
-            data-dropdown-toggle="dropdown"
-            id="user-menu-button"
-            aria-expanded="true"
+          <Dropdown
+            label={userIcon}
+            style={{ border: "none" }}
+            className="border-none rounded-t-none"
           >
-            <span className="object-center flex flex-col items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                />
-              </svg>
-            </span>
-          </button>
-          <div
-            className=" absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="dropdown"
-          >
-            <div className="py-4 px-4 text-right">
-              <span className="block text-sm text-gray-800 truncate dark:text-gray-400">
-                {user.username}
+            <Dropdown.Header>
+              <span className="block text-sm">{user?.username}</span>
+              <span className="block truncate text-sm font-medium">
+                {user?.email}
               </span>
-              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                {user.email}
-              </span>
-            </div>
-            <ul
-              className="py-1 text-gray-500 dark:text-gray-400 text-right"
-              aria-labelledby="dropdown"
+            </Dropdown.Header>
+            <hr />
+            <Dropdown.Item
+              onClick={() => navigate("/profile")}
+              icon={HiOutlineUser}
             >
-              <li>
-                {/* {const navigat = useNavigate()} */}
-                {/* {onclick=()=>navigate("/egal")} */}
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-                >
-                  My profile
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Account settings
-                </a>
-              </li>
-            </ul>
-            <ul
-              className="py-1 text-gray-500 dark:text-gray-400 text-right"
-              aria-labelledby="dropdown"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>
+              Profile
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => navigate("settings")} icon={HiCog}>
+              Settings
+            </Dropdown.Item>
+            <hr />
+            <Dropdown.Item onClick={signout} icon={HiLogout}>
+              Sign out
+            </Dropdown.Item>
+          </Dropdown>
         </div>
       </div>
       <Drawer
@@ -156,21 +149,10 @@ export function SidebarWithBurgerMenu() {
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
         >
-          <button>
+          <button onClick={() => navigate("/home")}>
             <div className="mb-2 flex items-center gap-4 p-4 ">
-              <ListItemPrefix
-                onClick={() => navigate("/home")}
-                style={{ cursor: "pointer" }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-                  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
-                </svg>
+              <ListItemPrefix style={{ cursor: "pointer" }}>
+                <HiOutlineHome className="w-6 h-6" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-bold">
                 Home
@@ -196,18 +178,7 @@ export function SidebarWithBurgerMenu() {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 18.375V5.625Zm1.5 0v1.5c0 .207.168.375.375.375h1.5a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-1.5A.375.375 0 0 0 3 5.625Zm16.125-.375a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h1.5A.375.375 0 0 0 21 7.125v-1.5a.375.375 0 0 0-.375-.375h-1.5ZM21 9.375A.375.375 0 0 0 20.625 9h-1.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h1.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-1.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h1.5a.375.375 0 0 0 .375-.375v-1.5Zm0 3.75a.375.375 0 0 0-.375-.375h-1.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h1.5a.375.375 0 0 0 .375-.375v-1.5ZM4.875 18.75a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-1.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375h1.5ZM3.375 15h1.5a.375.375 0 0 0 .375-.375v-1.5a.375.375 0 0 0-.375-.375h-1.5a.375.375 0 0 0-.375.375v1.5c0 .207.168.375.375.375Zm0-3.75h1.5a.375.375 0 0 0 .375-.375v-1.5A.375.375 0 0 0 4.875 9h-1.5A.375.375 0 0 0 3 9.375v1.5c0 .207.168.375.375.375Zm4.125 0a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5h-9Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <HiOutlineFilm className="w-6 h-6" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className="mr-auto font-bold">
                     Movies
@@ -271,14 +242,7 @@ export function SidebarWithBurgerMenu() {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path d="M4.5 4.5a3 3 0 0 0-3 3v9a3 3 0 0 0 3 3h8.25a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3H4.5ZM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06Z" />
-                    </svg>
+                    <HiOutlineVideoCamera className="w-6 h-6" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className="mr-auto font-bold">
                     Tv show
@@ -341,7 +305,7 @@ export function SidebarWithBurgerMenu() {
                 />
               </ListItemSuffix> */}
             </ListItem>
-            <ListItem>
+            <ListItem onClick={() => navigate("/profile")}>
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -350,7 +314,7 @@ export function SidebarWithBurgerMenu() {
                 Profile
               </Typography>
             </ListItem>
-            <ListItem>
+            <ListItem onClick={() => navigate("/settings")}>
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -358,7 +322,7 @@ export function SidebarWithBurgerMenu() {
                 Settings
               </Typography>
             </ListItem>
-            <ListItem>
+            <ListItem onClick={signout}>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
