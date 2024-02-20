@@ -77,7 +77,6 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
-
       <div className="flex justify-between">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
@@ -111,7 +110,7 @@ export function SidebarWithBurgerMenu() {
         className="new-className"
         open={isDrawerOpen}
         onClose={closeDrawer}
-      >
+      />
 
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
@@ -121,7 +120,6 @@ export function SidebarWithBurgerMenu() {
         )}
       </IconButton>
       <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}>
-
         <Card
           color="transparent"
           shadow={false}
@@ -320,7 +318,6 @@ export function SidebarWithBurgerMenu() {
               <Typography color="blue-gray" className="mr-auto font-bold">
                 Profile
               </Typography>
-
             </ListItem>
             <ListItem>
               <ListItemPrefix>
