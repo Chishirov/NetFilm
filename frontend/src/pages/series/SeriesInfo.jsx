@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-function MovieInfo() {
-  const [movieInfo, setMovieInfo] = useState(null);
+function SeriesInfo() {
+  const [seriesInfo, setSeriesInfo] = useState(null);
   const { id } = useParams() ;
 
   useEffect(() => {
@@ -16,9 +16,9 @@ function MovieInfo() {
           }
         };
 
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
+        const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?language=en-US`, options);
         const data = await response.json();
-        setMovieInfo(data);
+        setSeriesInfo(data);
       } catch (error) {
         console.error(error);
       }
@@ -38,18 +38,21 @@ function MovieInfo() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Movie Infos</h1>
-      {movieInfo ? (
+      <h1 style={{ marginBottom: "20px" }}>Series Infos</h1>
+      {seriesInfo ? (
         <div>
           <img
-            src={`https://image.tmdb.org/t/p/w200${movieInfo.poster_path}`}
-            alt={movieInfo.title}
+            src={`https://image.tmdb.org/t/p/w200${seriesInfo.poster_path}`}
+            alt={seriesInfo.title}
             style={{ width: "10%", height: "auto", borderRadius: "8px" }}
           />
-          <h3>{movieInfo.title}</h3>
-          <p>{movieInfo.overview}</p>
-         <p>{movieInfo.production_companies[0].name}</p>
-          <p>{movieInfo.budget} $</p>
+          <h3>{seriesInfo.name}</h3>
+          <p>{seriesInfo.first_air_date}</p>
+         <p>{seriesInfo.overview}</p>
+         
+        
+        
+     
           <button onClick={() => goBack()}>Go Back</button>
         </div>
       ) : (
@@ -59,4 +62,4 @@ function MovieInfo() {
   );
 }
 
-export default MovieInfo;
+export default SeriesInfo;

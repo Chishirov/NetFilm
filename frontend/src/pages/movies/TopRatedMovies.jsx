@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
+
+import { Link } from "react-router-dom";
+
 import Cardcomponent from "../../components/Cardcomponent";
+import Pagination from "../../components/Pagination";
+
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +23,7 @@ function TopRatedMovies() {
         };
 
         const response = await fetch(
-          "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+          ` https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
@@ -28,7 +34,8 @@ function TopRatedMovies() {
     };
 
     fetchData();
-  }, []);
+
+  }, [currentPage]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
@@ -38,6 +45,8 @@ function TopRatedMovies() {
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "20px",
           justifyContent: "center",
+          width: "80%",
+          margin: "0 auto",
         }}
       >
         {top.map((movie) => (
@@ -50,6 +59,8 @@ function TopRatedMovies() {
           />
         ))}
       </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
     </div>
   );
 }
