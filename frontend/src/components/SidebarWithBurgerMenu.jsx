@@ -9,7 +9,7 @@ import {
   HiOutlineVideoCamera,
   HiOutlineHome,
 } from "react-icons/hi";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -76,6 +76,24 @@ export function SidebarWithBurgerMenu() {
       />
     </svg>
   );
+
+  async function redirect() {
+    try {
+      const response = await axios.get("http://localhost:3000/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/login");
+    }
+  }
+  useEffect(() => {
+    if (!user) {
+      redirect();
+    }
+  }, []);
 
   async function signout() {
     const { data } = await axios.post(
