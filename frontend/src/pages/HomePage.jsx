@@ -24,13 +24,26 @@ function HomePage() {
   const { seriesId, setSeriesId } = useContext(SeriesContext);
 
   const [seriesVideo, setSeriesVideo] = useState();
-  const { movieId, setMovieId } = useContext(MoviesContext);
+  const {
+    movieId,
+    setMovieId,
+    nowPlayingMovies,
+    setNowPlayingMovies,
+    popularMovies,
+    setPopulatMovies,
+    topRatedMovies,
+    setTopRatedMovies,
+    upComingMovies,
+    setUpCompingMovies,
+    movieVideo,
+    setMovieVideo,
+    fetchPlayingMovies,
+    fetchUpComingMovies,
+    fetchTopRatedMovies,
+    fetchPopularMovies,
+  } = useContext(MoviesContext);
   console.log("movieId in home: ", movieId);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-  const [popularMovies, setPopulatMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-  const [upComingMovies, setUpCompingMovies] = useState([]);
-  const [movieVideo, setMovieVideo] = useState();
+
   useEffect(() => {
     fetchDataAring();
   }, []);
@@ -145,120 +158,6 @@ function HomePage() {
     }
   };
 
-  // console.log("Seriesvideo", seriesVideo);
-
-  //   useEffect(() => {
-  //     fetchData();
-  //   }, []);
-
-  const fetchPlayingMovies = async () => {
-    try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-        },
-      };
-
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
-        options
-      );
-      const data = await response.json();
-
-      setNowPlayingMovies(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchPopularMovies = async () => {
-    try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-        },
-      };
-
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-        options
-      );
-      const data = await response.json();
-
-      setPopulatMovies(data.results.reverse());
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchTopRatedMovies = async () => {
-    try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-        },
-      };
-
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-        options
-      );
-      const data = await response.json();
-
-      setTopRatedMovies(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchUpComingMovies = async () => {
-    try {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-        },
-      };
-
-      const response = await fetch(
-        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
-        options
-      );
-      const data = await response.json();
-      // console.log(data);
-      setUpCompingMovies(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  // const fetchMovieById = async () => {
-  //   try {
-  //     if (movieId) {
-  //       const url = ` https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`;
-  //       const headers = {
-  //         accept: "application/json",
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzdlMDBkMTIyZDg0MmZlZTYwYzFlNWY1MzUwZWVkNCIsInN1YiI6IjY1MmE2Yjk5MWYzZTYwMDExYzRhMmNmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.27Of1P9G1YQOX5RsHqMkoga3b6WelSSkdIblIqP19YY",
-  //       };
-
-  //       const response = await axios.get(url, { headers });
-
-  //       console.log(response.data.results[1].key);
-  //       setMovieVideo(response.data.results[1].key);
-  //       // Set the movie video state here if necessary
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching movie by ID:", error);
-  //   }
-  // };
   useEffect(() => {
     fetchPlayingMovies();
     fetchPopularMovies();
