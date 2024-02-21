@@ -19,6 +19,10 @@ import UserProfile from "../pages/UserProfile.jsx";
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
     path: "/",
     element: <SidebarWithBurgerMenu />,
     children: [
@@ -62,10 +66,6 @@ const router = createBrowserRouter([
       {
         path: "/top-rated-series",
         element: <TopRatedSeries />,
-      },
-      {
-        path: "/login",
-        element: <LoginPage />,
       },
       {
         path: "/movies-info/:id",
