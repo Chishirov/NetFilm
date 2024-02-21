@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cardcomponent from "../../components/Cardcomponent";
+
 import Pagination from "../../components/Pagination";
+
 
 function PopularMovies() {
   const [movies, setMovies] = useState([]);
@@ -31,10 +33,12 @@ function PopularMovies() {
     };
 
     fetchData();
+
   }, [currentPage]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
+
       <div
         style={{
           display: "grid",

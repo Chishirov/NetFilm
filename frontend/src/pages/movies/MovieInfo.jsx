@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 function MovieInfo() {
   const [movieInfo, setMovieInfo] = useState(null);
-  const { id } = useParams();
+  const { id } = useParams() ;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,13 +28,17 @@ function MovieInfo() {
   }, [id]);
 
 
+
+  
+
+
   const goBack = () => {
     window.history.back();
   };
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Movie Infoz</h1>
+      <h1 style={{ marginBottom: "20px" }}>Movie Infos</h1>
       {movieInfo ? (
         <div>
           <img

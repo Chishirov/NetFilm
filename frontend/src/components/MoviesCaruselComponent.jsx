@@ -5,7 +5,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
-function CaruselComponent({ items }) {
+function MoviesCaruselComponent({ items }) {
   const { movieId, setMovieId } = useContext(MoviesContext);
   const { seriesId, setSeriesId } = useContext(SeriesContext);
 
@@ -44,7 +44,7 @@ function CaruselComponent({ items }) {
           <div
             // style={{ width: "400px" }}
             key={movie.id}
-            onClick={() => setSeriesId(movie.id)}
+            onClick={() => setMovieId(movie.id)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
@@ -64,4 +64,4 @@ function CaruselComponent({ items }) {
   );
 }
 
-export default CaruselComponent;
+export default MoviesCaruselComponent;
