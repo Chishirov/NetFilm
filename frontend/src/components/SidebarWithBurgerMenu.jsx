@@ -148,7 +148,7 @@ export function SidebarWithBurgerMenu() {
         </div>
       </div>
       <Drawer
-        className="new-className"
+        className="sidebar-drawer"
         open={isDrawerOpen}
         onClose={closeDrawer}
       >
