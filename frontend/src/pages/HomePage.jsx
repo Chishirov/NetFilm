@@ -164,9 +164,7 @@ function HomePage() {
     fetchTopRatedMovies();
     fetchUpComingMovies();
 
-    // if (movieId) {
-    //   fetchMovieById();
-    // }
+ 
   }, []);
   //
   useEffect(() => {
