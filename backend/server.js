@@ -17,7 +17,7 @@ app.use(
 app.use(cookieParser());
 
 await mongoose.connect(
-  "mongodb+srv://omar:Oy76811148@cluster0.taehtxj.mongodb.net/"
+  "mongodb+srv://yussefomar8:omaryossef@cluster0.4h8fbgc.mongodb.net/"
 );
 
 app.get("/test", (req, res) => {
@@ -30,3 +30,4 @@ app.listen(PORT, () =>
     "listening in port http://localhost:3000 test>> http://localhost:3000/test"
   )
 );
+//omaryossef

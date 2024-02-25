@@ -22,91 +22,46 @@ export const postRegisterUser = async (req, res) => {
   }
 };
 
-export const postLoginController = async (req, res) => {
-  const { email, password } = req.body;
-
+export const postLoginUser = async (req, res) => {
+  const { email, password } = await req.body;
   try {
-    const loggedUser = await userModel.findOne({ email: email });
-    if (!loggedUser) {
-      return res
-        .status(404)
-        .send({ success: false, error: "User/Password Combination not found" });
+    if (!email && !password) throw new Error("Please enter a valid email");
+    const user = await userModel.findOne({ email });
+    if (user) {
+      console.log("user found");
+
+      const checkPassword = await bcrypt.compare(password, user.password);
+      if (checkPassword) {
+        console.log("password correct");
+        jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
+          if (err) throw err;
+          res.cookie("token", token).json(user);
+        });
+        console.log("token created");
+      } else {
+        res.status(401).json("wrong password");
+      }
     }
-    const isCorrectPassword = await bcrypt.compare(
-      password,
-      loggedUser.password
-    );
-    if (!isCorrectPassword) {
-      return res
-        .status(404)
-        .send({ success: false, error: "User/Password Combination not found" });
-    }
-
-    const expiresInMs = 5 * 60 * 1000;
-
-    const expiresInDate = new Date(Date.now() + expiresInMs);
-
-    // next();
-
-    const token = jwt.sign({ userId: loggedUser._id }, jwtSecret, {
-      expiresIn: expiresInMs / 1000,
-    });
-
-    const cookieOptions = {
-      httpOnly: true,
-
-      maxAge: expiresInMs,
-    };
-
-    res.cookie("jwt", token, cookieOptions);
-
-    const options = {
-      maxAge: expiresInMs,
-    };
-    const payload = {
-      expires: expiresInDate.toISOString(),
-      user: loggedUser,
-    };
-    res.cookie("JWTinfo", payload, options);
-
-    return res.send({
-      success: true,
-      msg: `User ${loggedUser.email} logged in`,
-    });
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ success: false, error: error.message });
+    res.status(401).json("user not found");
   }
 };
 
-export const postLogoutController = async (req, res) => {
-  res.clearCookie("jwt");
-  res.clearCookie("JWTinfo");
-  res.send({ msg: "erfolgreich ausgeloggt" });
+export const postSignoutUser = async (req, res) => {
+  res.clearCookie("token");
+  res.send("signout user");
 };
+
 export const getValidateUser = async (req, res) => {
+  const { token } = await req.cookies;
+  if (!token) return res.status(401).send("Access denied. No token provided.");
   try {
-    const { token } = req.cookies;
-    if (!token) {
-      return res.status(401).send("Access denied. No token provided.");
-    }
-
-    const tokenData = await jwt.verify(token, jwtSecret);
-    const user = await userModel.findById(tokenData.id);
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.status(200).json(user);
+    jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
+      if (err) throw err;
+      const user = await userModel.findById(tokenData.id);
+      res.status(200).json(user);
+    });
   } catch (error) {
-    if (
-      error.name === "JsonWebTokenError" ||
-      error.name === "TokenExpiredError"
-    ) {
-      return res.status(401).json({ error: "Invalid or expired token" });
-    }
-    console.error("Error validating user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(400).json("error invalid token");
   }
 };
