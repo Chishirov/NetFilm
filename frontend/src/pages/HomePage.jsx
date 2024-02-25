@@ -171,8 +171,8 @@ function HomePage() {
   useEffect(() => {
     const handleScroll = () => {
       // Your scroll event logic here
-      setMovieId("");
-      setSeriesId("");
+      // setMovieId("");
+      // setSeriesId("");
       setMovieVideo(undefined);
       setSeriesVideo(undefined);
     };
@@ -226,8 +226,8 @@ function HomePage() {
 
   return (
     <>
-      {movieId && (
-        <div onScroll={() => setMovieId(undefined)} className="movie-box">
+      {movieVideo && (
+        <div className="movie-box">
           {movieInfo && (
             <div>
               <h1 className="headline-home">{movieInfo.title}</h1>
@@ -249,7 +249,7 @@ function HomePage() {
         </div>
       )}
       {seriesId && seriesVideo && (
-        <div onScroll={() => setSeriesId()} className="movie-box">
+        <div className="movie-box">
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${seriesVideo}`}
             autoPlay
@@ -260,7 +260,7 @@ function HomePage() {
       <div
         className="carusels-container"
         style={{
-          marginTop: movieId && "600px",
+          marginTop: movieVideo && "520px",
         }}
       >
         <h2>Movies playing now </h2>
