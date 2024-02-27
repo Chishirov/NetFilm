@@ -1,4 +1,5 @@
-import mongoose, { now } from "mongoose";
+import mongoose from "mongoose";
+
 
 const UserModel = new mongoose.Schema({
   username: { type: String },
@@ -8,8 +9,11 @@ const UserModel = new mongoose.Schema({
     {
       title: String,
       movieId: String,
+      isFavorite: Boolean,
+      isWatchlist: Boolean
     }
   ],
 }, { timestamps: true });
+
 
 export default mongoose.model("user", UserModel);

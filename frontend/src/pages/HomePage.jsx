@@ -27,6 +27,8 @@ function HomePage() {
   const {
     movieId,
     setMovieId,
+    movieInfo,
+    setMovieInfo,
     nowPlayingMovies,
     setNowPlayingMovies,
     popularMovies,
@@ -41,6 +43,7 @@ function HomePage() {
     fetchUpComingMovies,
     fetchTopRatedMovies,
     fetchPopularMovies,
+    fetchMovieInfo,
   } = useContext(MoviesContext);
   console.log("movieId in home: ", movieId);
 
@@ -163,15 +166,13 @@ function HomePage() {
     fetchPopularMovies();
     fetchTopRatedMovies();
     fetchUpComingMovies();
-
- 
   }, []);
   //
   useEffect(() => {
     const handleScroll = () => {
       // Your scroll event logic here
-      setMovieId("");
-      setSeriesId("");
+      // setMovieId("");
+      // setSeriesId("");
       setMovieVideo(undefined);
       setSeriesVideo(undefined);
     };
@@ -217,28 +218,41 @@ function HomePage() {
   useEffect(() => {
     fetchSeriesByID();
   }, [seriesId]);
-
   useEffect(() => {
+    fetchMovieInfo();
     fetchMovieById();
   }, [movieId]);
+  console.log("movieInfo", movieInfo);
 
   return (
     <>
-      {movieId && (
-        <div onScroll={() => setMovieId(undefined)} className="movie-box">
-          <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${movieVideo}`}
-            autoPlay
-            controls
-          />
+      {movieVideo && (
+        <div className="movie-box">
+          {movieInfo && (
+            <div>
+              <h1 className="headline-home">{movieInfo.title}</h1>
+              <p className="home-paragraph">{movieInfo.overview}</p>
+              {/* <p>{movieInfo.production_companies[0].name}</p> */}
+              <p>{movieInfo.budget} $</p>
+            </div>
+          )}
+          <div className="home-video">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${movieVideo}`}
+              playing={true}
+              controls
+              muted={true}
+              width={"800px"}
+              height={"100%"}
+            />
+          </div>
         </div>
       )}
       {seriesId && seriesVideo && (
-        <div onScroll={() => setSeriesId()} className="movie-box">
+        <div className="movie-box">
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${seriesVideo}`}
             autoPlay
-            controls
           />
         </div>
       )}
@@ -246,7 +260,7 @@ function HomePage() {
       <div
         className="carusels-container"
         style={{
-          marginTop: seriesId && "600px",
+          marginTop: movieVideo && "520px",
         }}
       >
         <h2>Movies playing now </h2>
