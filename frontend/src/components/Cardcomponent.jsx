@@ -27,10 +27,11 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
   const handleIdOnClick = async () => {
     try {
       const movieRes = await axios.post(
-        `http://localhost:3000/movie/${userId}`,
+        " http://localhost:3000/favorite-movie",
         {
           title: movieTitle,
           movieId: cardId.toString(),
+          userId: userId,
           isfavorite: true,
           isWatchList: false,
         },
