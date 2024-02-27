@@ -32,8 +32,8 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
           title: movieTitle,
           movieId: cardId.toString(),
           userId: userId,
-          isfavorite: true,
-          isWatchList: false,
+          isFavorite: true,
+          isWatchlist: false,
         },
         { withCredentials: true }
       );
