@@ -8,6 +8,8 @@ const UserModel = new mongoose.Schema({
     {
       title: String,
       movieId: String,
+      isFavorite: Boolean,
+      isWatchlist: Boolean
     }
   ],
 }, { timestamps: true });
