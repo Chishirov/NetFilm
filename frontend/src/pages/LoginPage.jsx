@@ -43,7 +43,7 @@ function LoginPage() {
       setUser(data);
       setRedirect(true);
     } catch (error) {
-      console.log("Login failed", error);
+      console.log("Login failed", error.response.data);
       alert("Login failed");
     }
   }

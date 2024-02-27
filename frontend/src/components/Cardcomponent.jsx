@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -14,12 +15,44 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-function Cardcomponent({ src, title, date, link }) {
+import { UserContext } from "../context/UserContext";
+function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
   const [openMenu, setOpenMenu] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const handleClick = () => {
     console.log("clicked");
     setOpenMenu(!openMenu);
+  };
+  const handleIdOnClick = async () => {
+    try {
+      const movieRes = await axios.post(
+        " http://localhost:3000/favorite-movie",
+        {
+          title: movieTitle,
+          movieId: cardId.toString(),
+          userId: userId,
+          isfavorite: true,
+          isWatchList: false,
+        },
+        { withCredentials: true }
+      );
+      if (movieRes.status === 201) {
+        // Check if the movie is already in the user's list
+        if (!user.movies.some((movie) => movie?.movieId === cardId)) {
+          // Add the movie to the user's list
+          setUser((prevUser) => ({
+            ...prevUser,
+            movies: [
+              ...prevUser.movies,
+              { title: movieTitle, movieId: cardId },
+            ],
+          }));
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div>
@@ -59,7 +92,10 @@ function Cardcomponent({ src, title, date, link }) {
             </MenuHandler>
 
             <MenuList>
-              <MenuItem className="flex items-center gap-2">
+              <MenuItem
+                onClick={() => handleIdOnClick()}
+                className="flex items-center gap-2"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

@@ -1,3 +1,4 @@
+
 import userModel from "../models/userModel.js"
 
 
@@ -51,3 +52,4 @@ export const getAllMovies = async (req, res) => {
 
     }
 }
+

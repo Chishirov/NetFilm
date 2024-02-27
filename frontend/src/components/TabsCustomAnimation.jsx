@@ -48,7 +48,11 @@ export function TabsCustomAnimation() {
     <Tabs id="custom-animation" value={defaultValue}>
       <TabsHeader className="w-2/3 m-auto bg-transparent">
         {data.map(({ label, value }) => (
-          <Tab style={{ color: "red" }} key={value} value={value}>
+          <Tab
+            style={{ color: "red", fontWeight: "bold" }}
+            key={value}
+            value={value}
+          >
             {label}
           </Tab>
         ))}
