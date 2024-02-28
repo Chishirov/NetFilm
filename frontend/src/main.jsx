@@ -11,14 +11,14 @@ import { SeriesProvider } from "./context/SeriesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-
-    <UserContextProvider>   <SeriesProvider>
-      <MoviesProvider>
-        {/* <ThemeProvider></ThemeProvider> */}
-        <App />
-      </MoviesProvider>
-   </SeriesProvider>
+    <UserContextProvider>
+      {" "}
+      <SeriesProvider>
+        <MoviesProvider>
+          {/* <ThemeProvider></ThemeProvider> */}
+          <App />
+        </MoviesProvider>
+      </SeriesProvider>
     </UserContextProvider>
-
   </React.StrictMode>
 );

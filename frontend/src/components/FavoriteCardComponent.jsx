@@ -39,29 +39,37 @@ function FavoriteCardComponent({ src, id, title, overview }) {
   }, []);
   return (
     <>
-      <Card className="w-full max-w-[48rem] flex-row">
+      <Card
+        className="h-48   flex-row "
+        style={{ width: "60%", margin: "20px" }}
+      >
         <CardHeader
           shadow={false}
           floated={false}
-          className="m-0 w-2/5 shrink-0 rounded-r-none"
+          className="m-0 shrink-0 rounded-r-none"
         >
           <img
             src={src}
             alt="card-image"
-            className="h-full w-full object-cover"
+            style={{ height: "100%", width: "100%", objectFit: "cover" }}
           />
         </CardHeader>
         <CardBody>
           <Typography variant="h6" color="gray" className="mb-4 uppercase">
             {title}
           </Typography>
-          <Typography variant="h4" color="blue-gray" className="mb-2">
-            {overview}
+          <Typography color="blue-gray" className="mb-2 ">
+            {overview}...
           </Typography>
 
           <a href="#" className="inline-block">
-            <Button variant="text" className="flex items-center gap-2">
-              Learn More
+            <Button
+              onClick={""}
+              color="red"
+              variant="text"
+              className="flex items-center gap-2"
+            >
+              delete
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
