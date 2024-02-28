@@ -16,6 +16,7 @@ import SeriesInfo from "../pages/series/SeriesInfo";
 import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
 import UserProfile from "../pages/UserProfile.jsx";
+import ErrorPage from "../pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <UserProfile />,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
