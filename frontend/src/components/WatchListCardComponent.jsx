@@ -9,17 +9,14 @@ import {
 import { UserContext } from "../context/UserContext";
 import { MoviesContext } from "../context/MoviesContext";
 import axios from "axios";
-function FavoriteCardComponent({ src, id, title, overview }) {
+
+function WatchListCardComponent({ src, id, title, overview }) {
   const { user, setUser } = useContext(UserContext);
   const { movieInfo, setMovieInfo } = useContext(MoviesContext);
 
   const deleteHandler = async () => {
     console.log("userId", user._id);
     try {
-      // const response = await axios({
-      //   method: "DELETE",
-      //   url: "http://localhost:3000/delete-movie",
-      //   data: { movieId: id, userId: user._id.toString() },
       // });
       const response = await axios.delete(
         `http://localhost:3000/delete-movie/${id}/${user._id}`
@@ -117,4 +114,4 @@ function FavoriteCardComponent({ src, id, title, overview }) {
   );
 }
 
-export default FavoriteCardComponent;
+export default WatchListCardComponent;
