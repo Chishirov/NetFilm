@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
-
+import { UserContext } from "../../context/UserContext";
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Cardcomponent from "../../components/Cardcomponent";
 
 import Pagination from "../../components/Pagination";
-
+import { UserContext } from "../../context/UserContext";
 
 function PopularMovies() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,12 +33,10 @@ function PopularMovies() {
     };
 
     fetchData();
-
   }, [currentPage]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
-
       <div
         style={{
           display: "grid",
@@ -56,6 +54,9 @@ function PopularMovies() {
             title={movie.title}
             date={movie.release_date}
             link={`/movies-info/${movie.id}`}
+            cardId={movie.id}
+            userId={user?._id}
+            movieTitle={movie.title}
           />
         ))}
       </div>

@@ -3,6 +3,7 @@ import { Avatar } from "flowbite-react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import FavoritePage from "./FavoritePage";
 
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
@@ -18,6 +19,7 @@ function UserProfile() {
           </div>
         </div>
       </Avatar>
+      <FavoritePage />
     </div>
   );
 }

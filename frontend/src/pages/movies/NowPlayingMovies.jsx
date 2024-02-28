@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
-// import Pagination from "./Pagination"; // Import your Pagination component
-
+import { UserContext } from "../../context/UserContext";
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  console.log(currentPage);
+    const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
