@@ -24,7 +24,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
     console.log("clicked");
     setOpenMenu(!openMenu);
   };
-  const handleIdOnClick = async () => {
+  const favoriteHanlder = async () => {
     try {
       const movieRes = await axios.post(
         " http://localhost:3000/favorite-movie",
@@ -53,6 +53,46 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
               },
             ],
           }));
+          setOpenMenu(!openMenu);
+        }
+      } else {
+        // Movie already exists in user's list
+        console.log("Movie already exists in user's list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const wachelistHandler = async () => {
+    try {
+      const movieRes = await axios.post(
+        " http://localhost:3000/favorite-movie",
+        {
+          title: movieTitle,
+          movieId: cardId.toString(),
+          userId: userId,
+          isFavorite: false,
+          isWatchlist: true,
+        },
+        { withCredentials: true }
+      );
+      if (movieRes.status === 201) {
+        // Check if the movie is already in the user's list
+        if (!user.movies.some((movie) => movie?.movieId === cardId)) {
+          // Add the movie to the user's list
+          setUser((prevUser) => ({
+            ...prevUser,
+            movies: [
+              ...prevUser.movies,
+              {
+                title: movieTitle,
+                movieId: cardId,
+                isFavorite: true,
+                isWatchlist: false,
+              },
+            ],
+          }));
+          setOpenMenu(!openMenu);
         }
       } else {
         // Movie already exists in user's list
@@ -101,7 +141,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
 
             <MenuList>
               <MenuItem
-                onClick={() => handleIdOnClick()}
+                onClick={() => favoriteHanlder()}
                 className="flex items-center gap-2"
               >
                 <svg
@@ -119,7 +159,10 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
                 </Typography>
               </MenuItem>
               <hr className="my-2" />
-              <MenuItem className="flex items-center gap-2">
+              <MenuItem
+                onClick={() => wachelistHandler()}
+                className="flex items-center gap-2"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

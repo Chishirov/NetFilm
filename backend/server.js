@@ -17,7 +17,7 @@ app.use(
 app.use(cookieParser());
 
 await mongoose.connect(
-  "mongodb+srv://dimitar:Katerichka8@cluster0.w9ecclc.mongodb.net/MovieWebseite",
+  "mongodb+srv://omar:Jww5nz3lkde8sUOA@cluster0.9krnhbb.mongodb.net/movie-app"
 );
 
 app.get("/test", (req, res) => {
@@ -31,3 +31,4 @@ app.listen(PORT, () =>
   )
 );
 //omaryossef
+//

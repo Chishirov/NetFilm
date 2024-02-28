@@ -24,7 +24,7 @@ function HomePage() {
   // const {id} = useParams()
   const { seriesId, setSeriesId, seriesInfo, setSeriesInfo, fetchSeriesInfo } =
     useContext(SeriesContext);
-  console.log("seriesInfo in home", seriesInfo);
+  // console.log("seriesInfo in home", seriesInfo);
   const [seriesVideo, setSeriesVideo] = useState();
   const {
     movieId,
@@ -226,7 +226,7 @@ function HomePage() {
     fetchMovieInfo();
     fetchMovieById();
   }, [movieId]);
-  console.log("movieInfo", movieInfo);
+  // console.log("movieInfo", movieInfo);
 
   return (
     <>

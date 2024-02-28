@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import FavoriteCardComponent from "../components/FavoriteCardComponent";
+// import FavoriteCardComponent from "../components/FavoriteCardComponent";
 import { UserContext } from "../context/UserContext";
 import { MoviesContext } from "../context/MoviesContext";
+import WatchListCardComponent from "../components/WatchListCardComponent";
 
-function FavoritePage() {
+function WatchListPage() {
   const { user } = useContext(UserContext);
   const { movieInfo, setMovieInfo } = useContext(MoviesContext);
   const [loadedMovies, setLoadedMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovieData = async () => {
-      if (user?.movies?.length) {
+      if (user?.movies.length) {
         try {
           const movieDataPromises = user?.movies
-            .filter((movie) => movie.isFavorite === true)
+            .filter((movie) => movie.isWatchlist === true)
             .map(async (movie) => {
               const options = {
                 method: "GET",
@@ -58,7 +59,7 @@ function FavoritePage() {
       }}
     >
       {loadedMovies.map((movieData, index) => (
-        <FavoriteCardComponent
+        <WatchListCardComponent
           key={index}
           id={user.movies[index]?.movieId}
           src={`https://image.tmdb.org/t/p/w400${movieData?.poster_path}`}
@@ -70,4 +71,4 @@ function FavoritePage() {
   );
 }
 
-export default FavoritePage;
+export default WatchListPage;
