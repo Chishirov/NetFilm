@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { SeriesContext } from "../../context/SeriesContext";
 
 function SeriesInfo() {
-  const { seriesInfo, setSeriesInfo } = useContext(SeriesContext);
+  const { seriesInfo, setSeriesInfo, fetchSeriesInfo } =
+    useContext(SeriesContext);
   const { id } = useParams();
-
+  console.log(seriesInfo);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSeriesInfo = async () => {
       try {
         const options = {
           method: "GET",
@@ -30,7 +31,7 @@ function SeriesInfo() {
       }
     };
 
-    fetchData();
+    fetchSeriesInfo();
   }, [id]);
 
   const goBack = () => {
