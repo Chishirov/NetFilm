@@ -16,7 +16,8 @@ function FavoritePage() {
             method: "GET",
             headers: {
               accept: "application/json",
-              Authorization: "<YOUR_API_TOKEN>",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
             },
           };
 
@@ -55,7 +56,7 @@ function FavoritePage() {
           id={user.movies[index].movieId}
           src={`https://image.tmdb.org/t/p/w400${movieData?.poster_path}`}
           title={movieData?.title}
-          overview={movieData?.overview.slice(0, 250)}
+          overview={movieData?.overview}
         />
       ))}
     </div>

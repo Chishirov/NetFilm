@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext";
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-    const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,6 +53,9 @@ function NowPlayingMovies() {
             title={movie.title}
             date={movie.release_date}
             link={`/movies-info/${movie.id}`}
+            cardId={movie.id}
+            userId={user?._id}
+            movieTitle={movie.title}
           />
         ))}
       </div>
