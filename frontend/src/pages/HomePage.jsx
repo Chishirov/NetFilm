@@ -47,8 +47,8 @@ function HomePage() {
     fetchPopularMovies,
     fetchMovieInfo,
   } = useContext(MoviesContext);
-  console.log("movieId in home: ", movieId);
-
+  // console.log("movieId in home: ", movieId);
+  const [trail, setTrail] = useState(false);
   useEffect(() => {
     fetchDataAring();
   }, []);
@@ -149,7 +149,7 @@ function HomePage() {
         console.log("SERIES ID", seriesId);
         console.log("DATA", data);
         if (data.results && data.results.length === 0) {
-          alert("No trailer found for the series.");
+          setTrail(true);
         }
         if (data.results && data.results.length > 0) {
           for (const video of data.results) {
@@ -162,28 +162,7 @@ function HomePage() {
       console.error("Error fetching series by ID:", error);
     }
   };
-  // const fetchSeriesInfo = async () => {
-  //   try {
-  //     const options = {
-  //       method: "GET",
-  //       headers: {
-  //         accept: "application/json",
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-  //       },
-  //     };
 
-  //     const response = await fetch(
-  //       `https://api.themoviedb.org/3/tv/${seriesId}?language=en-US`,
-  //       options
-  //     );
-  //     const data = await response.json();
-  //     setSeriesInfo(data);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   useEffect(() => {
     fetchPlayingMovies();
     fetchPopularMovies();
@@ -196,6 +175,7 @@ function HomePage() {
       // Your scroll event logic here
       // setMovieId("");
       // setSeriesId("");
+      setTrail(false);
       setMovieVideo(undefined);
       setSeriesVideo(undefined);
     };
@@ -272,7 +252,7 @@ function HomePage() {
           </div>
         </div>
       )}
-      {seriesVideo && (
+      {seriesVideo ? (
         <div className="movie-box">
           {seriesInfo && (
             <div>
@@ -293,11 +273,28 @@ function HomePage() {
             />
           </div>
         </div>
+      ) : (
+        trail &&
+        seriesInfo && (
+          <div className="movie-box">
+            {" "}
+            <div>
+              <h1 className="headline-home">{seriesInfo.name}</h1>
+              <p className="home-paragraph">{seriesInfo.overview}</p>
+            </div>
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w300${seriesInfo.poster_path}`}
+                alt={seriesInfo.title}
+              />
+            </div>
+          </div>
+        )
       )}
       <div
         className="carusels-container"
         style={{
-          marginTop: (movieVideo || seriesVideo) && "520px",
+          marginTop: (movieVideo || seriesVideo || trail) && "520px",
         }}
       >
         <h2>Movies playing now </h2>
