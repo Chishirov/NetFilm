@@ -45,10 +45,18 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
             ...prevUser,
             movies: [
               ...prevUser.movies,
-              { title: movieTitle, movieId: cardId },
+              {
+                title: movieTitle,
+                movieId: cardId,
+                isFavorite: true,
+                isWatchlist: false,
+              },
             ],
           }));
         }
+      } else {
+        // Movie already exists in user's list
+        console.log("Movie already exists in user's list");
       }
     } catch (error) {
       console.error(error);

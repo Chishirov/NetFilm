@@ -41,14 +41,21 @@ function FavoritePage() {
   }, [user]);
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "20px",
+      }}
+    >
       {loadedMovies.map((movieData, index) => (
         <FavoriteCardComponent
           key={user.movies[index]._id}
           id={user.movies[index].movieId}
-          src={`https://image.tmdb.org/t/p/w200${movieData?.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w400${movieData?.poster_path}`}
           title={movieData?.title}
-          overview={movieData?.overview}
+          overview={movieData?.overview.slice(0, 250)}
         />
       ))}
     </div>

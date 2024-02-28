@@ -31,7 +31,6 @@ function TopRatedMovies() {
     };
 
     fetchData();
-
   }, [currentPage]);
 
   return (
@@ -53,11 +52,13 @@ function TopRatedMovies() {
             title={movie.title}
             date={movie.release_date}
             link={`/movies-info/${movie.id}`}
+            cardId={movie.id}
+            userId={user?._id}
+            movieTitle={movie.title}
           />
         ))}
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
-
     </div>
   );
 }

@@ -9,7 +9,16 @@ function UserProfile() {
   const { user, setUser } = useContext(UserContext);
 
   return (
-    <div>
+    <div
+      style={{
+        marginLeft: "100px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+        gap: "20px",
+      }}
+    >
       <Avatar>
         <div className="space-y-4 text-xl text-white">
           <div>{user?.username}</div>
@@ -19,7 +28,15 @@ function UserProfile() {
           </div>
         </div>
       </Avatar>
-      <FavoritePage />
+      <div
+        style={{
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <FavoritePage />
+      </div>
     </div>
   );
 }
