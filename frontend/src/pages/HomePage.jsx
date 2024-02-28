@@ -9,6 +9,7 @@ import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
 import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
+import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 function HomePage() {
   const {
     rated,
@@ -21,8 +22,9 @@ function HomePage() {
     fetchDataAring,
   } = useContext(SeriesContext);
   // const {id} = useParams()
-  const { seriesId, setSeriesId } = useContext(SeriesContext);
-
+  const { seriesId, setSeriesId, seriesInfo, setSeriesInfo, fetchSeriesInfo } =
+    useContext(SeriesContext);
+  console.log("seriesInfo in home", seriesInfo);
   const [seriesVideo, setSeriesVideo] = useState();
   const {
     movieId,
@@ -160,7 +162,28 @@ function HomePage() {
       console.error("Error fetching series by ID:", error);
     }
   };
+  // const fetchSeriesInfo = async () => {
+  //   try {
+  //     const options = {
+  //       method: "GET",
+  //       headers: {
+  //         accept: "application/json",
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+  //       },
+  //     };
 
+  //     const response = await fetch(
+  //       `https://api.themoviedb.org/3/tv/${seriesId}?language=en-US`,
+  //       options
+  //     );
+  //     const data = await response.json();
+  //     setSeriesInfo(data);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   useEffect(() => {
     fetchPlayingMovies();
     fetchPopularMovies();
@@ -216,6 +239,7 @@ function HomePage() {
   };
 
   useEffect(() => {
+    fetchSeriesInfo();
     fetchSeriesByID();
   }, [seriesId]);
   useEffect(() => {
@@ -248,19 +272,32 @@ function HomePage() {
           </div>
         </div>
       )}
-      {seriesId && seriesVideo && (
+      {seriesVideo && (
         <div className="movie-box">
-          <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${seriesVideo}`}
-            autoPlay
-          />
+          {seriesInfo && (
+            <div>
+              <h1 className="headline-home">{seriesInfo.name}</h1>
+              <p className="home-paragraph">{seriesInfo.overview}</p>
+              {/* <p>{movieInfo.production_companies[0].name}</p> */}
+              {/* <p>{seriesInfo.budget} $</p> */}
+            </div>
+          )}
+          <div className="home-video">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${seriesVideo}`}
+              playing={true}
+              controls
+              muted={true}
+              width={"800px"}
+              height={"100%"}
+            />
+          </div>
         </div>
       )}
-
       <div
         className="carusels-container"
         style={{
-          marginTop: movieVideo && "520px",
+          marginTop: (movieVideo || seriesVideo) && "520px",
         }}
       >
         <h2>Movies playing now </h2>
@@ -272,13 +309,13 @@ function HomePage() {
         <h2>Movies comming soon </h2>
         <MoviesCaruselComponent items={upComingMovies} />
         <h2>Airing Today</h2>
-        <CaruselComponent items={aring} />
+        <SeriesCaruselComponent items={aring} />
         <h2>On TV</h2>
-        <CaruselComponent items={onTv} />
+        <SeriesCaruselComponent items={onTv} />
         <h2>Popular Series</h2>
-        <CaruselComponent items={popular} />
+        <SeriesCaruselComponent items={popular} />
         <h2>Top Rated</h2>
-        <CaruselComponent items={rated} />
+        <SeriesCaruselComponent items={rated} />
         <Outlet />
       </div>
     </>
