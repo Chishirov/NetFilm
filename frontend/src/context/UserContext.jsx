@@ -6,8 +6,9 @@ export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  //const [movies,setmovies]=use
 
-  // console.log(user?.movies);
+  console.log("movies in context", user?.movies);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

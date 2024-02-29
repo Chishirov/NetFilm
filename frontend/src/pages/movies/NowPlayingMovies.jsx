@@ -56,6 +56,7 @@ function NowPlayingMovies() {
             cardId={movie.id}
             userId={user?._id}
             movieTitle={movie.title}
+            imageUrl={movie.poster_path}
           />
         ))}
       </div>
