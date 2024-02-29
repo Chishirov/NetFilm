@@ -53,7 +53,6 @@ export const postSignoutUser = async (req, res) => {
 };
 
 export const getValidateUser = async (req, res) => {
-
   const { token } = await req.cookies;
   if (!token) return res.status(401).send("Access denied. No token provided.");
   try {
