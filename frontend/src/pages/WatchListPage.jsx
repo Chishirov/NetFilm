@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import {
   Card,
@@ -31,7 +31,22 @@ function FavoritePage() {
       console.error(error);
     }
   };
-
+  useEffect(() => {
+    const getAllmovies = async () => {
+      if (user?.movies.length) {
+        try {
+          const moviesRes = await axios.get(
+            `http://localhost:3000/get-movies/${user?._id}`
+          );
+          console.log(moviesRes.data);
+          setUser({ ...user, movies: moviesRes.data });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    getAllmovies();
+  }, []);
   return (
     <div
       style={{
