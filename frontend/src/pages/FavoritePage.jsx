@@ -46,7 +46,7 @@ function FavoritePage() {
         .map((movie, index) => (
           <Card
             key={index}
-            className="h-48   flex-row "
+            className="h-40   flex-row "
             style={{ width: "60%", margin: "20px" }}
           >
             <CardHeader
