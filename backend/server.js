@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { router } from "./routes/router.js";
 
+//
 const app = express();
 const PORT = 3000;
 app.use(express());
