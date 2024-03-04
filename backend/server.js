@@ -17,7 +17,7 @@ app.use(
 app.use(cookieParser());
 
 await mongoose.connect(
-  "mongodb+srv://omar:Jww5nz3lkde8sUOA@cluster0.9krnhbb.mongodb.net/movie-app"
+  "mongodb+srv://Elaheh:8eRjBMJVzBeWZtOm@cluster0.nyfrzbf.mongodb.net/movie-app"
 );
 
 app.get("/test", (req, res) => {
