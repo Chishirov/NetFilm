@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUrl, setGenres } from "../../sort/homeSlice.js";
 import { fetchDataFromApi } from "../../utils/api.jsx";
 import Banner from "../../components/banner/Banner.jsx";
+import Carousel from "../carousel/Carousel.jsx";
 
 const BannerHome = () => {
     const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const BannerHome = () => {
     return (
         <div>
             <Banner />
+            <Carousel />
         </div>
     );
 };
