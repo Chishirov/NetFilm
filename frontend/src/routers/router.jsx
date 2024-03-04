@@ -17,8 +17,12 @@ import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
 import UserProfile from "../pages/UserProfile.jsx";
 import ErrorPage from "../pages/ErrorPage.jsx";
+
+import SettingsPage from "../pages/SettingsPage.jsx";
+
 import RegisterPage from "../components/login/RegisterPage.jsx";
 import LandingPage from "../components/landingPage/LandingPage.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -86,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <ErrorPage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
     ],
   },

@@ -11,6 +11,7 @@ import {
   getAllMovies,
   postFavoriteMovie,
 } from "../controller/movieController.js";
+import { updatePassword, updateUsername } from "../controller/settingsController.js";
 
 export const router = Router();
 
@@ -24,3 +25,7 @@ router
   .post("/favorite-movie", postFavoriteMovie)
   .delete("/delete-movie/:movieId/:userId", deleteMovie)
   .get("/get-movies/:id", getAllMovies);
+
+router
+  .put("/update-password", updatePassword)
+  .put("/update-username", updateUsername)
