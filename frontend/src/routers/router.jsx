@@ -17,12 +17,15 @@ import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
 import UserProfile from "../pages/UserProfile.jsx";
 import ErrorPage from "../pages/ErrorPage.jsx";
+import RegisterPage from "../components/login/RegisterPage.jsx";
+import LandingPage from "../components/landingPage/LandingPage.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/register",
+    element: <RegisterPage />,
   },
+  { path: "/", element: <LandingPage /> },
   {
     path: "/",
     element: <SidebarWithBurgerMenu />,

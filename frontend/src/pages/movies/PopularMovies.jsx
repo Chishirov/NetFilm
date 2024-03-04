@@ -4,6 +4,7 @@ import Cardcomponent from "../../components/Cardcomponent";
 
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
+import BannerHome from "../../components/bannerHome/BannerHome";
 
 function PopularMovies() {
   const [movies, setMovies] = useState([]);
@@ -36,7 +37,8 @@ function PopularMovies() {
   }, [currentPage]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div style={{ textAlign: "center" }}>
+      <BannerHome />
       <div
         style={{
           display: "grid",

@@ -12,6 +12,8 @@ const UserModel = new mongoose.Schema(
         imageUrl: String,
         isFavorite: Boolean,
         isWatchlist: Boolean,
+        //rating:string,
+        //commit:string
       },
     ],
   },
