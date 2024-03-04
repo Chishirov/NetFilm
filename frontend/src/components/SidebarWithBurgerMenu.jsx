@@ -45,7 +45,7 @@ import {
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
-
+// import "../index.scss";
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(0);
@@ -87,7 +87,6 @@ export function SidebarWithBurgerMenu() {
     } catch (error) {
       console.log("useEffect weiter leitung");
       navigate("/login");
-     
     }
   }
   useEffect(() => {
@@ -111,7 +110,7 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
-      <div className="flex justify-between items-center bg-white">
+      <div className="flex justify-between items-center header-gradieant">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />

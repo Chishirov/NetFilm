@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidebar-drawer {
+/* .sidebar-drawer {
   background-color: rgb(208, 143, 135);
-}
+} */
 
 body {
   background-color: rgba(0, 0, 0, 0.926);

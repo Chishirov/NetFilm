@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
+import BannerHome from "../../components/bannerHome/BannerHome";
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
@@ -34,7 +35,8 @@ function TopRatedMovies() {
   }, [currentPage]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div style={{ textAlign: "center" }}>
+      <BannerHome />
       <div
         style={{
           display: "grid",
@@ -55,6 +57,7 @@ function TopRatedMovies() {
             cardId={movie.id}
             userId={user?._id}
             movieTitle={movie.title}
+            imageUrl={movie.poster_path}
           />
         ))}
       </div>

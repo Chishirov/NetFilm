@@ -10,6 +10,7 @@ import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
 import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 function HomePage() {
   const {
     rated,
@@ -49,6 +50,7 @@ function HomePage() {
   } = useContext(MoviesContext);
   // console.log("movieId in home: ", movieId);
   const [trail, setTrail] = useState(false);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     fetchDataAring();
   }, []);

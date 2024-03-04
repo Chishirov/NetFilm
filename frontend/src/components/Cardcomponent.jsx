@@ -16,7 +16,16 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
+function Cardcomponent({
+  src,
+  imageUrl,
+  title,
+  date,
+  link,
+  cardId,
+  userId,
+  movieTitle,
+}) {
   const [openMenu, setOpenMenu] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
@@ -32,6 +41,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
           title: movieTitle,
           movieId: cardId.toString(),
           userId: userId,
+          imageUrl: imageUrl,
           isFavorite: true,
           isWatchlist: false,
         },
@@ -48,6 +58,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
               {
                 title: movieTitle,
                 movieId: cardId,
+                imageUrl: imageUrl,
                 isFavorite: true,
                 isWatchlist: false,
               },
@@ -63,13 +74,14 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
       console.error(error);
     }
   };
-  const wachelistHandler = async () => {
+  const watchlistHandler = async () => {
     try {
       const movieRes = await axios.post(
         " http://localhost:3000/favorite-movie",
         {
           title: movieTitle,
           movieId: cardId.toString(),
+          imageUrl: imageUrl,
           userId: userId,
           isFavorite: false,
           isWatchlist: true,
@@ -87,6 +99,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
               {
                 title: movieTitle,
                 movieId: cardId,
+                imageUrl: imageUrl,
                 isFavorite: true,
                 isWatchlist: false,
               },
@@ -160,7 +173,7 @@ function Cardcomponent({ src, title, date, link, cardId, userId, movieTitle }) {
               </MenuItem>
               <hr className="my-2" />
               <MenuItem
-                onClick={() => wachelistHandler()}
+                onClick={() => watchlistHandler()}
                 className="flex items-center gap-2"
               >
                 <svg
