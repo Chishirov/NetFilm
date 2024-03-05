@@ -3,6 +3,7 @@ import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
 import BannerHome from "../../components/bannerHome/BannerHome";
+import ElaCard from "../../components/ElaCard/ElaCard.jsx";
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
@@ -35,6 +36,7 @@ function NowPlayingMovies() {
 
     fetchData();
   }, [currentPage]);
+  console.log("play", play);
   return (
     <div style={{ textAlign: "center" }}>
       <BannerHome />
@@ -48,19 +50,31 @@ function NowPlayingMovies() {
           margin: "0 auto",
         }}
       >
-        {play.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))}
+        {/* <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          width: "100%",
+          height: "100%",
+        }}
+      > */}
+        {/* {play.map((movie) => (
+          // <Cardcomponent
+          //   key={movie.id}
+          //   src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+          //   title={movie.title}
+          //   date={movie.release_date}
+          //   link={`/movies-info/${movie.id}`}
+          //   cardId={movie.id}
+          //   userId={user?._id}
+          //   movieTitle={movie.title}
+          //   imageUrl={movie.poster_path}
+          // />
+        
+        ))} */}
+        <ElaCard data={play} />
+        {/* </div> */}
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
