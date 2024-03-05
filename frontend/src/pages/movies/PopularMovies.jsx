@@ -4,12 +4,14 @@ import Cardcomponent from "../../components/Cardcomponent";
 
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
-import BannerHome from "../../components/bannerHome/BannerHome";
+// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard.jsx";
+import Banner from "../../components/banner/Banner.jsx";
 
 function PopularMovies() {
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); 
   const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
@@ -36,10 +38,17 @@ function PopularMovies() {
 
     fetchData();
   }, [currentPage]);
-
+  const filteredMovies = movies.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   return (
     <div style={{ textAlign: "center" }}>
-      <BannerHome />
+      <Banner
+        data={movies}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -63,7 +72,7 @@ function PopularMovies() {
             imageUrl={movie.poster_path}
           />
         ))} */}
-        <ElaCard data={movies} />
+        <ElaCard data={filteredMovies} />
       </div>
 
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

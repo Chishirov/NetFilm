@@ -26,7 +26,7 @@ const RegisterPage = () => {
         );
         setLogin(true);
         alert("Account created successfully, please ");
-        navigate("/register");
+        navigate("/");
       } catch (error) {
         console.log("Error registering", error);
       }

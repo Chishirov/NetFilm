@@ -7,8 +7,8 @@ import { MoviesProvider } from "./context/MoviesContext.jsx";
 import { UserContextProvider } from "./context/UserContext.jsx";
 
 import { SeriesProvider } from "./context/SeriesContext.jsx";
-import { Provider } from "react-redux";
-import { store } from "./sort/sort.js";
+// import { Provider } from "react-redux";
+// import { store } from "./sort/sort.js";
 // import { ThemeProvider } from "@material-tailwind/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -17,10 +17,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       {" "}
       <SeriesProvider>
         <MoviesProvider>
-          <Provider store={store}>
+          {/* <Provider store={store}> */}
             {/* <ThemeProvider></ThemeProvider> */}
             <App />
-          </Provider>
+          {/* </Provider> */}
         </MoviesProvider>
       </SeriesProvider>
     </UserContextProvider>
