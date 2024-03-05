@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { router } from "./routes/router.js";
+import "dotenv/config.js";
 
 const app = express();
 const PORT = 3000;
@@ -16,9 +17,7 @@ app.use(
 );
 app.use(cookieParser());
 
-await mongoose.connect(
-  "mongodb+srv://Elaheh:8eRjBMJVzBeWZtOm@cluster0.nyfrzbf.mongodb.net/movies",
-);
+await mongoose.connect(`${process.env.DB_URL}`);
 
 app.get("/test", (req, res) => {
   res.send("Hello World");
