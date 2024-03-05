@@ -5,6 +5,7 @@ import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
 import BannerHome from "../../components/bannerHome/BannerHome";
+import ElaCard from "../../components/ElaCard/ElaCard.jsx";
 
 function PopularMovies() {
   const [movies, setMovies] = useState([]);
@@ -49,7 +50,7 @@ function PopularMovies() {
           margin: "0 auto",
         }}
       >
-        {movies.map((movie) => (
+        {/* {movies.map((movie) => (
           <Cardcomponent
             key={movie.id}
             src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
@@ -61,7 +62,8 @@ function PopularMovies() {
             movieTitle={movie.title}
             imageUrl={movie.poster_path}
           />
-        ))}
+        ))} */}
+        <ElaCard data={movies} />
       </div>
 
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

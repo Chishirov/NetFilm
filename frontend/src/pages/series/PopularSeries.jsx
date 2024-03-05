@@ -2,10 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
 import { SeriesContext } from "../../context/SeriesContext";
+import BannerHome from "../../components/bannerHome/BannerHome";
+import ElaCard from "../../components/ElaCard/ElaCard";
+import Pagination from "../../components/Pagination";
 
 function OnTvSeries() {
   //const [popular, setPopular] = useState([]);
   const { popular, setPopular } = useContext(SeriesContext);
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +23,7 @@ function OnTvSeries() {
         };
 
         const response = await fetch(
-          "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+          `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
@@ -30,20 +34,22 @@ function OnTvSeries() {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Popular Series</h1>
+    <div style={{ textAlign: "center" }}>
+      <BannerHome />
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "20px",
           justifyContent: "center",
+          width: "80%",
+          margin: "0 auto",
         }}
       >
-        {popular.map((movie) => (
+        {/* {popular.map((movie) => (
           <Cardcomponent
             key={movie.id}
             src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
@@ -51,8 +57,10 @@ function OnTvSeries() {
             date={movie.first_air_date}
             link={`/series-info/${movie.id}`}
           />
-        ))}
+        ))} */}
+        <ElaCard data={popular} />
       </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
