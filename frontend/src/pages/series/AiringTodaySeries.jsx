@@ -3,13 +3,18 @@ import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import { SeriesContext } from "../../context/SeriesContext";
 import ElaCard from "../../components/ElaCard/ElaCard.jsx";
-import BannerHome from "../../components/bannerHome/BannerHome.jsx";
+// import BannerHome from "../../components/bannerHome/BannerHome.jsx";
 import Pagination from "../../components/Pagination.jsx";
+import Banner from "../../components/banner/Banner.jsx";
 function AiringTodaySeries() {
   //const [aring, setAring] = useState([]);
   const { aring, setAring } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredShow = aring.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +43,11 @@ function AiringTodaySeries() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <BannerHome />
+      <Banner
+        data={aring}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -58,7 +67,7 @@ function AiringTodaySeries() {
             link={`/series-info/${movie.id}`}
           />
         ))} */}
-        <ElaCard data={aring} />
+        <ElaCard data={filteredShow} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>

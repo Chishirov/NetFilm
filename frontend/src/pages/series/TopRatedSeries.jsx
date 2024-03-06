@@ -4,12 +4,18 @@ import Cardcomponent from "../../components/Cardcomponent";
 import { SeriesContext } from "../../context/SeriesContext";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Pagination from "../../components/Pagination";
-import BannerHome from "../../components/bannerHome/BannerHome";
+// import BannerHome from "../../components/bannerHome/BannerHome";
+import Banner from "../../components/banner/Banner";
 
 function OnTvSeries() {
   //const [rated, setRated] = useState([]);
   const { rated, setRated } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredShow = rated.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +44,11 @@ function OnTvSeries() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <BannerHome />
+      <Banner
+        data={rated}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -58,7 +68,7 @@ function OnTvSeries() {
             link={`/series-info/${movie.id}`}
           />
         ))} */}
-        <ElaCard data={rated} />
+        <ElaCard data={filteredShow} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>

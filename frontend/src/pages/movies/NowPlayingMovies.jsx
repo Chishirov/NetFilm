@@ -2,11 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
 import { UserContext } from "../../context/UserContext";
-import BannerHome from "../../components/bannerHome/BannerHome";
+// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard.jsx";
+import Banner from "../../components/banner/Banner.jsx";
+import "../../components/banner/style.scss";
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
@@ -36,10 +39,19 @@ function NowPlayingMovies() {
 
     fetchData();
   }, [currentPage]);
-  console.log("play", play);
+  const filteredMovies = play.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   return (
     <div style={{ textAlign: "center" }}>
-      <BannerHome />
+      {/* <BannerHome moviePage={"/movie/now_playing"} /> */}
+      <Banner
+        data={play}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+
       <div
         style={{
           display: "grid",
@@ -73,7 +85,7 @@ function NowPlayingMovies() {
           // />
         
         ))} */}
-        <ElaCard data={play} />
+        <ElaCard data={filteredMovies} />
         {/* </div> */}
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

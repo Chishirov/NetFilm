@@ -20,12 +20,12 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import ContentWrapper from "../contentWrapper/ContentWrapper";
+// import ContentWrapper from "../contentWrapper/ContentWrapper";
 import Img from "../lazyLoadImage/Img";
 import PosterFallback from "../../assets/no-poster.png";
 import CircleRating from "../circleRating/CircleRating";
-import Genres from "../genres/Genres";
-import useFetch from "../../hooks/useFetch";
+// import Genres from "../genres/Genres";
+// import useFetch from "../../hooks/useFetch";
 import "./style.scss";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
@@ -40,12 +40,12 @@ const ElaCard = ({ data }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-  const carouselContainer = useRef();
-  console.log(carouselContainer);
+  // const carouselContainer = useRef();
+  // console.log(carouselContainer);
 
-  const { url } = useSelector((state) => state.home);
+  // const { url } = useSelector((state) => state.home);
 
-  console.log(data);
+  // console.log(data);
 
   const handleClick = () => {
     console.log("clicked");
@@ -133,10 +133,11 @@ const ElaCard = ({ data }) => {
       console.error(error);
     }
   };
+
   return (
     <div className="carousel">
       {
-        <div className="carouselItems" ref={carouselContainer}>
+        <div className="carouselItems">
           {data?.map((item) => {
             return (
               <div
@@ -151,7 +152,7 @@ const ElaCard = ({ data }) => {
                     alt={item.title || item.name}
                   />
                   <CircleRating rating={item.vote_average.toFixed(1)} />
-                  <Genres data={item.genre_ids.slice(0, 2)} />
+                  {/* <Genres data={item.genre_ids.slice(0, 2)} /> */}
                   <Menu>
                     <MenuHandler>
                       <IconButton
