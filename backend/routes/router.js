@@ -11,7 +11,7 @@ import {
   getAllMovies,
   postFavoriteMovie,
 } from "../controller/movieController.js";
-import { updatePassword, updateUsername } from "../controller/settingsController.js";
+import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 
 export const router = Router();
 
@@ -29,3 +29,4 @@ router
 router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
+  .put("/missing-password", updateMissingPassword)
