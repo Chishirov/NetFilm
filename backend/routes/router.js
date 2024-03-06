@@ -14,6 +14,7 @@ import {
 } from "../controller/movieController.js";
 import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 
+
 export const router = Router();
 
 router
@@ -32,3 +33,4 @@ router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
   .put("/missing-password", updateMissingPassword)
+
