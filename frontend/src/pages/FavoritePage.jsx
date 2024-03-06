@@ -12,6 +12,8 @@ function FavoritePage() {
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState({});
   const [klicked, setcklicked] = useState(false); // soll zukunft in context sein damit verwinden wir all comments and zeigen
+  const [clickedComments, setClickedComments] = useState({});
+
   // console.log(comments[693134]);
   console.log("comments", comments);
   const commentHandler = async (movieId) => {
@@ -32,7 +34,10 @@ function FavoritePage() {
             ...prevComments,
             [movieId]: comments[movieId],
           }));
-          setcklicked(!klicked);
+          setClickedComments((prevClickedComments) => ({
+            ...prevClickedComments,
+            [movieId]: false,
+          }));
         }
       } else {
         // Movie already exists in user's list
@@ -123,8 +128,17 @@ function FavoritePage() {
                   </svg>
                 </Button>
               </a>
-              {!klicked ? (
-                <Button onClick={() => setcklicked(!klicked)}>comment</Button>
+              {!clickedComments[movie.movieId] ? (
+                <Button
+                  onClick={() =>
+                    setClickedComments({
+                      ...clickedComments,
+                      [movie.movieId]: true,
+                    })
+                  }
+                >
+                  comment
+                </Button>
               ) : (
                 <div>
                   <textarea
@@ -137,9 +151,9 @@ function FavoritePage() {
                       })
                     }
                   />
-                  <button onClick={() => commentHandler(movie.movieId)}>
+                  <Button onClick={() => commentHandler(movie.movieId)}>
                     save
-                  </button>
+                  </Button>
                 </div>
               )}
             </CardBody>
