@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import {
   Card,
@@ -10,7 +10,38 @@ import {
 import axios from "axios";
 function FavoritePage() {
   const { user, setUser } = useContext(UserContext);
-
+  const [comments, setComments] = useState({});
+  const [klicked, setcklicked] = useState(false); // soll zukunft in context sein damit verwinden wir all comments and zeigen
+  // console.log(comments[693134]);
+  console.log("comments", comments);
+  const commentHandler = async (movieId) => {
+    try {
+      const movieRes = await axios.post(
+        `http://localhost:3000/update-movie/${user._id}/${movieId}`,
+        {
+          comment: comments[movieId],
+        },
+        { withCredentials: true }
+      );
+      if (movieRes.status === 201) {
+        // Check if the movie is already in the user's list
+        if (user.movies.find((movie) => movie?.movieId === movieId)) {
+          // Add the movie to the user's list
+          //prevComments={}={movieid:string},prevComments={movieid:string}
+          setComments((prevComments) => ({
+            ...prevComments,
+            [movieId]: comments[movieId],
+          }));
+          setcklicked(!klicked);
+        }
+      } else {
+        // Movie already exists in user's list
+        console.log("Movie already exists in user's list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const deleteHandler = async (movieId) => {
     try {
       const response = await axios.delete(
@@ -92,6 +123,25 @@ function FavoritePage() {
                   </svg>
                 </Button>
               </a>
+              {!klicked ? (
+                <Button onClick={() => setcklicked(!klicked)}>comment</Button>
+              ) : (
+                <div>
+                  <textarea
+                    type="text"
+                    value={comments[movie.movieId] || ""} //comments[693134]
+                    onChange={(e) =>
+                      setComments({
+                        ...comments,
+                        [movie.movieId]: e.target.value,
+                      })
+                    }
+                  />
+                  <button onClick={() => commentHandler(movie.movieId)}>
+                    save
+                  </button>
+                </div>
+              )}
             </CardBody>
           </Card>
         ))}

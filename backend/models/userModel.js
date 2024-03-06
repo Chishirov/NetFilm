@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
-
+const commentSchema = new mongoose.Schema({
+  // movieId:
+  comment: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
 const UserModel = new mongoose.Schema(
   {
     username: { type: String },
@@ -12,6 +16,7 @@ const UserModel = new mongoose.Schema(
         imageUrl: String,
         isFavorite: Boolean,
         isWatchlist: Boolean,
+        comments: [commentSchema],
         //rating:string,
         //commit:string
       },
