@@ -54,12 +54,8 @@ export const getValidateUser = async (req, res) => {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
       const user = await userModel.findById(tokenData.id);
-      res.status(200).json({
-        username: user.username,
-        email: user.email,
-        id: user._id,
-        movies: user.movies,
-      });
+      const { _id, username, email, movies } = user;
+      res.status(200).json({ _id, username, email, movies });
       console.log("token überprüft");
     });
   } catch (error) {

@@ -7,6 +7,7 @@ import {
   getValidateUser,
 } from "../controller/userController.js";
 import {
+  addCommentToMovie,
   deleteMovie,
   getAllMovies,
   postFavoriteMovie,
@@ -23,6 +24,7 @@ router
 
 router
   .post("/favorite-movie", postFavoriteMovie)
+  .post("/update-movie/:userId/:movieId", addCommentToMovie)
   .delete("/delete-movie/:movieId/:userId", deleteMovie)
   .get("/get-movies/:id", getAllMovies);
 
