@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
 import { Outlet } from "react-router-dom";
@@ -50,7 +50,27 @@ function HomePage() {
   } = useContext(MoviesContext);
   // console.log("movieId in home: ", movieId);
   const [trail, setTrail] = useState(false);
-  const { user } = useContext(UserContext);
+
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  ////
+  async function redirect() {
+    try {
+      const response = await axios.get("http://localhost:3000/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/login");
+    }
+  }
+  useEffect(() => {
+    if (!user?.username) {
+      redirect();
+    }
+  }, []);
   useEffect(() => {
     fetchDataAring();
   }, []);
