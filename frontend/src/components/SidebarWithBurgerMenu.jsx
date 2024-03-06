@@ -103,7 +103,7 @@ export function SidebarWithBurgerMenu() {
     );
     if (data) {
       alert("You have signed out");
-      navigate("/login");
+      navigate("/");
       setUser("");
     }
   }
