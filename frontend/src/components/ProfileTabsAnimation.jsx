@@ -40,7 +40,7 @@ function ProfileTabsAnimation() {
         ))}
       </TabsHeader>{" "}
       <TabsBody
-        className="w-2/3 m-auto"
+        className="w-full md:w-3/4 m-auto flex"
         animate={{
           initial: { y: 250 },
           mount: { y: 0 },

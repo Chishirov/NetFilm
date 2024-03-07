@@ -24,8 +24,8 @@ export const addCommentToMovie = async (req, res) => {
     console.log("userId", userId);
     console.log("movieId", movieId);
 
-    const { comment } = req.body;
-
+    const { comment, raiting } = req.body;
+    console.log("raiting", raiting);
     const user = await userModel.findById(userId);
 
     if (!user) {
@@ -39,8 +39,8 @@ export const addCommentToMovie = async (req, res) => {
     if (movieIndex === -1) {
       return res.status(404).json({ error: "Movie not found" });
     }
-
-    user.movies[movieIndex].comments.push({ comment });
+    user.movies[movieIndex].comments.pop({ raiting, comment })
+    user.movies[movieIndex].comments.push({ raiting, comment });
 
     await user.save();
 
