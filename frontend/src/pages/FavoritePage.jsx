@@ -6,6 +6,7 @@ import {
   CardBody,
   Typography,
   Button,
+  Rating,
 } from "@material-tailwind/react";
 import axios from "axios";
 function FavoritePage() {
@@ -52,7 +53,9 @@ function FavoritePage() {
       const response = await axios.delete(
         `http://localhost:3000/delete-movie/${movieId}/${user._id}`
       );
-
+      if (response) {
+        console.log("movie deleted successfully");
+      }
       if (user?.movies.length !== 0) {
         console.log("user.movies", user.movies);
         const remainigMovies = user.movies.filter(
@@ -69,22 +72,11 @@ function FavoritePage() {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "20px",
-      }}
-    >
+    <div className="content-center w-full mt-6">
       {user?.movies
         .filter((movie) => movie.isFavorite === true)
         .map((movie, index) => (
-          <Card
-            key={index}
-            className="h-40   flex-row "
-            style={{ width: "60%", margin: "20px" }}
-          >
+          <Card key={index} className="h-60 w-full flex-row mb-4">
             <CardHeader
               shadow={false}
               floated={false}
@@ -92,70 +84,75 @@ function FavoritePage() {
             >
               <img
                 src={`https://image.tmdb.org/t/p/w400${movie?.imageUrl}`}
-                alt="card-image"
-                style={{ height: "100%", width: "100%", objectFit: "cover" }}
+                alt="movie-image"
+                className="h-full w-full object-cover"
               />
             </CardHeader>
             <CardBody>
-              <Typography variant="h6" color="gray" className="mb-4 uppercase">
+              <Typography variant="h4" color="blue-gray" className="mb-2">
                 {movie.title}
               </Typography>
-              {/* <Typography color="blue-gray" className="mb-2 ">
-                {overview}...
-              </Typography> */}
-
-              <a href="#" className="inline-block">
-                <Button
-                  onClick={() => deleteHandler(movie.movieId)}
-                  color="red"
-                  variant="text"
-                  className="flex items-center gap-2"
-                >
-                  delete
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    className="h-4 w-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                    />
-                  </svg>
-                </Button>
-              </a>
+              <Typography variant="h6" color="gray" className="mb-2 uppercase">
+                {movie.release_date}
+              </Typography>
+              <Rating
+                className="mb-2"
+                // value={()=>{}}
+              />
               {!clickedComments[movie.movieId] ? (
-                <Button
-                  onClick={() =>
-                    setClickedComments({
-                      ...clickedComments,
-                      [movie.movieId]: true,
-                    })
-                  }
-                >
-                  comment
-                </Button>
-              ) : (
-                <div>
-                  <textarea
-                    type="text"
-                    value={comments[movie.movieId] || ""} //comments[693134]
-                    onChange={(e) =>
-                      setComments({
-                        ...comments,
-                        [movie.movieId]: e.target.value,
+                <>
+                  <Typography className=" h-12 mb-8 font-normal">
+                    {comments[movie.id]}No Comment...
+                  </Typography>
+                  <Button
+                    className="m-1 w-36"
+                    onClick={() =>
+                      setClickedComments({
+                        ...clickedComments,
+                        [movie.movieId]: true,
                       })
                     }
-                  />
-                  <Button onClick={() => commentHandler(movie.movieId)}>
+                  >
+                    comment
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography className="h-12 mb-8 font-normal">
+                    <textarea
+                      className="w-full border border-gray-400"
+                      value={comments[movie.movieId] || ""} //comments[693134]
+                      onChange={(e) =>
+                        setComments({
+                          ...comments,
+                          [movie.movieId]: e.target.value,
+                        })
+                      }
+                    />
+                  </Typography>
+                  <Button
+                    className="m-1 w-36"
+                    onClick={
+                      (() => commentHandler(movie.movieId),
+                      () =>
+                        setClickedComments({
+                          ...clickedComments,
+                          [movie.movieId]: false,
+                        }))
+                    }
+                  >
                     save
                   </Button>
-                </div>
+                </>
               )}
+              <Button
+                onClick={() => deleteHandler(movie.movieId)}
+                color="red"
+                // variant="text"
+                className="m-1 w-36"
+              >
+                delete
+              </Button>
             </CardBody>
           </Card>
         ))}
