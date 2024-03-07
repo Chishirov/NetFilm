@@ -3,6 +3,15 @@ import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+// ______________________________________________
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+  Avatar,
+} from "@material-tailwind/react";
+// _________________________________________________
 const LandingPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");

@@ -45,11 +45,12 @@ const RegisterPage = () => {
           </div>
        
       </div>
-      <div className="container opacity-layer">
+      {/* <div className="container opacity-layer"> */}
+      <div className="container">
         <div className="background-img">
         <img src="src/assets/BG-L.png" alt="" />
         </div>
-        <div className="opacity-layer"></div>
+        {/* <div className="opacity-layer"></div> */}
         <form className="login-form">
           <input
             type="text"
