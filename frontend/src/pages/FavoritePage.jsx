@@ -43,7 +43,6 @@ function FavoritePage() {
             ...prevClickedComments,
             [movieId]: false,
           }));
-
         }
       }
     } catch (error) {
@@ -120,17 +119,6 @@ function FavoritePage() {
                         [movie.movieId]: true,
                       })
                     }
-
-                  />
-                  <Button
-                    onClick={() =>
-                      commentHandler(movie.movieId) &&
-                      setClickedComments((prevClickedComments) => ({
-                        ...prevClickedComments,
-                        [movie.movieId]: false,
-                      }))
-                    }
-
                   >
                     comment
                   </Button>
@@ -152,7 +140,6 @@ function FavoritePage() {
                   <Button
                     className="m-1 w-auto lg:w-36"
                     onClick={() => commentHandler(movie.movieId)}
-
                   >
                     save
                   </Button>
