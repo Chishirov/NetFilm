@@ -31,7 +31,7 @@ export const postLoginUser = async (req, res) => {
         jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
           if (err) throw err;
           res
-            .cookie("token", token, { maxAge: 900000, httpOnly: true })
+            .cookie("token", token, { maxAge: 90000000, httpOnly: true })
             .json({ id: user._id });
         });
         console.log("token created");
