@@ -5,6 +5,7 @@ import {
   postSignoutUser,
   postRegisterUser,
   getValidateUser,
+  getAllUsers,
 } from "../controller/userController.js";
 import {
   addCommentToMovie,
@@ -12,8 +13,11 @@ import {
   getAllMovies,
   postFavoriteMovie,
 } from "../controller/movieController.js";
-import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
-
+import {
+  updateMissingPassword,
+  updatePassword,
+  updateUsername,
+} from "../controller/settingsController.js";
 
 export const router = Router();
 
@@ -21,7 +25,8 @@ router
   .post("/register", postRegisterUser)
   .post("/login", postLoginUser)
   .get("/validate", getValidateUser)
-  .post("/signout", postSignoutUser);
+  .post("/signout", postSignoutUser)
+  .get("/getAllUser", getAllUsers);
 
 router
   .post("/favorite-movie", postFavoriteMovie)
@@ -32,5 +37,4 @@ router
 router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
-  .put("/missing-password", updateMissingPassword)
-
+  .put("/missing-password", updateMissingPassword);

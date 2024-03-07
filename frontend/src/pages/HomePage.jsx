@@ -63,7 +63,7 @@ function HomePage() {
       setUser(loggedUser);
     } catch (error) {
       console.log("useEffect weiter leitung");
-      navigate("/login");
+      navigate("/");
     }
   }
   useEffect(() => {

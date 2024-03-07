@@ -27,21 +27,14 @@ function FavoritePage() {
       );
       if (movieRes.status === 201) {
         // Check if the movie is already in the user's list
-        if (user.movies.find((movie) => movie?.movieId === movieId)) {
+        if (user?.movies?.find((movie) => movie?.movieId === movieId)) {
           // Add the movie to the user's list
           //prevComments={}={movieid:string},prevComments={movieid:string}
           setComments((prevComments) => ({
             ...prevComments,
             [movieId]: comments[movieId],
           }));
-          setClickedComments((prevClickedComments) => ({
-            ...prevClickedComments,
-            [movieId]: false,
-          }));
         }
-      } else {
-        // Movie already exists in user's list
-        console.log("Movie already exists in user's list");
       }
     } catch (error) {
       console.error(error);
@@ -151,7 +144,15 @@ function FavoritePage() {
                       })
                     }
                   />
-                  <Button onClick={() => commentHandler(movie.movieId)}>
+                  <Button
+                    onClick={() =>
+                      commentHandler(movie.movieId) &&
+                      setClickedComments((prevClickedComments) => ({
+                        ...prevClickedComments,
+                        [movie.movieId]: false,
+                      }))
+                    }
+                  >
                     save
                   </Button>
                 </div>

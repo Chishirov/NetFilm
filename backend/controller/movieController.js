@@ -40,6 +40,7 @@ export const addCommentToMovie = async (req, res) => {
       return res.status(404).json({ error: "Movie not found" });
     }
 
+    user.movies[movieIndex].comments.pop({ comment });
     user.movies[movieIndex].comments.push({ comment });
 
     await user.save();
