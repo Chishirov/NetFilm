@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
 import { Outlet } from "react-router-dom";
@@ -9,6 +9,8 @@ import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
 import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
+import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 function HomePage() {
   const {
     rated,
@@ -21,12 +23,15 @@ function HomePage() {
     fetchDataAring,
   } = useContext(SeriesContext);
   // const {id} = useParams()
-  const { seriesId, setSeriesId } = useContext(SeriesContext);
-
+  const { seriesId, setSeriesId, seriesInfo, setSeriesInfo, fetchSeriesInfo } =
+    useContext(SeriesContext);
+  // console.log("seriesInfo in home", seriesInfo);
   const [seriesVideo, setSeriesVideo] = useState();
   const {
     movieId,
     setMovieId,
+    movieInfo,
+    setMovieInfo,
     nowPlayingMovies,
     setNowPlayingMovies,
     popularMovies,
@@ -41,9 +46,31 @@ function HomePage() {
     fetchUpComingMovies,
     fetchTopRatedMovies,
     fetchPopularMovies,
+    fetchMovieInfo,
   } = useContext(MoviesContext);
-  console.log("movieId in home: ", movieId);
+  // console.log("movieId in home: ", movieId);
+  const [trail, setTrail] = useState(false);
 
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  ////
+  async function redirect() {
+    try {
+      const response = await axios.get("http://localhost:3000/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/");
+    }
+  }
+  useEffect(() => {
+    if (!user?.username) {
+      redirect();
+    }
+  }, []);
   useEffect(() => {
     fetchDataAring();
   }, []);
@@ -144,7 +171,7 @@ function HomePage() {
         console.log("SERIES ID", seriesId);
         console.log("DATA", data);
         if (data.results && data.results.length === 0) {
-          alert("No trailer found for the series.");
+          setTrail(true);
         }
         if (data.results && data.results.length > 0) {
           for (const video of data.results) {
@@ -163,17 +190,14 @@ function HomePage() {
     fetchPopularMovies();
     fetchTopRatedMovies();
     fetchUpComingMovies();
-
-    // if (movieId) {
-    //   fetchMovieById();
-    // }
   }, []);
   //
   useEffect(() => {
     const handleScroll = () => {
       // Your scroll event logic here
-      setMovieId("");
-      setSeriesId("");
+      // setMovieId("");
+      // setSeriesId("");
+      setTrail(false);
       setMovieVideo(undefined);
       setSeriesVideo(undefined);
     };
@@ -217,38 +241,82 @@ function HomePage() {
   };
 
   useEffect(() => {
+    fetchSeriesInfo();
     fetchSeriesByID();
   }, [seriesId]);
-
   useEffect(() => {
+    fetchMovieInfo();
     fetchMovieById();
   }, [movieId]);
+  // console.log("movieInfo", movieInfo);
 
   return (
     <>
-      {movieId && (
-        <div onScroll={() => setMovieId(undefined)} className="movie-box">
-          <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${movieVideo}`}
-            autoPlay
-            controls
-          />
+      {movieVideo && (
+        <div className="movie-box">
+          {movieInfo && (
+            <div>
+              <h1 className="headline-home">{movieInfo.title}</h1>
+              <p className="home-paragraph">{movieInfo.overview}</p>
+              {/* <p>{movieInfo.production_companies[0].name}</p> */}
+              <p>{movieInfo.budget} $</p>
+            </div>
+          )}
+          <div className="home-video">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${movieVideo}`}
+              playing={true}
+              controls
+              muted={true}
+              width={"800px"}
+              height={"100%"}
+            />
+          </div>
         </div>
       )}
-      {seriesId && seriesVideo && (
-        <div onScroll={() => setSeriesId()} className="movie-box">
-          <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${seriesVideo}`}
-            autoPlay
-            controls
-          />
+      {seriesVideo ? (
+        <div className="movie-box">
+          {seriesInfo && (
+            <div>
+              <h1 className="headline-home">{seriesInfo.name}</h1>
+              <p className="home-paragraph">{seriesInfo.overview}</p>
+              {/* <p>{movieInfo.production_companies[0].name}</p> */}
+              {/* <p>{seriesInfo.budget} $</p> */}
+            </div>
+          )}
+          <div className="home-video">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${seriesVideo}`}
+              playing={true}
+              controls
+              muted={true}
+              width={"800px"}
+              height={"100%"}
+            />
+          </div>
         </div>
+      ) : (
+        trail &&
+        seriesInfo && (
+          <div className="movie-box">
+            {" "}
+            <div>
+              <h1 className="headline-home">{seriesInfo.name}</h1>
+              <p className="home-paragraph">{seriesInfo.overview}</p>
+            </div>
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w300${seriesInfo.poster_path}`}
+                alt={seriesInfo.title}
+              />
+            </div>
+          </div>
+        )
       )}
-
       <div
         className="carusels-container"
         style={{
-          marginTop: seriesId && "600px",
+          marginTop: (movieVideo || seriesVideo || trail) && "520px",
         }}
       >
         <h2>Movies playing now </h2>
@@ -260,13 +328,13 @@ function HomePage() {
         <h2>Movies comming soon </h2>
         <MoviesCaruselComponent items={upComingMovies} />
         <h2>Airing Today</h2>
-        <CaruselComponent items={aring} />
+        <SeriesCaruselComponent items={aring} />
         <h2>On TV</h2>
-        <CaruselComponent items={onTv} />
+        <SeriesCaruselComponent items={onTv} />
         <h2>Popular Series</h2>
-        <CaruselComponent items={popular} />
+        <SeriesCaruselComponent items={popular} />
         <h2>Top Rated</h2>
-        <CaruselComponent items={rated} />
+        <SeriesCaruselComponent items={rated} />
         <Outlet />
       </div>
     </>

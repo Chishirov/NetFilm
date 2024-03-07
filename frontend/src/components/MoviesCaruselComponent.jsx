@@ -28,6 +28,10 @@ function MoviesCaruselComponent({ items }) {
       items: 1,
     },
   };
+  const openMovie = (movieId) => {
+    document.documentElement.scrollTo(0, 0);
+    setMovieId(movieId);
+  };
   return (
     <div
       style={{
@@ -44,7 +48,7 @@ function MoviesCaruselComponent({ items }) {
           <div
             // style={{ width: "400px" }}
             key={movie.id}
-            onClick={() => setMovieId(movie.id)}
+            onClick={() => openMovie(movie.id)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}

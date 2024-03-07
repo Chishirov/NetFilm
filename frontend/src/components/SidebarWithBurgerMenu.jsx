@@ -9,7 +9,7 @@ import {
   HiOutlineVideoCamera,
   HiOutlineHome,
 } from "react-icons/hi";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -45,7 +45,7 @@ import {
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
-
+// import "../index.scss";
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(0);
@@ -77,6 +77,24 @@ export function SidebarWithBurgerMenu() {
     </svg>
   );
 
+  async function redirect() {
+    try {
+      const response = await axios.get("http://localhost:3000/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/");
+    }
+  }
+  useEffect(() => {
+    if (!user) {
+      redirect();
+    }
+  }, []);
+
   async function signout() {
     const { data } = await axios.post(
       "http://localhost:3000/signout",
@@ -85,14 +103,14 @@ export function SidebarWithBurgerMenu() {
     );
     if (data) {
       alert("You have signed out");
-      navigate("/login");
+      navigate("/");
       setUser("");
     }
   }
 
   return (
     <>
-      <div className="flex justify-between items-center bg-white">
+      <div className="flex justify-between items-center header-gradieant">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />
@@ -130,7 +148,7 @@ export function SidebarWithBurgerMenu() {
         </div>
       </div>
       <Drawer
-        className="new-className"
+        className="sidebar-drawer"
         open={isDrawerOpen}
         onClose={closeDrawer}
       >

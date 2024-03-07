@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
-
+import { UserContext } from "../../context/UserContext";
+// import BannerHome from "../../components/bannerHome/BannerHome";
+import ElaCard from "../../components/ElaCard/ElaCard";
+import Banner from "../../components/banner/Banner";
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-
+  const { user } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,11 +35,18 @@ function TopRatedMovies() {
     };
 
     fetchData();
-
   }, [currentPage]);
-
+  const filteredMovies = top.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div style={{ textAlign: "center" }}>
+      <Banner
+        data={top}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -49,18 +57,22 @@ function TopRatedMovies() {
           margin: "0 auto",
         }}
       >
-        {top.map((movie) => (
+        {/* {top.map((movie) => (
           <Cardcomponent
             key={movie.id}
             src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
             title={movie.title}
             date={movie.release_date}
             link={`/movies-info/${movie.id}`}
+            cardId={movie.id}
+            userId={user?._id}
+            movieTitle={movie.title}
+            imageUrl={movie.poster_path}
           />
-        ))}
+        ))} */}
+        <ElaCard data={filteredMovies} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
-
     </div>
   );
 }

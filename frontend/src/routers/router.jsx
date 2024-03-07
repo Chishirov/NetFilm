@@ -16,8 +16,24 @@ import SeriesInfo from "../pages/series/SeriesInfo";
 import HomePage from "../pages/HomePage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
 import UserProfile from "../pages/UserProfile.jsx";
+import ErrorPage from "../pages/ErrorPage.jsx";
+
+import SettingsPage from "../pages/SettingsPage.jsx";
+
+import RegisterPage from "../components/login/RegisterPage.jsx";
+import LandingPage from "../components/landingPage/LandingPage.jsx";
+import CommunityPage from "../pages/CommunityPage.jsx";
 
 const router = createBrowserRouter([
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  { path: "/", element: <LandingPage /> },
+  {
+    path: "/community-page",
+    element: <CommunityPage />,
+  },
   {
     path: "/",
     element: <SidebarWithBurgerMenu />,
@@ -64,10 +80,6 @@ const router = createBrowserRouter([
         element: <TopRatedSeries />,
       },
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
         path: "/movies-info/:id",
         element: <MovieInfo />,
       },
@@ -78,6 +90,14 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <UserProfile />,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
     ],
   },

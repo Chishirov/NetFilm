@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -14,12 +15,105 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-function Cardcomponent({ src, title, date, link }) {
+import { UserContext } from "../context/UserContext";
+function Cardcomponent({
+  src,
+  imageUrl,
+  title,
+  date,
+  link,
+  cardId,
+  userId,
+  movieTitle,
+}) {
   const [openMenu, setOpenMenu] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const handleClick = () => {
     console.log("clicked");
     setOpenMenu(!openMenu);
+  };
+  const favoriteHanlder = async () => {
+    try {
+      const movieRes = await axios.post(
+        " http://localhost:3000/favorite-movie",
+        {
+          title: movieTitle,
+          movieId: cardId.toString(),
+          userId: userId,
+          imageUrl: imageUrl,
+          isFavorite: true,
+          isWatchlist: false,
+        },
+        { withCredentials: true }
+      );
+      if (movieRes.status === 201) {
+        // Check if the movie is already in the user's list
+        if (!user.movies.some((movie) => movie?.movieId === cardId)) {
+          // Add the movie to the user's list
+          setUser((prevUser) => ({
+            ...prevUser,
+            movies: [
+              ...prevUser.movies,
+              {
+                title: movieTitle,
+                movieId: cardId,
+                imageUrl: imageUrl,
+                isFavorite: true,
+                isWatchlist: false,
+              },
+            ],
+          }));
+          setOpenMenu(!openMenu);
+        }
+      } else {
+        // Movie already exists in user's list
+        console.log("Movie already exists in user's list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const watchlistHandler = async () => {
+    try {
+      const movieRes = await axios.post(
+        " http://localhost:3000/favorite-movie",
+        {
+          title: movieTitle,
+          movieId: cardId.toString(),
+          imageUrl: imageUrl,
+          userId: userId,
+          isFavorite: false,
+          isWatchlist: true,
+        },
+        { withCredentials: true }
+      );
+      if (movieRes.status === 201) {
+        // Check if the movie is already in the user's list
+        if (!user.movies.some((movie) => movie?.movieId === cardId)) {
+          // Add the movie to the user's list
+          setUser((prevUser) => ({
+            ...prevUser,
+            movies: [
+              ...prevUser.movies,
+              {
+                title: movieTitle,
+                movieId: cardId,
+                imageUrl: imageUrl,
+                isFavorite: true,
+                isWatchlist: false,
+              },
+            ],
+          }));
+          setOpenMenu(!openMenu);
+        }
+      } else {
+        // Movie already exists in user's list
+        console.log("Movie already exists in user's list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div>
@@ -59,7 +153,10 @@ function Cardcomponent({ src, title, date, link }) {
             </MenuHandler>
 
             <MenuList>
-              <MenuItem className="flex items-center gap-2">
+              <MenuItem
+                onClick={() => favoriteHanlder()}
+                className="flex items-center gap-2"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -75,7 +172,10 @@ function Cardcomponent({ src, title, date, link }) {
                 </Typography>
               </MenuItem>
               <hr className="my-2" />
-              <MenuItem className="flex items-center gap-2">
+              <MenuItem
+                onClick={() => watchlistHandler()}
+                className="flex items-center gap-2"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

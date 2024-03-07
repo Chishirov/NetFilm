@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import Cardcomponent from "../../components/Cardcomponent";
 import Pagination from "../../components/Pagination";
-// import Pagination from "./Pagination"; // Import your Pagination component
-
+import { UserContext } from "../../context/UserContext";
+// import BannerHome from "../../components/bannerHome/BannerHome";
+import ElaCard from "../../components/ElaCard/ElaCard.jsx";
+import Banner from "../../components/banner/Banner.jsx";
+import "../../components/banner/style.scss";
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  console.log(currentPage);
+  const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,8 +39,19 @@ function NowPlayingMovies() {
 
     fetchData();
   }, [currentPage]);
+  const filteredMovies = play.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div style={{ textAlign: "center" }}>
+      {/* <BannerHome moviePage={"/movie/now_playing"} /> */}
+      <Banner
+        data={play}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+
       <div
         style={{
           display: "grid",
@@ -48,15 +62,31 @@ function NowPlayingMovies() {
           margin: "0 auto",
         }}
       >
-        {play.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-          />
-        ))}
+        {/* <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          width: "100%",
+          height: "100%",
+        }}
+      > */}
+        {/* {play.map((movie) => (
+          // <Cardcomponent
+          //   key={movie.id}
+          //   src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+          //   title={movie.title}
+          //   date={movie.release_date}
+          //   link={`/movies-info/${movie.id}`}
+          //   cardId={movie.id}
+          //   userId={user?._id}
+          //   movieTitle={movie.title}
+          //   imageUrl={movie.poster_path}
+          // />
+        
+        ))} */}
+        <ElaCard data={filteredMovies} />
+        {/* </div> */}
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
