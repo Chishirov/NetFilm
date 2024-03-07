@@ -56,6 +56,7 @@ const LandingPage = () => {
         {!hasEmail ? (
           <div className="input">
             <input
+            className="passwordInput"
               type="email"
               name="email"
               placeholder="Enter Your Email address"

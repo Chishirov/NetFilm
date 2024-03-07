@@ -35,7 +35,6 @@ const RegisterPage = () => {
   return (
     <div className="login">
       <div className="header">
-        <div className="wrapper">
           <div className="div-logo">
             <img className="img-1" src="src/assets/movie-logo.png" alt="" />
             <img
@@ -44,11 +43,11 @@ const RegisterPage = () => {
               alt=""
             />
           </div>
-        </div>
+       
       </div>
-      <div className="container">
+      <div className="container opacity-layer">
         <div className="background-img">
-          <img src="src/assets/BG-L.png" alt="" />
+        <img src="src/assets/BG-L.png" alt="" />
         </div>
         <div className="opacity-layer"></div>
         <form className="login-form">
