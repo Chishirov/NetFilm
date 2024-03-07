@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema({
   // movieId:
+  raiting: String,
   comment: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
