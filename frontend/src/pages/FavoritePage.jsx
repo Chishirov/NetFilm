@@ -14,19 +14,21 @@ function FavoritePage() {
   const [comments, setComments] = useState({});
   const [klicked, setcklicked] = useState(false); // soll zukunft in context sein damit verwinden wir all comments and zeigen
   const [clickedComments, setClickedComments] = useState({});
-
+  const [raitingValue, setRaitingValue] = useState(0);
   // console.log(comments[693134]);
   console.log("comments", comments);
+  console.log("raitingValue", raitingValue);
   const commentHandler = async (movieId) => {
     try {
       const movieRes = await axios.post(
         `http://localhost:3000/update-movie/${user._id}/${movieId}`,
         {
           comment: comments[movieId],
+          raiting: raitingValue,
         },
         { withCredentials: true }
       );
-      if (movieRes.status === 201) {
+      if (movieRes.status === 200) {
         // Check if the movie is already in the user's list
         if (user.movies.find((movie) => movie?.movieId === movieId)) {
           // Add the movie to the user's list
@@ -35,6 +37,7 @@ function FavoritePage() {
             ...prevComments,
             [movieId]: comments[movieId],
           }));
+          setRaitingValue(0);
           setClickedComments((prevClickedComments) => ({
             ...prevClickedComments,
             [movieId]: false,
@@ -76,7 +79,10 @@ function FavoritePage() {
       {user?.movies
         .filter((movie) => movie.isFavorite === true)
         .map((movie, index) => (
-          <Card key={index} className="h-60 w-full flex-row mb-4">
+          <Card
+            key={index}
+            className="w-80 h-72 md:max-h-60 md:w-full flex-row mb-4"
+          >
             <CardHeader
               shadow={false}
               floated={false}
@@ -85,7 +91,7 @@ function FavoritePage() {
               <img
                 src={`https://image.tmdb.org/t/p/w400${movie?.imageUrl}`}
                 alt="movie-image"
-                className="h-full w-full object-cover"
+                className="h-1/2 md:h-full w-full object-cover"
               />
             </CardHeader>
             <CardBody>
@@ -97,15 +103,18 @@ function FavoritePage() {
               </Typography>
               <Rating
                 className="mb-2"
-                // value={()=>{}}
+                value={raitingValue}
+                onChange={(raitingValue) => setRaitingValue(raitingValue)}
               />
               {!clickedComments[movie.movieId] ? (
                 <>
                   <Typography className=" h-12 mb-8 font-normal">
-                    {comments[movie.id]}No Comment...
+                    {comments[movie.movieId]
+                      ? comments[movie.movieId]
+                      : "No Comment..."}
                   </Typography>
                   <Button
-                    className="m-1 w-36"
+                    className="m-1 w-auto lg:w-36"
                     onClick={() =>
                       setClickedComments({
                         ...clickedComments,
@@ -131,15 +140,8 @@ function FavoritePage() {
                     />
                   </Typography>
                   <Button
-                    className="m-1 w-36"
-                    onClick={
-                      (() => commentHandler(movie.movieId),
-                      () =>
-                        setClickedComments({
-                          ...clickedComments,
-                          [movie.movieId]: false,
-                        }))
-                    }
+                    className="m-1 w-auto lg:w-36"
+                    onClick={() => commentHandler(movie.movieId)}
                   >
                     save
                   </Button>
@@ -149,7 +151,7 @@ function FavoritePage() {
                 onClick={() => deleteHandler(movie.movieId)}
                 color="red"
                 // variant="text"
-                className="m-1 w-36"
+                className="m-1 w-auto lg:w-36"
               >
                 delete
               </Button>
