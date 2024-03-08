@@ -82,19 +82,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 70%;
+        width: 350px;
         height: 100vh;
-        max-width: 600px;
+        // max-width: 600px;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(248, 248, 251, 0.5);
-        margin: 40px auto;
+        margin: 150px auto;
         position: relative;
         // transition: all 0.3s ease;
         background-color: transparent;
         @include md {
-            margin: 5% auto;
-            width: 50%;
-            max-width: 450px;
+            // margin: 90px auto;
+            width: 400px;
+            // max-width: 450px;
             // transition: all 0.3s ease;
         }
 
