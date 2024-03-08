@@ -14,6 +14,9 @@ import {
 } from "../controller/movieController.js";
 import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 
+import uploadController from "../controller/uploadController.js";
+import { getImage } from "../controller/imageController.js";
+
 
 export const router = Router();
 
@@ -33,4 +36,9 @@ router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
   .put("/missing-password", updateMissingPassword)
+
+router.post("/upload", uploadController);
+router.get("/image/:imageName", getImage);
+
+  
 

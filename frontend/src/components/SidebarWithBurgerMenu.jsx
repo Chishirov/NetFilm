@@ -45,6 +45,7 @@ import {
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { UploadContext } from "../context/UploadContext";
 // import "../index.scss";
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
@@ -52,6 +53,9 @@ export function SidebarWithBurgerMenu() {
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
+  const { imageUrl, setImageUrl} = useContext(UploadContext)
+ 
+  
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -59,6 +63,9 @@ export function SidebarWithBurgerMenu() {
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
+  
+  const userPfoto = <img style={{width:"42px", height:"42px", borderRadius:"50%"}} src={imageUrl} alt="img" />
+  
 
   const userIcon = (
     <svg
@@ -105,6 +112,7 @@ export function SidebarWithBurgerMenu() {
       alert("You have signed out");
       navigate("/");
       setUser("");
+      setImageUrl("")
     }
   }
 
@@ -112,15 +120,23 @@ export function SidebarWithBurgerMenu() {
     <>
       <div className="flex justify-between items-center header-gradieant">
         <IconButton variant="text" size="lg" onClick={openDrawer}>
+         
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2" />
           ) : (
+            
             <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
+          
+           
           )}
         </IconButton>
+        <p style={{ position: "absolute", right: "80px", ontSize: "24px" }}> Welcome, {user?.username}!</p>
+
+
+
         <div>
           <Dropdown
-            label={userIcon}
+            label={imageUrl ? userPfoto : userIcon}
             style={{ border: "none" }}
             className="border-none rounded-t-none"
           >
