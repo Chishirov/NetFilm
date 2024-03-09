@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import DetailsBanner from "../../components/details/detailsBanner/DetailsBanner.jsx";
 
 function MovieInfo() {
+  
   const [movieInfo, setMovieInfo] = useState(null);
   const { id } = useParams() ;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,26 +28,26 @@ function MovieInfo() {
     fetchData();
   }, [id]);
 
-
-
-  
-
-
   const goBack = () => {
     window.history.back();
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    // <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div>
+
+      <DetailsBanner id ={id} movieInfo={movieInfo} />
       <h1 style={{ marginBottom: "20px" }}>Movie Infos</h1>
+      <p>Hallo</p>
       {movieInfo ? (
         <div>
           <img
-            src={`https://image.tmdb.org/t/p/w200${movieInfo.poster_path}`}
+            src={`https://image.tmdb.org/t/p/original${movieInfo.poster_path}`}
             alt={movieInfo.title}
             style={{ width: "10%", height: "auto", borderRadius: "8px" }}
           />
           <h3>{movieInfo.title}</h3>
+          {/* <p>{movieInfo.genres}</p> */}
           <p>{movieInfo.overview}</p>
          <p>{movieInfo.production_companies[0].name}</p>
           <p>{movieInfo.budget} $</p>
@@ -60,3 +61,6 @@ function MovieInfo() {
 }
 
 export default MovieInfo;
+
+
+
