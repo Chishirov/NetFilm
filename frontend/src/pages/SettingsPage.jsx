@@ -5,7 +5,10 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import FileUploads from "../components/FileUploads";
+
+
+import { Images } from "../components/Image";
+
 function SettingsPage() {
   const [open, setOpen] = React.useState(1);
 
@@ -51,7 +54,8 @@ function SettingsPage() {
           Upload Photo
         </AccordionHeader>
         <AccordionBody>
-        <FileUploads/>
+     
+       <Images/>
         </AccordionBody>
       </Accordion>
      

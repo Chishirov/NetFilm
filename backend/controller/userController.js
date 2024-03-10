@@ -32,7 +32,7 @@ export const postLoginUser = async (req, res) => {
           if (err) throw err;
           res
             .cookie("token", token, { maxAge: 90000000, httpOnly: true })
-            .json({ id: user._id });
+            .json({ _id: user._id });
         });
         console.log("token created");
       } else {
@@ -54,8 +54,8 @@ export const getValidateUser = async (req, res) => {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
       const user = await userModel.findById(tokenData.id);
-      const { _id, username, email, movies } = user;
-      res.status(200).json({ _id, username, email, movies });
+      const { _id, username, email, movies} = user;
+      res.status(200).json({ _id, username, email, movies});
       console.log("token überprüft");
     });
   } catch (error) {

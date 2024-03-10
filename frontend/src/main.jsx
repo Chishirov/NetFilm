@@ -14,8 +14,9 @@ import { UploadContextProvider } from "./context/UploadContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+     <UserContextProvider>
     <UploadContextProvider>
-    <UserContextProvider>
+   
       {" "}
       <SeriesProvider>
         <MoviesProvider>
@@ -25,7 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           {/* </Provider> */}
         </MoviesProvider>
       </SeriesProvider>
-    </UserContextProvider>
+   
     </UploadContextProvider>
+    </UserContextProvider>
   </React.StrictMode>
 );

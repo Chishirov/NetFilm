@@ -53,7 +53,12 @@ export function SidebarWithBurgerMenu() {
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
-  const { imageUrl, setImageUrl} = useContext(UploadContext)
+  const { photo } = useContext(UploadContext)
+  const {images} = useContext(UploadContext)
+
+  console.log("USER IN SEIDBARWITHBURGERMENU", user)
+ 
+ 
  
   
 
@@ -64,7 +69,9 @@ export function SidebarWithBurgerMenu() {
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
   
-  const userPfoto = <img style={{width:"42px", height:"42px", borderRadius:"50%"}} src={imageUrl} alt="img" />
+  const userPfoto = <img style={{width:"50px", height:"50px", borderRadius:"50%"}} src={images} alt="img" />
+  
+  
   
 
   const userIcon = (
@@ -112,7 +119,7 @@ export function SidebarWithBurgerMenu() {
       alert("You have signed out");
       navigate("/");
       setUser("");
-      setImageUrl("")
+     
     }
   }
 
@@ -130,13 +137,13 @@ export function SidebarWithBurgerMenu() {
            
           )}
         </IconButton>
-        <p style={{ position: "absolute", right: "80px", ontSize: "24px" }}> Welcome, {user?.username}!</p>
+        <p style={{ position: "absolute", right: "90px", ontSize: "24px" }}> Welcome, {user?.username}!</p>
 
 
 
         <div>
           <Dropdown
-            label={imageUrl ? userPfoto : userIcon}
+            label={images  ? userPfoto : userIcon}
             style={{ border: "none" }}
             className="border-none rounded-t-none"
           >

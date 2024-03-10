@@ -13,9 +13,7 @@ import {
   postFavoriteMovie,
 } from "../controller/movieController.js";
 import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
-
-import uploadController from "../controller/uploadController.js";
-import { getImage } from "../controller/imageController.js";
+import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
 
 
 export const router = Router();
@@ -37,8 +35,12 @@ router
   .put("/update-username", updateUsername)
   .put("/missing-password", updateMissingPassword)
 
-router.post("/upload", uploadController);
-router.get("/image/:imageName", getImage);
+router
+  .post("/upload/:userId", uploadImage)
+  .get("/get-image/:id", getImageById)
+  .delete("/delete/:id", deleteImageById)
+  
+
 
   
 
