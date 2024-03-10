@@ -73,13 +73,13 @@ function FavoritePage() {
   };
 
   return (
-    <div className="content-center w-full mt-6">
+    <div className="flex flex-col  w-full mt-6">
       {user?.movies
         .filter((movie) => movie.isFavorite === true)
         .map((movie, index) => (
           <Card
             key={index}
-            className="w-80 h-72 md:max-h-60 md:w-full flex-row mb-4"
+            className="min-w-80 h-48 sm:h-60 md:w-full flex-row mb-2 md:mb-4 max-w-4xl place-self-center"
           >
             <CardHeader
               shadow={false}
@@ -89,30 +89,31 @@ function FavoritePage() {
               <img
                 src={`https://image.tmdb.org/t/p/w400${movie?.imageUrl}`}
                 alt="movie-image"
-                className="h-1/2 md:h-full w-full object-cover"
+                className="h-1/2 sm:h-full object-fill"
               />
             </CardHeader>
             <CardBody>
-              <Typography variant="h4" color="blue-gray" className="mb-2">
+              <Typography
+                variant="h4"
+                color="blue-gray"
+                className="mb-0 sm:mb-2 sm:text-xl text-lg resize-x"
+              >
                 {movie.title}
               </Typography>
-              <Typography variant="h6" color="gray" className="mb-2 uppercase">
-                {movie.release_date}
-              </Typography>
               <Rating
-                className="mb-2"
+                className="mb-0 sm:mb-2 h-4"
                 value={raitingValue}
                 onChange={(raitingValue) => setRaitingValue(raitingValue)}
               />
               {!clickedComments[movie.movieId] ? (
                 <>
-                  <Typography className=" h-12 mb-8 font-normal">
+                  <Typography className=" h-14 sm:h-16 mb-0 md:mb-8 sm:text-md text-sm overflow-auto">
                     {comments[movie.movieId]
                       ? comments[movie.movieId]
                       : "No Comment..."}
                   </Typography>
                   <Button
-                    className="m-1 w-auto lg:w-36"
+                    className="m-1 p-3 w-auto md:w-36 text-xs sm:text-sm"
                     onClick={() =>
                       setClickedComments({
                         ...clickedComments,
@@ -125,9 +126,9 @@ function FavoritePage() {
                 </>
               ) : (
                 <>
-                  <Typography className="h-12 mb-8 font-normal">
+                  <Typography className="h-12 mb-1 md:mb-8 font-normal ">
                     <textarea
-                      className="w-full border border-gray-400"
+                      className="w-full border border-gray-400 text-xs sm:text-sm"
                       value={comments[movie.movieId] || ""} //comments[693134]
                       onChange={(e) =>
                         setComments({
@@ -138,7 +139,7 @@ function FavoritePage() {
                     />
                   </Typography>
                   <Button
-                    className="m-1 w-auto lg:w-36"
+                    className="m-1 p-3 w-auto md:w-36 text-xs sm:text-sm"
                     onClick={() => commentHandler(movie.movieId)}
                   >
                     save
@@ -149,7 +150,7 @@ function FavoritePage() {
                 onClick={() => deleteHandler(movie.movieId)}
                 color="red"
                 // variant="text"
-                className="m-1 w-auto lg:w-36"
+                className="m-1 p-3 w-auto md:w-36 text-xs sm:text-sm"
               >
                 delete
               </Button>
