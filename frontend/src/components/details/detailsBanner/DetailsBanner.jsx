@@ -17,9 +17,6 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
         (c) => c.job === "Screenplay" || c.job === "Story" || c.job === "Writer"
     );
 
-    // const [genres, setGenres] = useState("")
-    // const _genres = movieInfo?.genres?.map((g) => g.id);
-
     const toHoursAndMinutes = (totalMinutes) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
@@ -71,7 +68,8 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
                                             <CircleRating
                                                 rating={movieInfo.vote_average.toFixed(1)}
                                             />
-                                            <div className="playbtn"
+                                            <div
+                                                className="playbtn"
                                                 onClick={() => {
                                                     setShow(true);
                                                     setVideoId(video?.key);
@@ -147,26 +145,7 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
                                                 </span>
                                             </div>
                                         )}
-                                        {movieInfo.production_companies?.length > 0 && (
-                                            <div className="info">
-                                                <span className="text bold">
-                                                    Production Companies:{" "}
-                                                </span>
-                                                <span className="text">
-                                                    {movieInfo.production_companies?.map((p, i) => {
-                                                        return (
-                                                            <span key={i}>
-                                                                {p.name}
-                                                                {movieInfo.production_companies
-                                                                    ?.length -
-                                                                    1 !==
-                                                                    i && ", "}
-                                                            </span>
-                                                        );
-                                                    })}
-                                                </span>
-                                            </div>
-                                        )}
+
                                         {movieInfo?.created_by?.length > 0 && (
                                             <div className="info">
                                                 <span className="text bold">Creator: </span>

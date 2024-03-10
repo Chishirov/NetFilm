@@ -76,9 +76,13 @@ const router = createBrowserRouter([
         element: <TopRatedSeries />,
       },
       {
-        path: "/movies-info/:id",
+        path: "/:mediaType/:id",
         element: <MovieInfo />,
       },
+      // {
+      //   path: "/movies-info/:id",
+      //   element: <MovieInfo />,
+      // },
       {
         path: "/series-info/:id",
         element: <SeriesInfo />,
