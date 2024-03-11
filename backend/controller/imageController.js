@@ -31,6 +31,7 @@ export const uploadImage = async (req, res) => {
 export const getImageById = async (req, res) => {
   try {
     const userId = req.params.id;
+    console.log("userId", userId)
     const user = await userModel.findById(userId);
     if (!user) {
       return res.status(404).send("user not found");

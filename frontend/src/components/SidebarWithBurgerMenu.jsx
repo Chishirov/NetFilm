@@ -69,7 +69,7 @@ export function SidebarWithBurgerMenu() {
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
   
-  const userPfoto = <img style={{width:"50px", height:"50px", borderRadius:"50%"}} src={images} alt="img" />
+  const userPfoto = <img style={{width:"50px", height:"50px", borderRadius:"50%"}} src={user?.image} alt="img" />
   
   
   

@@ -67,12 +67,13 @@ function HomePage() {
       const loggedUser = response.data;
       setUser(loggedUser);
       console.log("LOGGED USER HOME PAGE",loggedUser)
-      console.log("USER FROM HOME PAGE", user)
+    
     } catch (error) {
       console.log("useEffect weiter leitung");
       navigate("/login");
     }
   }
+  console.log("USER FROM HOME PAGE", user)
   useEffect(() => {
     if (!user?.username) {
       redirect();
@@ -81,23 +82,33 @@ function HomePage() {
   useEffect(() => {
     fetchDataAring();
   }, []);
+ 
 
-
+console.log("user._id", user?._id)
 const getImageById = async () => {
-    
+  console.log("user._id", user?._id)
+  if(user){
     try {
-        const response = await axios.get(`http://localhost:3000/get-image/${user._id}`, { withCredentials: true });
-        console.log("response.data.data", response.data.data);
-        setImages(response.data.data);
 
-    } catch (error) {
-        console.error('Error fetching images:', error);
-    }
+      const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
+      console.log("response.data.data", response.data.data);
+      setImages(response.data.data);
+    
+
+  } catch (error) {
+      console.error('Error fetching images:', error);
+  }
+
+  }
+   
 };
 
 useEffect(() => {
-  getImageById()
-}, []);
+  if(user?._id){
+    getImageById()
+  }
+ 
+}, [user]);
 
  
 
