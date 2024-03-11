@@ -1,14 +1,12 @@
 
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import ElaCard from "../../components/ElaCard/ElaCard";
-import Pagination from "../../components/Pagination";
+import ElaCard from "../../components/ElaCard/ElaCard.jsx";
+import Banner from "../../components/banner/Banner.jsx";
 import { UserContext } from "../../context/UserContext";
-import Banner from "../../components/banner/Banner";
+import Pagination from "../../components/Pagination";
 
-
-function NowPlayingMovies() {
-  const [play, setPlay] = useState([]);
+function PopularMovies() {
+  const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useContext(UserContext);
@@ -21,19 +19,22 @@ function NowPlayingMovies() {
           headers: {
             accept: "application/json",
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzdlMDBkMTIyZDg0MmZlZTYwYzFlNWY1MzUwZWVkNCIsInN1YiI6IjY1MmE2Yjk5MWYzZTYwMDExYzRhMmNmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.27Of1P9G1YQOX5RsHqMkoga3b6WelSSkdIblIqP19YY",
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
           },
         };
 
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage}`,
+          `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${currentPage}`,
           options
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
         const data = await response.json();
-        setPlay(data.results);
+        
+        // Setze das mediaType-Feld für jeden Film
+        const moviesWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(moviesWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -42,14 +43,18 @@ function NowPlayingMovies() {
     fetchData();
   }, [currentPage]);
 
-  const filteredMovies = play.filter((item) => {
+  const filteredMovies = movies.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Banner data={play} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Banner
+        data={movies}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -60,17 +65,11 @@ function NowPlayingMovies() {
           margin: "0 auto",
         }}
       >
-        {/* Rendering von ElaCard */}
         <ElaCard data={filteredMovies} />
-
-       
-     
       </div>
-
-      {/* Pagination-Komponente */}
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
 
-export default NowPlayingMovies;
+export default PopularMovies;

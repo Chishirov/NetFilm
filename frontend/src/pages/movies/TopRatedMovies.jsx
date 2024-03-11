@@ -1,16 +1,16 @@
+
 import React, { useState, useEffect, useContext } from "react";
-import Cardcomponent from "../../components/Cardcomponent";
-import Pagination from "../../components/Pagination";
-import { UserContext } from "../../context/UserContext";
-// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Banner from "../../components/banner/Banner";
+import { UserContext } from "../../context/UserContext";
+import Pagination from "../../components/Pagination";
 
 function TopRatedMovies() {
   const [top, setTop] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [currentPage, setCurrentPage] = useState(1);
   const { user } = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState("");
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,11 +24,17 @@ function TopRatedMovies() {
         };
 
         const response = await fetch(
-          ` https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
+          `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
-        setTop(data.results);
+        
+        // Setze das mediaType-Feld für jeden Film
+        const topWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setTop(topWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -36,10 +42,12 @@ function TopRatedMovies() {
 
     fetchData();
   }, [currentPage]);
+
   const filteredMovies = top.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
+
   return (
     <div style={{ textAlign: "center" }}>
       <Banner
@@ -57,19 +65,6 @@ function TopRatedMovies() {
           margin: "0 auto",
         }}
       >
-        {/* {top.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))} */}
         <ElaCard data={filteredMovies} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

@@ -1,20 +1,16 @@
+
 import React, { useState, useEffect, useContext } from "react";
-import Cardcomponent from "../../components/Cardcomponent";
-import Pagination from "../../components/Pagination";
-import { UserContext } from "../../context/UserContext";
-// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Banner from "../../components/banner/Banner";
+import { UserContext } from "../../context/UserContext";
+import Pagination from "../../components/Pagination";
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [currentPage, setCurrentPage] = useState(1);
   const { user } = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredMovies = movies.filter((item) => {
-    const title = item.title || item.name;
-    return title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +28,13 @@ function UpcomingMovies() {
           options
         );
         const data = await response.json();
-        setMovies(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const upcomingWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(upcomingWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -40,6 +42,11 @@ function UpcomingMovies() {
 
     fetchData();
   }, [currentPage]);
+
+  const filteredMovies = movies.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -58,19 +65,6 @@ function UpcomingMovies() {
           margin: "0 auto",
         }}
       >
-        {/* {movies.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))} */}
         <ElaCard data={filteredMovies} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
