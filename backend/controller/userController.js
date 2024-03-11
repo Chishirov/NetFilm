@@ -62,3 +62,22 @@ export const getValidateUser = async (req, res) => {
     res.status(400).json("error invalid token");
   }
 };
+export const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await userModel.find();
+    if (!allUsers || allUsers.length === 0) {
+      return res.status(404).json({ message: "Keine Benutzer gefunden" });
+    }
+
+    const usersInfo = allUsers.map((user) => ({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      movies: user.movies,
+    }));
+
+    res.json(usersInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

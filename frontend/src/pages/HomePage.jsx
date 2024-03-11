@@ -70,7 +70,7 @@ function HomePage() {
     
     } catch (error) {
       console.log("useEffect weiter leitung");
-      navigate("/login");
+      navigate("/");
     }
   }
   console.log("USER FROM HOME PAGE", user)
