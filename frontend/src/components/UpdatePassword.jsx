@@ -5,7 +5,7 @@ import { UserContext } from '../context/UserContext';
 const UpdatePassword = () => {
   const currentPasswordRef = useRef(null);
   const newPasswordRef = useRef(null);
-  const userContext = useContext(UserContext); // useContext innerhalb der Funktion verwenden
+  const userContext = useContext(UserContext); 
 
   const updatePassword = async () => {
     try {
@@ -16,6 +16,8 @@ const UpdatePassword = () => {
       });
 
       alert(response.data);
+      currentPasswordRef.current.value = "";
+      newPasswordRef.current.value = "";
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Passworts:', error);
       alert('Fehler beim Aktualisieren des Passworts.');
