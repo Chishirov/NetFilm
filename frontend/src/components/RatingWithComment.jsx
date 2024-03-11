@@ -80,26 +80,18 @@ export function RatingWithComment() {
       }
     };
 
-    // Iterate through moviesIds and fetch reviews for each movie
     moviesIds.forEach((movieId) => {
       fetchReviewsForMovie(movieId);
     });
-  }, [moviesIds]); // Run this effect whenever moviesIds state changes
+  }, [moviesIds]);
   console.log("users", users);
   console.log("---------moviesIds", moviesIds);
   console.log("reviews", reviews);
-  // const filteredreview = reviews.filter((review) => review.id !== review.id);
-  // console.log(filteredreview);
+
   return (
     <>
       {users.map((user) =>
         user.movies.map((movie) => {
-          // Find the review for the current movie
-          // const review = reviews.find(
-          //   (review) => review.movieId === movie.movieId
-          // );
-          // console.log("review", review);
-
           return (
             <div
               key={movie._id}
@@ -176,61 +168,62 @@ export function RatingWithComment() {
           );
         })
       )}
-      <div style={{ margin: "50px" }}>
-        {reviews.map((review) =>
-          review.data.map((rewiewer) => (
-            <div key={rewiewer.author}>
-              <Card
-                style={{ width: "70%", margin: "10px" }}
-                key={rewiewer.author}
-              >
-                <List>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <Avatar
-                        variant="circular"
-                        //  alt={user.username}
-                        src="https://docs.material-tailwind.com/img/face-3.jpg"
-                      />
-                      <Typography variant="h6" color="blue-gray">
-                        {/* {user.username} */}
-                        {rewiewer.author}
-                      </Typography>
-                    </ListItemPrefix>
-                    <div>
-                      <ListItemPrefix>
-                        <Typography variant="h6" color="blue-gray">
-                          {/* {movie.title} */}
-                        </Typography>
-                        <Rating
-                          name="read-only"
-                          size="small"
-                          value={rewiewer.author_details.rating}
-                          readOnly
-                        />
-                      </ListItemPrefix>
-                    </div>
-                    <div>
-                      <Typography
-                        className="ext-clip overflow-hidden ..."
-                        variant="paragraph"
-                        color="blue-gray"
-                        // style={{
-                        //   whiteSpace: "nowrap",
-                        //   overflow: "hidden",
-                        //   textOverflow: "ellipsis",
-                        // }}
-                      >
-                        &quot;{rewiewer.content.slice(0, 300)}&quot;
-                      </Typography>
-                    </div>
-                  </ListItem>
-                </List>
-              </Card>
-            </div>
-          ))
-        )}
-      </div>
     </>
   );
 }
+
+// <div style={{ margin: "50px" }}>
+//   {reviews.map((review) =>
+//     review.data.map((rewiewer) => (
+//       <div key={rewiewer.author}>
+//         <Card
+//           style={{ width: "70%", margin: "10px" }}
+//           key={rewiewer.author}
+//         >
+//           <List>
+//             <ListItem>
+//               <ListItemPrefix>
+//                 <Avatar
+//                   variant="circular"
+//                   //  alt={user.username}
+//                   src="https://docs.material-tailwind.com/img/face-3.jpg"
+//                 />
+//                 <Typography variant="h6" color="blue-gray">
+//                   {/* {user.username} */}
+//                   {rewiewer.author}
+//                 </Typography>
+//               </ListItemPrefix>
+//               <div>
+//                 <ListItemPrefix>
+//                   <Typography variant="h6" color="blue-gray">
+//                     {/* {movie.title} */}
+//                   </Typography>
+//                   <Rating
+//                     name="read-only"
+//                     size="small"
+//                     value={rewiewer.author_details.rating}
+//                     readOnly
+//                   />
+//                 </ListItemPrefix>
+//               </div>
+//               <div>
+//                 <Typography
+//                   className="ext-clip overflow-hidden ..."
+//                   variant="paragraph"
+//                   color="blue-gray"
+//                   // style={{
+//                   //   whiteSpace: "nowrap",
+//                   //   overflow: "hidden",
+//                   //   textOverflow: "ellipsis",
+//                   // }}
+//                 >
+//                   &quot;{rewiewer.content.slice(0, 300)}&quot;
+//                 </Typography>
+//               </div>
+//             </ListItem>
+//           </List>
+//         </Card>
+//       </div>
+//     ))
+//   )}
+// </div>

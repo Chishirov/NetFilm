@@ -14,8 +14,11 @@ import {
   postFavoriteMovie,
 } from "../controller/movieController.js";
 
-import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
-import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
+import {
+  deleteImageById,
+  getImageById,
+  uploadImage,
+} from "../controller/imageController.js";
 
 import {
   updateMissingPassword,
@@ -42,17 +45,11 @@ router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
 
-  .put("/missing-password", updateMissingPassword)
+  .put("/missing-password", updateMissingPassword);
 
 router
   .post("/upload/:userId", uploadImage)
   .get("/get-image/:id", getImageById)
   .delete("/delete/:id", deleteImageById)
-  
-
-
-  
-
 
   .put("/missing-password", updateMissingPassword);
-
