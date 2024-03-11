@@ -35,7 +35,9 @@ const ElaCard = ({ data }) => {
 
   const [openMenu, setOpenMenu] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const [klick, setCklick] = useState(true);
+
+  const navigate = useNavigate();
+
 
 
 
@@ -143,6 +145,7 @@ const ElaCard = ({ data }) => {
                     className="lazy-load-image-background"
                     src={`https://image.tmdb.org/t/p/w400${item.poster_path}`}
                     alt={item.title || item.name}
+                    onClick={() => navigate(`/movies-info/${item.id}`)}
                   />
                   <CircleRating rating={item.vote_average.toFixed(1)} />
                   {/* <Genres data={item.genre_ids.slice(0, 2)} /> */}

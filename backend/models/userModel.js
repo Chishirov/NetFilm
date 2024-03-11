@@ -10,6 +10,7 @@ const UserModel = new mongoose.Schema(
     username: { type: String },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    image: { type: String },
     movies: [
       {
         title: String,

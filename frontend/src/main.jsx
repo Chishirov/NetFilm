@@ -7,13 +7,16 @@ import { MoviesProvider } from "./context/MoviesContext.jsx";
 import { UserContextProvider } from "./context/UserContext.jsx";
 
 import { SeriesProvider } from "./context/SeriesContext.jsx";
+import { UploadContextProvider } from "./context/UploadContext.jsx";
 // import { Provider } from "react-redux";
 // import { store } from "./sort/sort.js";
 // import { ThemeProvider } from "@material-tailwind/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <UserContextProvider>
+     <UserContextProvider>
+    <UploadContextProvider>
+   
       {" "}
       <SeriesProvider>
         <MoviesProvider>
@@ -23,6 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           {/* </Provider> */}
         </MoviesProvider>
       </SeriesProvider>
+   
+    </UploadContextProvider>
     </UserContextProvider>
   </React.StrictMode>
 );
