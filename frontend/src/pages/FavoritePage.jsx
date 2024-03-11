@@ -24,7 +24,7 @@ function FavoritePage() {
         `http://localhost:3000/update-movie/${user._id}/${movieId}`,
         {
           comment: comments[movieId],
-          raiting: raitingValue,
+          raiting: Number(raitingValue),
         },
         { withCredentials: true }
       );

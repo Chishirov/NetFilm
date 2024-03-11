@@ -103,6 +103,7 @@ export function SidebarWithBurgerMenu() {
     );
     if (data) {
       alert("You have signed out");
+
       navigate("/");
       setUser("");
     }
@@ -137,7 +138,7 @@ export function SidebarWithBurgerMenu() {
             >
               Profile
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => navigate("settings")} icon={HiCog}>
+            <Dropdown.Item onClick={() => navigate("/settings")} icon={HiCog}>
               Settings
             </Dropdown.Item>
             <hr />
@@ -305,12 +306,12 @@ export function SidebarWithBurgerMenu() {
               </AccordionBody>
             </Accordion>
             <hr className="my-2 border-blue-gray-50" />
-            <ListItem>
+            <ListItem onClick={() => navigate("/community-page")}>
               <ListItemPrefix>
                 <InboxIcon className="h-5 w-5 " />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-bold">
-                Inbox
+                Community
               </Typography>
 
               {/* <ListItemSuffix>

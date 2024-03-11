@@ -30,10 +30,7 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   { path: "/", element: <LandingPage /> },
-  {
-    path: "/community-page",
-    element: <CommunityPage />,
-  },
+
   {
     path: "/",
     element: <SidebarWithBurgerMenu />,
@@ -41,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <HomePage />,
+      },
+      {
+        path: "/community-page",
+        element: <CommunityPage />,
       },
       {
         path: "/movies",
