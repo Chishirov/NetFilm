@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
@@ -33,7 +34,13 @@ function OnTvSeries() {
           options
         );
         const data = await response.json();
-        setOnTv(data.results);
+
+        // Setze das mediaType-Feld für jede Serie
+        const onTvWithMediaType = data.results.map((serie) => ({
+          ...serie,
+          mediaType: "tv",
+        }));
+        setOnTv(onTvWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -66,6 +73,7 @@ function OnTvSeries() {
             title={movie.name}
             date={movie.first_air_date}
             link={`/series-info/${movie.id}`}
+            mediaType="tv" // Setze das mediaType-Feld
           />
         ))} */}
         <ElaCard data={filteredShow} />
