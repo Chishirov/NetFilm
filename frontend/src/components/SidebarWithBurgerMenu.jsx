@@ -132,7 +132,7 @@ export function SidebarWithBurgerMenu() {
             <XMarkIcon className="h-8 w-8 stroke-2" />
           ) : (
             
-            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
+            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "white" }} />
           
            
           )}
@@ -186,6 +186,7 @@ export function SidebarWithBurgerMenu() {
         {/* <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}> */}
 
         <Card
+        style={{ color: "white" }}
           color="transparent"
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
