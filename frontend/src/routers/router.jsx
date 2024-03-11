@@ -22,7 +22,7 @@ import SettingsPage from "../pages/SettingsPage.jsx";
 
 import RegisterPage from "../components/login/RegisterPage.jsx";
 import LandingPage from "../components/landingPage/LandingPage.jsx";
-
+import CommunityPage from "../pages/CommunityPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   { path: "/", element: <LandingPage /> },
+  {
+    path: "/community-page",
+    element: <CommunityPage />,
+  },
   {
     path: "/",
     element: <SidebarWithBurgerMenu />,

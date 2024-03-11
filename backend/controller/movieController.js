@@ -18,7 +18,40 @@ export const postFavoriteMovie = async (req, res) => {
     res.status(404).json("error favorite movie");
   }
 };
+export const addCommentToMovie = async (req, res) => {
+  try {
+    const { userId, movieId } = req.params;
+    console.log("userId", userId);
+    console.log("movieId", movieId);
 
+    const { comment, raiting } = req.body;
+    console.log("raiting", raiting);
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const movieIndex = user.movies.findIndex(
+      (movie) => movie.movieId === movieId
+    );
+
+    if (movieIndex === -1) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    user.movies[movieIndex].comments.pop({ raiting, comment })
+    user.movies[movieIndex].comments.push({ raiting, comment });
+
+
+    await user.save();
+
+    return res.status(200).json(user.movies);
+  } catch (error) {
+    console.error("Error adding comment to movie:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 export const deleteMovie = async (req, res) => {
   try {
     const { movieId, userId } = await req.params;

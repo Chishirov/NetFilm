@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
 import { Outlet } from "react-router-dom";
@@ -11,6 +11,9 @@ import "../styles/homePage.css";
 import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 import { UserContext } from "../context/UserContext.jsx";
+import { UploadContext } from "../context/UploadContext.jsx";
+import { Images } from "../components/Image.jsx";
+
 function HomePage() {
   const {
     rated,
@@ -50,10 +53,66 @@ function HomePage() {
   } = useContext(MoviesContext);
   // console.log("movieId in home: ", movieId);
   const [trail, setTrail] = useState(false);
-  const { user } = useContext(UserContext);
+
+  const { user, setUser } = useContext(UserContext);
+  const {images, setImages} = useContext(UploadContext)
+  const { photo, setPhoto } = useContext(UploadContext);
+  const navigate = useNavigate();
+  ////
+  async function redirect() {
+    try {
+      const response = await axios.get("http://localhost:3000/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+      console.log("LOGGED USER HOME PAGE",loggedUser)
+    
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/");
+    }
+  }
+  console.log("USER FROM HOME PAGE", user)
+  useEffect(() => {
+    if (!user?.username) {
+      redirect();
+    }
+  }, []);
   useEffect(() => {
     fetchDataAring();
   }, []);
+ 
+
+console.log("user._id", user?._id)
+const getImageById = async () => {
+  console.log("user._id", user?._id)
+  if(user){
+    try {
+
+      const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
+      console.log("response.data.data", response.data.data);
+      setImages(response.data.data);
+    
+
+  } catch (error) {
+      console.error('Error fetching images:', error);
+  }
+
+  }
+   
+};
+
+useEffect(() => {
+  if(user?._id){
+    getImageById()
+  }
+ 
+}, [user]);
+
+ 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -229,6 +288,7 @@ function HomePage() {
     fetchMovieById();
   }, [movieId]);
   // console.log("movieInfo", movieInfo);
+  
 
   return (
     <>
@@ -315,7 +375,8 @@ function HomePage() {
         <SeriesCaruselComponent items={popular} />
         <h2>Top Rated</h2>
         <SeriesCaruselComponent items={rated} />
-        <Outlet />
+        {/* <Images/> */}
+      
       </div>
     </>
   );

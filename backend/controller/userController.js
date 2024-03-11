@@ -31,8 +31,8 @@ export const postLoginUser = async (req, res) => {
         jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
           if (err) throw err;
           res
-            .cookie("token", token, { maxAge: 900000, httpOnly: true })
-            .json({ id: user._id });
+            .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+            .json({ _id: user._id });
         });
         console.log("token created");
       } else {
@@ -54,15 +54,30 @@ export const getValidateUser = async (req, res) => {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
       const user = await userModel.findById(tokenData.id);
-      res.status(200).json({
-        username: user.username,
-        email: user.email,
-        id: user._id,
-        movies: user.movies,
-      });
+      const { _id, username, email, movies, image} = user;
+      res.status(200).json({ _id, username, email, movies, image});
       console.log("token überprüft");
     });
   } catch (error) {
     res.status(400).json("error invalid token");
+  }
+};
+export const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await userModel.find();
+    if (!allUsers || allUsers.length === 0) {
+      return res.status(404).json({ message: "Keine Benutzer gefunden" });
+    }
+
+    const usersInfo = allUsers.map((user) => ({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      movies: user.movies,
+    }));
+
+    res.json(usersInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
