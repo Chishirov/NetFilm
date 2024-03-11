@@ -76,7 +76,7 @@ export const getAllUsers = async (req, res) => {
       movies: user.movies,
     }));
 
-    res.json(usersInfo);
+    res.status(200).json(usersInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
