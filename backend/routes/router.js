@@ -17,11 +17,11 @@ import {
 import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
 
-import {
-  updateMissingPassword,
-  updatePassword,
-  updateUsername,
-} from "../controller/settingsController.js";
+// import {
+//   updateMissingPassword,
+//   updatePassword,
+//   updateUsername,
+// } from "../controller/settingsController.js";
 
 export const router = Router();
 

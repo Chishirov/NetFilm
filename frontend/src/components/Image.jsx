@@ -14,24 +14,34 @@ export const Images = () => {
 
   const {images, setImages} = useContext(UploadContext)
     
-  const getAllImages = async () => {
-      try {
-          const response = await axios.get(`http://localhost:3000/get-image/${user._id}`, {withCredentials:true}); // Anpassen der URL an deine Serveradresse
-          console.log("response.data.data", response.data.data)
-          setImages(response.data.data);
-
-      } catch (error) {
-          console.error('Error fetching images:', error);
-      }
+   const getImageById = async () => {
+        console.log("user._id", user?._id)
+        if(user){
+          try {
+      
+            const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
+            console.log("response.data.data", response.data.data);
+            setImages(response.data.data);
+          
+      
+        } catch (error) {
+            console.error('Error fetching images:', error);
+        }
+      
+        }
+         
+      };
+      const handleImageUpload = () => {
+        getImageById();
     };
-    const handleImageUpload = () => {
-        getAllImages();
-    };
-    
-   
-    useEffect(() => {
-      getAllImages();
-    }, [user]);
+      
+      useEffect(() => {
+        if(user?._id){
+          getImageById()
+        }
+       
+      }, [user]);
+      
     
 
 

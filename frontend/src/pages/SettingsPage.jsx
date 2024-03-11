@@ -8,6 +8,7 @@ import {
 
 
 import { Images } from "../components/Image";
+import UpdatePassword from "../components/UpdatePassword";
 
 function SettingsPage() {
   const [open, setOpen] = React.useState(1);
@@ -43,10 +44,7 @@ function SettingsPage() {
           Update Password
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input type="password" label="Password" />
-            <Button>Update</Button>
-          </div>
+          <UpdatePassword/>
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 4}>
