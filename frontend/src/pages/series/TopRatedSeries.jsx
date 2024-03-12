@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from "react";
 
 import Cardcomponent from "../../components/Cardcomponent";
@@ -33,7 +34,13 @@ function OnTvSeries() {
           options
         );
         const data = await response.json();
-        setRated(data.results);
+
+        // Setze das mediaType-Feld für jede Serie
+        const ratedWithMediaType = data.results.map((serie) => ({
+          ...serie,
+          mediaType: "tv",
+        }));
+        setRated(ratedWithMediaType);
       } catch (error) {
         console.error(error);
       }

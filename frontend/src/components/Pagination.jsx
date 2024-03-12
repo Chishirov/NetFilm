@@ -32,7 +32,11 @@ function Pagination({ currentPage, setCurrentPage }) {
   for (let i = startIndex; i <= endIndex; i++) {
     buttons.push(
       <IconButton
-        style={{ backgroundColor: "red" }}
+      style={{ 
+        backgroundColor: "transparent",
+        color:"orange",
+        border:"1px solid orange",
+    }}
         key={i}
         {...getItemProps(i)}
       >
@@ -47,13 +51,17 @@ function Pagination({ currentPage, setCurrentPage }) {
         variant="text"
         className="flex items-center gap-2 rounded-full"
         onClick={prev}
-        style={{ backgroundColor: "red" }}
+        style={{ 
+          backgroundColor: "transparent",
+          color:"orange",
+          border:"1px solid orange",
+      }}
         disabled={currentPage === 1}
       >
         <ArrowLeftIcon
           strokeWidth={2}
           className="h-4 w-4"
-          style={{ backgroundColor: "red" }}
+          // style={{ backgroundColor: "red" }}
         />{" "}
       </Button>
       <div className="flex items-center gap-2">{buttons}</div>
@@ -62,7 +70,11 @@ function Pagination({ currentPage, setCurrentPage }) {
         className="flex items-center gap-2 rounded-full"
         onClick={next}
         disabled={currentPage === maxNumber}
-        style={{ backgroundColor: "red" }}
+        style={{ 
+          backgroundColor: "transparent",
+          color:"orange",
+          border:"1px solid orange",
+      }}
       >
         <ArrowRightIcon
           strokeWidth={2}

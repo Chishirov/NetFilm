@@ -54,8 +54,8 @@ export const getValidateUser = async (req, res) => {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
       const user = await userModel.findById(tokenData.id);
-      const { _id, username, email, movies, image} = user;
-      res.status(200).json({ _id, username, email, movies, image});
+      const { _id, username, email, movies, image } = user;
+      res.status(200).json({ _id, username, email, movies, image });
       console.log("token überprüft");
     });
   } catch (error) {
@@ -74,9 +74,10 @@ export const getAllUsers = async (req, res) => {
       username: user.username,
       email: user.email,
       movies: user.movies,
+      image: user.image,
     }));
 
-    res.json(usersInfo);
+    res.status(200).json(usersInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
