@@ -156,7 +156,7 @@ const ElaCard = ({ data, mediaType }) => {
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
                                                     fill="currentColor"
-                                                    className="w-9 h-9 border-2 text-5xl font-bold text-pink-700 border-pink-700 rounded-full p-1 bg-transparent hover:bg-pink-700 hover:text-white hover:font-bold transition-all duration-300 ease-in-out"
+                                                    className="w-9 h-9 border-2 text-5xl font-bold text-orange-700 border-orange-700 rounded-full p-1 bg-transparent hover:bg-orange-700 hover:text-white hover:font-bold transition-all duration-300 ease-in-out"
                                                     onClick={() => handleClick()}
                                                 >
                                                     <path
