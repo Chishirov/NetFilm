@@ -1,17 +1,19 @@
 import React, { useContext, useRef } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const UpdateUsername = () => {
   const newUsernameRef = useRef(null);
-  const userContext = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
   const updateUsername = async () => {
     try {
       const response = await axios.put(
         "http://localhost:3000/update-username",
         {
-          id: userContext.user._id,
+          id:user._id,
 
           username: newUsernameRef.current.value,
         }
@@ -21,11 +23,25 @@ const UpdateUsername = () => {
       console.log()
 
       newUsernameRef.current.value = "";
+      await signout();
     } catch (error) {
       console.error("Fehler beim Aktualisieren des Benutzernamens:", error);
       alert("Fehler beim Aktualisieren des Benutzernamens.");
     }
   };
+  async function signout() {
+    const { data } = await axios.post(
+      "http://localhost:3000/signout",
+      {},
+      { withCredentials: true }
+    );
+    if (data) {
+      alert("You have signed out");
+      navigate("/");
+      setUser("");
+     
+    }
+  }
 
   return (
     <div>
