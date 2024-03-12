@@ -18,11 +18,6 @@ import {
 import { updateEmail, updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
 
-import {
-  deleteImageById,
-  getImageById,
-  uploadImage,
-} from "../controller/imageController.js";
 
 
 

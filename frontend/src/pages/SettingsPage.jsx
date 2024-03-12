@@ -18,42 +18,41 @@ function SettingsPage() {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div>
-      <Accordion open={open === 1}>
-        <AccordionHeader onClick={() => handleOpen(1)}>
-          Update Username
-        </AccordionHeader>
-        <AccordionBody>
-        <UpdateUsername/>
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 2}>
-        <AccordionHeader onClick={() => handleOpen(2)}>
-          Update Email
-        </AccordionHeader>
-        <AccordionBody>
-         <UpdateEmail/>
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 3}>
-        <AccordionHeader onClick={() => handleOpen(3)}>
-          Update Password
-        </AccordionHeader>
-        <AccordionBody>
-          <UpdatePassword/>
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 4}>
-        <AccordionHeader onClick={() => handleOpen(4)}>
-          Upload Photo
-        </AccordionHeader>
-        <AccordionBody>
-     
-       <Images/>
-        </AccordionBody>
-      </Accordion>
-     
-    </div>
+    <div >
+  <Accordion open={open === 1} >
+    <AccordionHeader onClick={() => handleOpen(1)}>
+      Update Username
+    </AccordionHeader>
+    <AccordionBody>
+      <UpdateUsername/>
+    </AccordionBody>
+  </Accordion>
+  <Accordion open={open === 2} >
+    <AccordionHeader onClick={() => handleOpen(2)}>
+      Update Email
+    </AccordionHeader>
+    <AccordionBody>
+      <UpdateEmail/>
+    </AccordionBody>
+  </Accordion>
+  <Accordion open={open === 3} >
+    <AccordionHeader onClick={() => handleOpen(3)}>
+      Update Password
+    </AccordionHeader>
+    <AccordionBody>
+      <UpdatePassword/>
+    </AccordionBody>
+  </Accordion>
+  <Accordion open={open === 4} >
+    <AccordionHeader onClick={() => handleOpen(4)}>
+      Upload Photo
+    </AccordionHeader>
+    <AccordionBody>
+      <Images/>
+    </AccordionBody>
+  </Accordion>
+</div>
+
   );
 }
 
