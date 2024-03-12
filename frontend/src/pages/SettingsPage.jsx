@@ -8,6 +8,9 @@ import {
 
 
 import { Images } from "../components/Image";
+import UpdatePassword from "../components/UpdatePassword";
+import UpdateEmail from "../components/UpdateEmail";
+import UpdateUsername from "../components/UpdateUsername";
 
 function SettingsPage() {
   const [open, setOpen] = React.useState(1);
@@ -21,10 +24,7 @@ function SettingsPage() {
           Update Username
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input label="Username" />
-            <Button>Update</Button>
-          </div>
+        <UpdateUsername/>
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2}>
@@ -32,10 +32,7 @@ function SettingsPage() {
           Update Email
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input type="email" label="Email" />
-            <Button>Update</Button>
-          </div>
+         <UpdateEmail/>
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 3}>
@@ -43,10 +40,7 @@ function SettingsPage() {
           Update Password
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input type="password" label="Password" />
-            <Button>Update</Button>
-          </div>
+          <UpdatePassword/>
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 4}>
