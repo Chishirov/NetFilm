@@ -18,7 +18,7 @@ function SettingsPage() {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div >
+    <div sty >
   <Accordion open={open === 1} >
     <AccordionHeader onClick={() => handleOpen(1)}>
       Update Username
