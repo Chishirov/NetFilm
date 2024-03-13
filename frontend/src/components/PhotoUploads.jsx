@@ -64,19 +64,19 @@ export const PhotoUpload = ({onImageUpload}) => {
 
  return (
       <>
-        <div>
-          <input
-            className="flex-grow p-3 sm:p-2 border rounded-md"
+        <div className='flex flex-col gap-2 items-center'>
+          <input 
+            className=" p-3 sm:p-2 border rounded-md"
             accept="image/*"
             type="file"
             onChange={convertToBase64}
           />
          {photo && <img src={photo} width={200} height={200} style={{ borderRadius: "10px" }} alt="" />}
 
-          <button className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={uploadImage}>UPLOAD FOTO</button>
-          <button className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={cancel}>CANCEL</button>
-          <button className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={deleteImageById}>DELETE</button>
-
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={uploadImage}>UPLOAD</button>
+        
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={deleteImageById}>DELETE</button>
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={cancel}>CANCEL</button>
 
         </div>
       </>

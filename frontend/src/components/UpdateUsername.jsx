@@ -44,10 +44,10 @@ const UpdateUsername = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col gap-2 items-center'>
       <div>
         <input
-          style={{ backgroundColor: "transparent" }}
+          style={{ backgroundColor: "transparent",textAlign:"center" }}
           className="flex-grow p-3 sm:p-2 border rounded-md"
           type="text"
           placeholder="New Username"
