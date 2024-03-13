@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
-import { Outlet } from "react-router-dom";
-import CaruselComponent from "../components/CaruselComponent.jsx";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
@@ -12,7 +9,6 @@ import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 import { UserContext } from "../context/UserContext.jsx";
 import { UploadContext } from "../context/UploadContext.jsx";
-import { Images } from "../components/Image.jsx";
 
 function HomePage() {
   const {
@@ -25,24 +21,15 @@ function HomePage() {
     aring,
     fetchDataAring,
   } = useContext(SeriesContext);
-  // const {id} = useParams()
-  const { seriesId, setSeriesId, seriesInfo, setSeriesInfo, fetchSeriesInfo } =
-    useContext(SeriesContext);
-  // console.log("seriesInfo in home", seriesInfo);
+  const { seriesId, seriesInfo, fetchSeriesInfo } = useContext(SeriesContext);
   const [seriesVideo, setSeriesVideo] = useState();
   const {
     movieId,
-    setMovieId,
     movieInfo,
-    setMovieInfo,
     nowPlayingMovies,
-    setNowPlayingMovies,
     popularMovies,
-    setPopulatMovies,
     topRatedMovies,
-    setTopRatedMovies,
     upComingMovies,
-    setUpCompingMovies,
     movieVideo,
     setMovieVideo,
     fetchPlayingMovies,
@@ -51,170 +38,105 @@ function HomePage() {
     fetchPopularMovies,
     fetchMovieInfo,
   } = useContext(MoviesContext);
-  // console.log("movieId in home: ", movieId);
   const [trail, setTrail] = useState(false);
-
   const { user, setUser } = useContext(UserContext);
-  const {images, setImages} = useContext(UploadContext)
-  const { photo, setPhoto } = useContext(UploadContext);
+  const { setImages } = useContext(UploadContext);
   const navigate = useNavigate();
-  ////
-  async function redirect() {
+  const movieUrl = "https://api.themoviedb.org/3";
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
+    },
+  };
+
+  const redirect = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/validate", {
-        withCredentials: true,
-      });
-      const loggedUser = response.data;
+      const response = await axios.get("/validate");
+      const loggedUser = await response.data;
       setUser(loggedUser);
-      console.log("LOGGED USER HOME PAGE",loggedUser)
-    
     } catch (error) {
-      console.log("useEffect weiter leitung");
       navigate("/");
     }
-  }
-  console.log("USER FROM HOME PAGE", user)
+  };
+
+  const getImageById = async () => {
+    if (user) {
+      try {
+        const response = await axios.get(`/get-image/${user?._id}`);
+        setImages(response.data.data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (user?._id) {
+      getImageById();
+    }
+  }, [user]);
+
   useEffect(() => {
     if (!user?.username) {
       redirect();
     }
-  }, []);
-  useEffect(() => {
     fetchDataAring();
   }, []);
- 
 
-console.log("user._id", user?._id)
-const getImageById = async () => {
-  console.log("user._id", user?._id)
-  if(user){
+  const fetchDataOnTv = async () => {
     try {
+      const response = await fetch(
+        `${movieUrl}/tv/on_the_air?language=en-US&page=1`,
+        options
+      );
+      const data = await response.json();
+      setOnTv(data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
-      console.log("response.data.data", response.data.data);
-      setImages(response.data.data);
-    
-
-  } catch (error) {
-      console.error('Error fetching images:', error);
-  }
-
-  }
-   
-};
-
-useEffect(() => {
-  if(user?._id){
-    getImageById()
-  }
- 
-}, [user]);
-
- 
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
-        const response = await fetch(
-          "https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1",
-          options
-        );
-        const data = await response.json();
-        setOnTv(data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
-        const response = await fetch(
-          "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
-          options
-        );
-        const data = await response.json();
-        setPopular(data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
-        const response = await fetch(
-          "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
-          options
-        );
-        const data = await response.json();
-        setRated(data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const fetchDataPopular = async () => {
+    try {
+      const response = await fetch(
+        `${movieUrl}/tv/popular?language=en-US&page=1`,
+        options
+      );
+      const data = await response.json();
+      setPopular(data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const fetchDataRated = async () => {
+    try {
+      const response = await fetch(
+        `${movieUrl}/tv/top_rated?language=en-US&page=1`,
+        options
+      );
+      const data = await response.json();
+      setRated(data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchSeriesByID = async () => {
     try {
       if (seriesId) {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
         const response = await fetch(
-          `https://api.themoviedb.org/3/tv/${seriesId}/videos?language=en-US`,
+          `${movieUrl}/tv/${seriesId}/videos?language=en-US`,
           options
         );
         const data = await response.json();
-
-        console.log("SERIES ID", seriesId);
-        console.log("DATA", data);
         if (data.results && data.results.length === 0) {
           setTrail(true);
         }
         if (data.results && data.results.length > 0) {
           for (const video of data.results) {
-            console.log("Video", video);
             setSeriesVideo(video.key);
           }
         }
@@ -224,7 +146,42 @@ useEffect(() => {
     }
   };
 
+  const fetchMovieById = async () => {
+    try {
+      if (movieId) {
+        const response = await fetch(
+          `${movieUrl}/movie/${movieId}/videos?language=en-US`,
+          options
+        );
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          for (const video of data.results) {
+            if (video.type === "Trailer") {
+              setMovieVideo(video.key);
+              return;
+            }
+          }
+        }
+        console.error("No trailer found for the movie.");
+      }
+    } catch (error) {
+      console.error("Error fetching movie by ID:", error);
+    }
+  };
+
+  const handleScroll = () => {
+    // Your scroll event logic here
+    // setMovieId("");
+    // setSeriesId("");
+    setTrail(false);
+    setMovieVideo(undefined);
+    setSeriesVideo(undefined);
+  };
+
   useEffect(() => {
+    fetchDataRated();
+    fetchDataPopular();
+    fetchDataOnTv();
     fetchPlayingMovies();
     fetchPopularMovies();
     fetchTopRatedMovies();
@@ -232,14 +189,7 @@ useEffect(() => {
   }, []);
   //
   useEffect(() => {
-    const handleScroll = () => {
-      // Your scroll event logic here
-      // setMovieId("");
-      // setSeriesId("");
-      setTrail(false);
-      setMovieVideo(undefined);
-      setSeriesVideo(undefined);
-    };
+    handleScroll();
 
     // Attach the scroll event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
@@ -249,35 +199,6 @@ useEffect(() => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const fetchMovieById = async () => {
-    try {
-      if (movieId) {
-        const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`;
-        const headers = {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzdlMDBkMTIyZDg0MmZlZTYwYzFlNWY1MzUwZWVkNCIsInN1YiI6IjY1MmE2Yjk5MWYzZTYwMDExYzRhMmNmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.27Of1P9G1YQOX5RsHqMkoga3b6WelSSkdIblIqP19YY",
-        };
-
-        const response = await axios.get(url, { headers });
-        console.log("response", response);
-        if (response.data.results && response.data.results.length > 0) {
-          for (const video of response.data.results) {
-            if (video.type === "Trailer") {
-              setMovieVideo(video.key);
-              console.log("movie Video", movieVideo);
-
-              return;
-            }
-          }
-        }
-
-        console.error("No trailer found for the movie.");
-      }
-    } catch (error) {
-      console.error("Error fetching movie by ID:", error);
-    }
-  };
 
   useEffect(() => {
     fetchSeriesInfo();
@@ -287,8 +208,6 @@ useEffect(() => {
     fetchMovieInfo();
     fetchMovieById();
   }, [movieId]);
-  // console.log("movieInfo", movieInfo);
-  
 
   return (
     <>
@@ -376,7 +295,6 @@ useEffect(() => {
         <h2>Top Rated</h2>
         <SeriesCaruselComponent items={rated} />
         {/* <Images/> */}
-      
       </div>
     </>
   );

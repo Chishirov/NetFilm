@@ -1,17 +1,15 @@
-import { Button, Input, Card } from "@material-tailwind/react";
-import React from "react";
+import { Button, Input } from "@material-tailwind/react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
 
-
 import { Images } from "../components/Image";
 
 function SettingsPage() {
-  const [open, setOpen] = React.useState(1);
-
+  const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
@@ -54,11 +52,9 @@ function SettingsPage() {
           Upload Photo
         </AccordionHeader>
         <AccordionBody>
-     
-       <Images/>
+          <Images />
         </AccordionBody>
       </Accordion>
-     
     </div>
   );
 }

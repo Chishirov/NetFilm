@@ -1,37 +1,21 @@
-
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Pagination from "../../components/Pagination";
-import { UserContext } from "../../context/UserContext";
 import Banner from "../../components/banner/Banner";
-
+import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
 function NowPlayingMovies() {
   const [play, setPlay] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzdlMDBkMTIyZDg0MmZlZTYwYzFlNWY1MzUwZWVkNCIsInN1YiI6IjY1MmE2Yjk5MWYzZTYwMDExYzRhMmNmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.27Of1P9G1YQOX5RsHqMkoga3b6WelSSkdIblIqP19YY",
-          },
-        };
-
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage}`,
+          `${movieUrl}/movie/now_playing?language=en-US&page=${currentPage}`,
           options
         );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
         const data = await response.json();
         setPlay(data.results);
       } catch (error) {
@@ -49,7 +33,11 @@ function NowPlayingMovies() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Banner data={play} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Banner
+        data={play}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div
         style={{
           display: "grid",
@@ -62,11 +50,7 @@ function NowPlayingMovies() {
       >
         {/* Rendering von ElaCard */}
         <ElaCard data={filteredMovies} />
-
-       
-     
       </div>
-
       {/* Pagination-Komponente */}
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>

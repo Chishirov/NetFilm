@@ -8,21 +8,17 @@ import {
   Button,
 } from "@material-tailwind/react";
 import axios from "axios";
+
 function FavoritePage() {
   const { user, setUser } = useContext(UserContext);
-
   const deleteHandler = async (movieId) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/delete-movie/${movieId}/${user._id}`
-      );
+      await axios.delete(`/delete-movie/${user._id}/${movieId}`);
 
       if (user?.movies.length !== 0) {
-        console.log("user.movies", user.movies);
         const remainigMovies = user.movies.filter(
           (movie) => movie?.movieId !== movieId
         );
-        console.log("remainigMovies", remainigMovies);
         setUser({ ...user, movies: remainigMovies });
       } else {
         console.error("error with deleted movie");
@@ -31,25 +27,24 @@ function FavoritePage() {
       console.error(error);
     }
   };
-  useEffect(() => {
-    const getAllmovies = async () => {
-      if (user?.movies.length) {
-        try {
-          const moviesRes = await axios.get(
-            `http://localhost:3000/get-movies/${user?._id}`
-          );
-          console.log(moviesRes.data);
-          setUser({ ...user, movies: moviesRes.data });
-        } catch (error) {
-          console.error(error);
-        }
+
+  const getAllmovies = async () => {
+    if (user?.movies.length) {
+      try {
+        const moviesRes = await axios.get(`/get-movies/${user?._id}`);
+        setUser({ ...user, movies: moviesRes.data });
+      } catch (error) {
+        console.error(error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     getAllmovies();
   }, []);
 
   return (
-    <div className="flex flex-col  w-full mt-6">
+    <div className="flex flex-col  w-full mt-6 mx-4">
       {user?.movies
         .filter((movie) => movie.isWatchlist === true)
         .map((movie, index) => (
@@ -82,7 +77,6 @@ function FavoritePage() {
               <Button
                 onClick={() => deleteHandler(movie.movieId)}
                 color="red"
-                // variant="text"
                 className="m-1 p-3 w-auto text-xs sm:text-sm"
               >
                 remove from watch list

@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-
-import Cardcomponent from "../../components/Cardcomponent";
+import { useState, useEffect, useContext } from "react";
 import { SeriesContext } from "../../context/SeriesContext";
-// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Pagination from "../../components/Pagination";
 import Banner from "../../components/banner/Banner";
 
 function OnTvSeries() {
-  //const [popular, setPopular] = useState([]);
   const { popular, setPopular } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");

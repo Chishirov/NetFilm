@@ -1,30 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import Cardcomponent from "../../components/Cardcomponent";
+import { useState, useEffect } from "react";
 import Pagination from "../../components/Pagination";
-import { UserContext } from "../../context/UserContext";
-// import BannerHome from "../../components/bannerHome/BannerHome";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Banner from "../../components/banner/Banner";
+import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
-function TopRatedMovies() {
+const TopRatedMovies = () => {
   const [top, setTop] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  const { user } = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
         const response = await fetch(
-          ` https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${currentPage}`,
+          `${movieUrl}/movie/top-rated?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
@@ -36,10 +25,12 @@ function TopRatedMovies() {
 
     fetchData();
   }, [currentPage]);
+
   const filteredMovies = top.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
+
   return (
     <div style={{ textAlign: "center" }}>
       <Banner
@@ -75,6 +66,6 @@ function TopRatedMovies() {
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
-}
+};
 
 export default TopRatedMovies;

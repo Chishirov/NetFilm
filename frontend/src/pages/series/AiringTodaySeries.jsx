@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-
-import Cardcomponent from "../../components/Cardcomponent";
+import { useState, useEffect, useContext } from "react";
 import { SeriesContext } from "../../context/SeriesContext";
 import ElaCard from "../../components/ElaCard/ElaCard.jsx";
-// import BannerHome from "../../components/bannerHome/BannerHome.jsx";
 import Pagination from "../../components/Pagination.jsx";
 import Banner from "../../components/banner/Banner.jsx";
-function AiringTodaySeries() {
-  //const [aring, setAring] = useState([]);
+
+const AiringTodaySeries = () => {
   const { aring, setAring } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +12,7 @@ function AiringTodaySeries() {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,6 +70,6 @@ function AiringTodaySeries() {
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
-}
+};
 
 export default AiringTodaySeries;

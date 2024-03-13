@@ -1,4 +1,3 @@
-import React from "react";
 import { RatingWithComment } from "../components/RatingWithComment";
 
 function CommunityPage() {
