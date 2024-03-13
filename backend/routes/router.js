@@ -15,17 +15,13 @@ import {
   postFavoriteMovie,
 } from "../controller/movieController.js";
 
-import {
-  deleteImageById,
-  getImageById,
-  uploadImage,
-} from "../controller/imageController.js";
 
-import {
-  updateMissingPassword,
-  updatePassword,
-  updateUsername,
-} from "../controller/settingsController.js";
+import { updateEmail, updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
+import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
+
+
+
+
 
 export const router = Router();
 
@@ -46,6 +42,7 @@ router
 router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
+  .put("/update-email", updateEmail)
 
   .put("/missing-password", updateMissingPassword);
 

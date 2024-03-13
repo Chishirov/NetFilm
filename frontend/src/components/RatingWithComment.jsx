@@ -11,9 +11,13 @@ import {
 import Rating from "@mui/material/Rating";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+
 import "../styles/communityPage.css";
 import { UserContext } from "../context/UserContext";
 import { Button } from "flowbite-react";
+
+
+
 export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
@@ -24,6 +28,11 @@ export function RatingWithComment() {
   // const [rating, setRating] = useState(0);
   // const [title, setTitle] = useState("");
   let movieIds = [];
+
+  
+
+
+
   useEffect(() => {
     const getAllUser = async () => {
       try {

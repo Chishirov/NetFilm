@@ -37,13 +37,18 @@ export const updateUsername = async (req, res) => {
   try {
     const { id, username } = await req.body;
     const user = await userModel.findById(id);
-    user.username = username;
-    user.save();
-    res.status(200).send("Username updated");
+    if (user) {
+      user.username = username;
+      await user.save(); 
+      res.status(200).send("Username updated");
+    } else {
+      res.status(404).send("User not found");
+    }
   } catch (error) {
     res.status(400).send(error);
   }
 };
+
 
 export const updateEmail = async (req, res) => {
   try {
@@ -55,7 +60,7 @@ export const updateEmail = async (req, res) => {
     const user = await userModel.findById(id);
     user.email = email;
     user.save();
-    res.status(200).send("Email updated");
+    res.status(200).send("Email Uploaded");
   } catch (error) {
     res.status(400).send(error);
   }

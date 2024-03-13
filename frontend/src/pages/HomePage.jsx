@@ -83,6 +83,7 @@ function HomePage() {
     fetchDataAring();
   }, []);
 
+
   console.log("user._id", user?._id);
   const getImageById = async () => {
     console.log("user._id", user?._id);
@@ -99,6 +100,10 @@ function HomePage() {
       }
     }
   };
+
+ 
+
+
 
   useEffect(() => {
     if (user?._id) {
