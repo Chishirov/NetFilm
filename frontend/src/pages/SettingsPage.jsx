@@ -20,15 +20,16 @@ function SettingsPage() {
   return (
     <div sty >
   <Accordion open={open === 1} >
-    <AccordionHeader onClick={() => handleOpen(1)}>
-      Update Username
-    </AccordionHeader>
+  <AccordionHeader onClick={() => handleOpen(1)} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+  Update Username
+</AccordionHeader>
+
     <AccordionBody>
       <UpdateUsername/>
     </AccordionBody>
   </Accordion>
   <Accordion open={open === 2} >
-    <AccordionHeader onClick={() => handleOpen(2)}>
+    <AccordionHeader onClick={() => handleOpen(2)} style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
       Update Email
     </AccordionHeader>
     <AccordionBody>
@@ -36,7 +37,7 @@ function SettingsPage() {
     </AccordionBody>
   </Accordion>
   <Accordion open={open === 3} >
-    <AccordionHeader onClick={() => handleOpen(3)}>
+    <AccordionHeader onClick={() => handleOpen(3)} style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
       Update Password
     </AccordionHeader>
     <AccordionBody>
@@ -44,7 +45,7 @@ function SettingsPage() {
     </AccordionBody>
   </Accordion>
   <Accordion open={open === 4} >
-    <AccordionHeader onClick={() => handleOpen(4)}>
+    <AccordionHeader onClick={() => handleOpen(4)} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       Upload Photo
     </AccordionHeader>
     <AccordionBody>
