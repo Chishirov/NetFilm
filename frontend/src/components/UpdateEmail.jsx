@@ -40,12 +40,12 @@ const UpdateEmail = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col gap-2 items-center'>
       <p>{user?.email}</p>
       <div>
-        <input style={{ backgroundColor: 'transparent' }} className="flex-grow p-3 sm:p-2 border rounded-md" type="email" placeholder="New Email" ref={emailRef} />
+        <input style={{ backgroundColor: 'transparent',textAlign:"center" }} className="flex-grow p-3 sm:p-2 border rounded-md" type="email" placeholder="New Email" ref={emailRef} />
       </div>
-      <button className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={updateEmail}>UPDATE EMAIL</button>
+      <button className="px-12 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={updateEmail}>UPDATE EMAIL</button>
     </div>
   );
 };
