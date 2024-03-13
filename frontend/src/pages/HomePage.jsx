@@ -84,31 +84,31 @@ function HomePage() {
   }, []);
  
 
-console.log("user._id", user?._id)
-const getImageById = async () => {
-  console.log("user._id", user?._id)
-  if(user){
-    try {
+// console.log("user._id", user?._id)
+// const getImageById = async () => {
+//   console.log("user._id", user?._id)
+//   if(user){
+//     try {
 
-      const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
-      console.log("response.data.data", response.data.data);
-      setImages(response.data.data);
+//       const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
+//       console.log("response.data.data", response.data.data);
+//       setImages(response.data.data);
     
 
-  } catch (error) {
-      console.error('Error fetching images:', error);
-  }
+//   } catch (error) {
+//       console.error('Error fetching images:', error);
+//   }
 
-  }
+//   }
    
-};
+// };
 
-useEffect(() => {
-  if(user?._id){
-    getImageById()
-  }
+// useEffect(() => {
+//   if(user?._id){
+//     getImageById()
+//   }
  
-}, [user]);
+// }, [user]);
 
  
 

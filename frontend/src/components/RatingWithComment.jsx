@@ -9,7 +9,9 @@ import {
 } from "@material-tailwind/react";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { UploadContext } from "../context/UploadContext";
 export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const [moviesIds, setMoviesIds] = useState([]);
@@ -18,6 +20,11 @@ export function RatingWithComment() {
   // const [rating, setRating] = useState(0);
   // const [title, setTitle] = useState("");
   let movieIds = [];
+
+  
+
+
+
   useEffect(() => {
     const getAllUser = async () => {
       try {
