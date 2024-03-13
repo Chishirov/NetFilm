@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DetailsBanner from "../../components/details/detailsBanner/DetailsBanner.jsx";
 import Cast from "../../components/details/cast/Cast.jsx";
+import VideosSection from "../../components/details/videosSection/VideosSection.jsx";
 
 function MovieInfo() {
     const [movieInfo, setMovieInfo] = useState(null);
     const [credits, setCredits] = useState(null);
     const [videos, setVideos] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [creditsLoading, setCreditsLoading] = useState(false);
     const { mediaType, id } = useParams();
 
@@ -49,7 +50,7 @@ function MovieInfo() {
 
                 setLoading(false);
             } catch (error) {
-                console.error("Fehler beim Laden der Daten:", error);
+                console.error("Error loading data:", error);
                 setLoading(false);
             }
         };
@@ -70,6 +71,12 @@ function MovieInfo() {
                 video={videos?.results?.[0]}
             />
             <Cast data={credits?.cast} loading={creditsLoading} />
+            <VideosSection 
+                movieInfo={movieInfo}
+                loading={loading}
+                video={videos?.results} // Übergeben  die Videos-Prop an die VideoSection-Komponente
+                id={id} // Übergeben die ID an die VideoSection-Komponente
+            />
         </div>
     );
 }

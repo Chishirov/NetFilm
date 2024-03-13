@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-// import { useSelector } from "react-redux";
-
+import { useState } from "react";
 import "./style.scss";
 
 const Genres = ({ data }) => {
-    //  const { genres } = useSelector((state) => state.home);
     const [genres, setGenres] = useState("")
     return (
         <div className="genres">
