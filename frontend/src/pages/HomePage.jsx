@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
-import { Outlet } from "react-router-dom";
-import CaruselComponent from "../components/CaruselComponent.jsx";
+// import { SidebarWithBurgerMenu } from "../components/SidebarWithBurgerMenu.jsx";
+// import { Outlet } from "react-router-dom";
+// import CaruselComponent from "../components/CaruselComponent.jsx";
+// import { Images } from "../components/Image.jsx";
+// import "../components/details/detailsBanner/style.scss";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
 import "../styles/homePage.css";
@@ -12,8 +14,7 @@ import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 import { UserContext } from "../context/UserContext.jsx";
 import { UploadContext } from "../context/UploadContext.jsx";
-import { Images } from "../components/Image.jsx";
-
+import dayjs from "dayjs";
 function HomePage() {
   const {
     rated,
@@ -55,7 +56,7 @@ function HomePage() {
   const [trail, setTrail] = useState(false);
 
   const { user, setUser } = useContext(UserContext);
-  const {images, setImages} = useContext(UploadContext)
+  const { images, setImages } = useContext(UploadContext);
   const { photo, setPhoto } = useContext(UploadContext);
   const navigate = useNavigate();
   ////
@@ -66,14 +67,13 @@ function HomePage() {
       });
       const loggedUser = response.data;
       setUser(loggedUser);
-      console.log("LOGGED USER HOME PAGE",loggedUser)
-    
+      console.log("LOGGED USER HOME PAGE", loggedUser);
     } catch (error) {
       console.log("useEffect weiter leitung");
       navigate("/");
     }
   }
-  console.log("USER FROM HOME PAGE", user)
+  console.log("USER FROM HOME PAGE", user);
   useEffect(() => {
     if (!user?.username) {
       redirect();
@@ -82,36 +82,29 @@ function HomePage() {
   useEffect(() => {
     fetchDataAring();
   }, []);
- 
 
-console.log("user._id", user?._id)
-const getImageById = async () => {
-  console.log("user._id", user?._id)
-  if(user){
-    try {
+  console.log("user._id", user?._id);
+  const getImageById = async () => {
+    console.log("user._id", user?._id);
+    if (user) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/get-image/${user?._id}`,
+          { withCredentials: true }
+        );
+        console.log("response.data.data", response.data.data);
+        setImages(response.data.data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    }
+  };
 
-      const response = await axios.get(`http://localhost:3000/get-image/${user?._id}`, { withCredentials: true });
-      console.log("response.data.data", response.data.data);
-      setImages(response.data.data);
-    
-
-  } catch (error) {
-      console.error('Error fetching images:', error);
-  }
-
-  }
-   
-};
-
-useEffect(() => {
-  if(user?._id){
-    getImageById()
-  }
- 
-}, [user]);
-
- 
-
+  useEffect(() => {
+    if (user?._id) {
+      getImageById();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -288,18 +281,31 @@ useEffect(() => {
     fetchMovieById();
   }, [movieId]);
   // console.log("movieInfo", movieInfo);
-  
-
+  console.log("moviesInfo ", movieInfo);
   return (
     <>
       {movieVideo && (
         <div className="movie-box">
           {movieInfo && (
-            <div>
-              <h1 className="headline-home">{movieInfo.title}</h1>
-              <p className="home-paragraph">{movieInfo.overview}</p>
+            <div className="right">
+              {/* <h1 className="headline-home">{movieInfo.title}</h1>
+              <p className="home-paragraph">{movieInfo.overview}</p> */}
               {/* <p>{movieInfo.production_companies[0].name}</p> */}
-              <p>{movieInfo.budget} $</p>
+              {/* <p>{movieInfo.budget} $</p> */}
+              <div className="title">{movieInfo.name || movieInfo.title}</div>
+              <div className="subtitle">{movieInfo.tagline}</div>
+              <div>{} </div>
+              <div className="overview">
+                <div className="heading">Overview</div>
+                <div className="description">{movieInfo.overview}</div>
+              </div>
+              <div className="genres">
+                {movieInfo?.genres?.map((g) => g.id).length > 0 ? (
+                  <div className="genre">
+                    {movieInfo?.genres?.map((g) => g.name).join(", ")}
+                  </div>
+                ) : null}
+              </div>
             </div>
           )}
           <div className="home-video">
@@ -308,7 +314,7 @@ useEffect(() => {
               playing={true}
               controls
               muted={true}
-              width={"800px"}
+              width={"600px"}
               height={"100%"}
             />
           </div>
@@ -376,7 +382,6 @@ useEffect(() => {
         <h2>Top Rated</h2>
         <SeriesCaruselComponent items={rated} />
         {/* <Images/> */}
-      
       </div>
     </>
   );

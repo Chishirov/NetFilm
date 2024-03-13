@@ -9,18 +9,17 @@ import {
 } from "../controller/userController.js";
 import {
   addCommentToMovie,
+  deleteCommentFromMovie,
   deleteMovie,
   getAllMovies,
   postFavoriteMovie,
 } from "../controller/movieController.js";
-
 
 import {
   deleteImageById,
   getImageById,
   uploadImage,
 } from "../controller/imageController.js";
-
 
 import {
   updateMissingPassword,
@@ -40,6 +39,7 @@ router
 router
   .post("/favorite-movie", postFavoriteMovie)
   .post("/update-movie/:userId/:movieId", addCommentToMovie)
+  .delete("/delete-comment/:userId/:movieId/:commentId", deleteCommentFromMovie)
   .delete("/delete-movie/:movieId/:userId", deleteMovie)
   .get("/get-movies/:id", getAllMovies);
 
