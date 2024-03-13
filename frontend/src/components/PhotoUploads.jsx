@@ -65,7 +65,7 @@ export const PhotoUpload = ({onImageUpload}) => {
  return (
       <>
         <div className='flex flex-col gap-2 items-center'>
-          <input style={{textAlign:"center"}}
+          <input 
             className=" p-3 sm:p-2 border rounded-md"
             accept="image/*"
             type="file"
@@ -73,10 +73,10 @@ export const PhotoUpload = ({onImageUpload}) => {
           />
          {photo && <img src={photo} width={200} height={200} style={{ borderRadius: "10px" }} alt="" />}
 
-          <button className="px-24 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={uploadImage}>UPLOAD</button>
-          <button className="px-24 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={cancel}>CANCEL</button>
-          <button className="px-24 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={deleteImageById}>DELETE</button>
-
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={uploadImage}>UPLOAD</button>
+        
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={deleteImageById}>DELETE</button>
+          <button className="px-28 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer" onClick={cancel}>CANCEL</button>
 
         </div>
       </>
