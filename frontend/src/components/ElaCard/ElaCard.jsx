@@ -23,7 +23,6 @@ import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 
 const ElaCard = ({ data, mediaType }) => {
-    const [endpoint, setEndpoint] = useState("day");
     const [openMenu, setOpenMenu] = useState(false);
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
@@ -145,20 +144,19 @@ const ElaCard = ({ data, mediaType }) => {
                                                 : 0
                                         }
                                     />
-                                    {/* <Genres data={item.genre_ids.slice(0, 2)} /> */}
                                     <Menu>
                                         <MenuHandler>
                                             <IconButton
                                                 size="sm"
                                                 color="white"
                                                 variant="text"
-                                                className="bg-gray-500 !absolute top-4 right-4 rounded-full"
+                                                className="bg-tranparent !absolute top-4 right-4 rounded-full"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
                                                     fill="currentColor"
-                                                    className="w-6 h-6"
+                                                    className="w-9 h-9 border-2 text-5xl font-bold text-orange-700 border-orange-700 rounded-full p-1 bg-transparent hover:bg-orange-700 hover:text-white hover:font-bold transition-all duration-300 ease-in-out"
                                                     onClick={() => handleClick()}
                                                 >
                                                     <path

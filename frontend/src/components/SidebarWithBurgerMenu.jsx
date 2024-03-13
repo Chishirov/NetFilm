@@ -108,7 +108,7 @@ export function SidebarWithBurgerMenu() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="black"
+      stroke="white"
       className="w-10 h-10"
     >
       <path
@@ -154,11 +154,11 @@ export function SidebarWithBurgerMenu() {
 
   return (
     <>
-      <div className="flex justify-between items-center header-gradieant">
-        <IconButton variant="text" size="lg" onClick={openDrawer}>
+      <div className="flex justify-between items-center header-gradieant" style={{color:"white"}}>
+        <IconButton variant="text" size="lg" onClick={openDrawer} >
          
           {isDrawerOpen ? (
-            <XMarkIcon className="h-8 w-8 stroke-2" />
+            <XMarkIcon className="h-8 w-8 stroke-2"/>
           ) : (
             
             <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "white" }} />
@@ -166,7 +166,7 @@ export function SidebarWithBurgerMenu() {
            
           )}
         </IconButton>
-        <p style={{ position: "absolute", right: "90px", ontSize: "24px" }}> Welcome, {user?.username}!</p>
+        <p style={{ position: "absolute", right: "90px", ontSize: "24px", fontSize:"25px" }}> Welcome, {user?.username}!</p>
 
 
 
@@ -222,20 +222,21 @@ export function SidebarWithBurgerMenu() {
         >
           <button onClick={() => navigate("/home")}>
             <div className="mb-2 flex items-center gap-4 p-4 ">
-              <ListItemPrefix style={{ cursor: "pointer" }}>
-                <HiOutlineHome className="w-6 h-6" />
+              <ListItemPrefix style={{ cursor: "pointer" }} >
+                <HiOutlineHome className="w-6 h-6"/>
               </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-bold">
+              <Typography color="blue-gray" className="mr-auto font-bold" style={{color:"white"}}>
                 Home
               </Typography>
             </div>
           </button>
 
-          <List>
+          <List style={{color:"white"}}>
             <Accordion
               open={open === 1}
               icon={
                 <ChevronDownIcon
+                style={{color:"white"}}
                   strokeWidth={2.5}
                   className={`mx-auto h-4 w-4 transition-transform ${
                     open === 1 ? "rotate-180" : ""
@@ -243,24 +244,25 @@ export function SidebarWithBurgerMenu() {
                 />
               }
             >
-              <ListItem className="p-0" selected={open === 1}>
+              <ListItem className="p-0" selected={open === 1} >
                 <AccordionHeader
+                style={{color:"white"}}
                   onClick={() => handleOpen(1)}
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
                     <HiOutlineFilm className="w-6 h-6" />
                   </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-bold">
+                  <Typography color="blue-gray" className="mr-auto font-bold" style={{color:"white"}}>
                     Movies
                   </Typography>
                 </AccordionHeader>
               </ListItem>
               <AccordionBody className="py-1">
-                <List className="p-0">
+                <List className="p-0" style={{color:"white"}}>
                   <button onClick={closeDrawer}>
-                    <ListItem onClick={() => navigate("/Popular-movies")}>
-                      <ListItemPrefix>
+                    <ListItem onClick={() => navigate("/Popular-movies")} >
+                      <ListItemPrefix >
                         <ChevronRightIcon
                           strokeWidth={3}
                           className="h-3 w-5 "
@@ -309,19 +311,20 @@ export function SidebarWithBurgerMenu() {
             >
               <ListItem className="p-0" selected={open === 2}>
                 <AccordionHeader
+                style={{color:"white"}}
                   onClick={() => handleOpen(2)}
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <HiOutlineVideoCamera className="w-6 h-6" />
+                    <HiOutlineVideoCamera className="w-6 h-6" style={{color:"white"}}/>
                   </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-bold">
+                  <Typography color="white" className="mr-auto font-bold">
                     Tv show
                   </Typography>
                 </AccordionHeader>
               </ListItem>
               <AccordionBody className="py-1">
-                <List className="p-0">
+                <List className="p-0" style={{color:"white"}}>
                   <button onClick={closeDrawer}>
                     <ListItem onClick={() => navigate("/Popular-series")}>
                       <ListItemPrefix>
@@ -357,12 +360,12 @@ export function SidebarWithBurgerMenu() {
                 </List>
               </AccordionBody>
             </Accordion>
-            <hr className="my-2 border-blue-gray-50" />
+            <hr className="my-2 border-blue-gray-50"/>
             <ListItem onClick={() => navigate("/community-page")}>
               <ListItemPrefix>
                 <InboxIcon className="h-5 w-5 " />
               </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-bold">
+              <Typography color="blue-gray" className="mr-auto font-bold text-blue-gray-50">
                 Community
               </Typography>
 
@@ -381,7 +384,7 @@ export function SidebarWithBurgerMenu() {
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
 
-              <Typography color="blue-gray" className="mr-auto font-bold">
+              <Typography color="white" className="mr-auto font-bold text-blue-gray-50">
                 Profile
               </Typography>
             </ListItem>
@@ -389,7 +392,7 @@ export function SidebarWithBurgerMenu() {
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-bold">
+              <Typography color="white" className="mr-auto font-bold text-blue-gray-50">
                 Settings
               </Typography>
             </ListItem>
@@ -397,7 +400,7 @@ export function SidebarWithBurgerMenu() {
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-bold">
+              <Typography color="white" className="mr-auto font-bold text-blue-gray-50">
                 Log Out
               </Typography>
             </ListItem>

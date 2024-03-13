@@ -12,7 +12,7 @@ function Pagination({ currentPage, setCurrentPage }) {
     variant: currentPage === index ? "filled" : "text",
     color: "gray",
     onClick: () => setCurrentPage(index),
-    className: "rounded-full",
+    className: "rounded-full border-2 border-orange-500 text-8md text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold",
   });
 
   const next = () => {
@@ -32,11 +32,6 @@ function Pagination({ currentPage, setCurrentPage }) {
   for (let i = startIndex; i <= endIndex; i++) {
     buttons.push(
       <IconButton
-      style={{ 
-        backgroundColor: "transparent",
-        color:"orange",
-        border:"1px solid orange",
-    }}
         key={i}
         {...getItemProps(i)}
       >
@@ -49,13 +44,8 @@ function Pagination({ currentPage, setCurrentPage }) {
     <div className="flex items-center justify-center gap-4 mt-20 ">
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full"
+        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
         onClick={prev}
-        style={{ 
-          backgroundColor: "transparent",
-          color:"orange",
-          border:"1px solid orange",
-      }}
         disabled={currentPage === 1}
       >
         <ArrowLeftIcon
@@ -67,14 +57,9 @@ function Pagination({ currentPage, setCurrentPage }) {
       <div className="flex items-center gap-2">{buttons}</div>
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full"
+        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-boldborder-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
         onClick={next}
         disabled={currentPage === maxNumber}
-        style={{ 
-          backgroundColor: "transparent",
-          color:"orange",
-          border:"1px solid orange",
-      }}
       >
         <ArrowRightIcon
           strokeWidth={2}
