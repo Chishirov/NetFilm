@@ -1,36 +1,30 @@
 import { useState, useEffect, useContext } from "react";
 import { SeriesContext } from "../../context/SeriesContext";
-import ElaCard from "../../components/ElaCard/ElaCard.jsx";
-import Pagination from "../../components/Pagination.jsx";
-import Banner from "../../components/banner/Banner.jsx";
+import ElaCard from "../../components/ElaCard/ElaCard";
+import Pagination from "../../components/Pagination";
+import Banner from "../../components/banner/Banner";
+import { options, movieUrl } from "../../components/fetchData/fetchData.jsx";
 
-const AiringTodaySeries = () => {
+function AiringTodaySeries() {
   const { aring, setAring } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredShow = aring.filter((item) => {
-    const title = item.title || item.name;
-    return title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
         const response = await fetch(
-          `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${currentPage}`,
+          `${movieUrl}/tv/airing_today?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
-        setAring(data.results);
+
+        // Setze das mediaType-Feld für jede Serie
+        const airingWithMediaType = data.results.map((serie) => ({
+          ...serie,
+          mediaType: "tv",
+        }));
+        setAring(airingWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -38,6 +32,11 @@ const AiringTodaySeries = () => {
 
     fetchData();
   }, [currentPage]);
+
+  const filteredShows = aring.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -56,20 +55,11 @@ const AiringTodaySeries = () => {
           margin: "0 auto",
         }}
       >
-        {/* {aring.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.name}
-            date={movie.first_air_date}
-            link={`/series-info/${movie.id}`}
-          />
-        ))} */}
-        <ElaCard data={filteredShow} />
+        <ElaCard data={filteredShows} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
-};
+}
 
 export default AiringTodaySeries;

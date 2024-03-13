@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema({
   // movieId:
-  raiting: String,
+  raiting: Number,
   comment: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
@@ -11,6 +11,9 @@ const UserModel = new mongoose.Schema(
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     image: { type: String },
+    isAdmin: { type: Boolean, default: false },
+    // adminEmail: { type: String, default: "admin@mail.com" },
+    // adminPwd: { type: String, required: true },
     movies: [
       {
         title: String,
@@ -18,9 +21,7 @@ const UserModel = new mongoose.Schema(
         imageUrl: String,
         isFavorite: Boolean,
         isWatchlist: Boolean,
-        comments: [commentSchema],
-        //rating:string,
-        //commit:string
+        comments: commentSchema,
       },
     ],
   },

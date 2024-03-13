@@ -17,7 +17,13 @@ function PopularMovies() {
           options
         );
         const data = await response.json();
-        setMovies(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const moviesWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(moviesWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -29,6 +35,7 @@ function PopularMovies() {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
+
   return (
     <div style={{ textAlign: "center" }}>
       <Banner
@@ -46,22 +53,8 @@ function PopularMovies() {
           margin: "0 auto",
         }}
       >
-        {/* {movies.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))} */}
         <ElaCard data={filteredMovies} />
       </div>
-
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );

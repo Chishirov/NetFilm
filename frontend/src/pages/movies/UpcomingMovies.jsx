@@ -6,8 +6,9 @@ import { movieUrl, options } from "../../components/fetchData/FetchData";
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+
   const filteredMovies = movies.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -21,7 +22,13 @@ function UpcomingMovies() {
           options
         );
         const data = await response.json();
-        setMovies(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const upcomingWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(upcomingWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -46,19 +53,6 @@ function UpcomingMovies() {
           margin: "0 auto",
         }}
       >
-        {/* {movies.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))} */}
         <ElaCard data={filteredMovies} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

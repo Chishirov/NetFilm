@@ -127,7 +127,7 @@
             border: none;
             border-radius: 0px 5px 5px 0px;
             padding: 0 10px;
-            font-size: 17px;
+            font-size: 25px;
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -135,7 +135,7 @@
             transition: opacity 0.3s ease;
             @include md{
                 height: 70px;
-            
+                font-size: 40px;
             }
             &:hover {
                 opacity: 0.9;

@@ -1,74 +1,79 @@
-import { useState, useEffect, useContext } from "react";
-import { SeriesContext } from "../../context/SeriesContext";
+import { useState, useEffect } from "react";
 import ElaCard from "../../components/ElaCard/ElaCard";
-import Pagination from "../../components/Pagination";
 import Banner from "../../components/banner/Banner";
+import Pagination from "../../components/Pagination";
+import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
-function OnTvSeries() {
-  const { popular, setPopular } = useContext(SeriesContext);
+function UpcomingMovies() {
+  const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredShow = popular.filter((item) => {
-    const title = item.title || item.name;
-    return title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
         const response = await fetch(
-          `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${currentPage}`,
+          `${movieUrl}/movie/upcoming?language=en-US&page=${currentPage}`,
           options
         );
+        if (!response.ok) {
+          throw new Error("Failed to fetch upcoming movies");
+        }
         const data = await response.json();
-        setPopular(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const upcomingWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(upcomingWithMediaType);
       } catch (error) {
-        console.error(error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [currentPage]);
 
+  const filteredMovies = movies.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   return (
     <div style={{ textAlign: "center" }}>
       <Banner
-        data={popular}
+        data={movies}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "20px",
-          justifyContent: "center",
-          width: "80%",
-          margin: "0 auto",
-        }}
-      >
-        {/* {popular.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.name}
-            date={movie.first_air_date}
-            link={`/series-info/${movie.id}`}
-          />
-        ))} */}
-        <ElaCard data={filteredShow} />
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "20px",
+            justifyContent: "center",
+            width: "80%",
+            margin: "0 auto",
+          }}
+        >
+          <ElaCard data={filteredMovies} />
+        </div>
+      )}
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
 
-export default OnTvSeries;
+export default UpcomingMovies;

@@ -9,12 +9,14 @@ import {
 } from "../controller/userController.js";
 import {
   addCommentToMovie,
+  deleteCommentFromMovie,
   deleteMovie,
   getAllMovies,
   postFavoriteMovie,
 } from "../controller/movieController.js";
 
-import { updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
+
+import { updateEmail, updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
 import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
 
 export const router = Router();
@@ -31,14 +33,17 @@ router
 router
   .post("/favorite-movie", postFavoriteMovie)
   .post("/update-movie/:userId/:movieId", addCommentToMovie)
-  .delete("/delete-movie/:userId/:movieId", deleteMovie)
+  .delete("/delete-comment/:userId/:movieId/:commentId", deleteCommentFromMovie)
+  .delete("/delete-movie/:movieId/:userId", deleteMovie)
   .get("/get-movies/:id", getAllMovies);
 
 // Settings Controller
 router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
-  .put("/missing-password", updateMissingPassword)
+  .put("/update-email", updateEmail)
+
+  .put("/missing-password", updateMissingPassword);
 
 // Image Controller
 router

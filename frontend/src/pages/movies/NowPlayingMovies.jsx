@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import ElaCard from "../../components/ElaCard/ElaCard";
+import ElaCard from "../../components/ElaCard/ElaCard.jsx";
+import Banner from "../../components/banner/Banner.jsx";
 import Pagination from "../../components/Pagination";
-import Banner from "../../components/banner/Banner";
 import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
-function NowPlayingMovies() {
-  const [play, setPlay] = useState([]);
+function PopularMovies() {
+  const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -17,7 +17,13 @@ function NowPlayingMovies() {
           options
         );
         const data = await response.json();
-        setPlay(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const moviesWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setMovies(moviesWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -26,7 +32,7 @@ function NowPlayingMovies() {
     fetchData();
   }, [currentPage]);
 
-  const filteredMovies = play.filter((item) => {
+  const filteredMovies = movies.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
   });
@@ -34,7 +40,7 @@ function NowPlayingMovies() {
   return (
     <div style={{ textAlign: "center" }}>
       <Banner
-        data={play}
+        data={movies}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
@@ -48,13 +54,11 @@ function NowPlayingMovies() {
           margin: "0 auto",
         }}
       >
-        {/* Rendering von ElaCard */}
         <ElaCard data={filteredMovies} />
       </div>
-      {/* Pagination-Komponente */}
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }
 
-export default NowPlayingMovies;
+export default PopularMovies;

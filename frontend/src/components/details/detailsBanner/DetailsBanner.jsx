@@ -9,11 +9,11 @@ import "./style.scss";
 import PropTypes from "prop-types";
 
 const DetailsBanner = ({ id, movieInfo, video, crew }) => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
-  const director = crew?.filter((crew) => crew.job === "Director");
 
+  const director = crew?.filter((c) => c.job === "Director");
   const writer = crew?.filter(
     (c) => c.job === "Screenplay" || c.job === "Story" || c.job === "Writer"
   );
@@ -67,8 +67,13 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
                     </div>
                     <div className="row">
                       <CircleRating
-                        rating={movieInfo.vote_average?.toFixed(1)}
+                        rating={
+                          movieInfo && movieInfo.vote_average
+                            ? movieInfo.vote_average.toFixed(1)
+                            : 0
+                        }
                       />
+
                       <div
                         className="playbtn"
                         onClick={() => {

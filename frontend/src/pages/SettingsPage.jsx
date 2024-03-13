@@ -1,12 +1,13 @@
-import { Button, Input } from "@material-tailwind/react";
 import { useState } from "react";
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-
 import { Images } from "../components/Image";
+import UpdateUsername from "../components/UpdateUsername";
+import UpdatePassword from "../components/UpdatePassword";
+import UpdateEmail from "../components/UpdateEmail";
 
 function SettingsPage() {
   const [open, setOpen] = useState(1);
@@ -15,40 +16,60 @@ function SettingsPage() {
   return (
     <div>
       <Accordion open={open === 1}>
-        <AccordionHeader onClick={() => handleOpen(1)}>
+        <AccordionHeader
+          onClick={() => handleOpen(1)}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           Update Username
         </AccordionHeader>
+
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input label="Username" />
-            <Button>Update</Button>
-          </div>
+          <UpdateUsername />
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2}>
-        <AccordionHeader onClick={() => handleOpen(2)}>
+        <AccordionHeader
+          onClick={() => handleOpen(2)}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           Update Email
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input type="email" label="Email" />
-            <Button>Update</Button>
-          </div>
+          <UpdateEmail />
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 3}>
-        <AccordionHeader onClick={() => handleOpen(3)}>
+        <AccordionHeader
+          onClick={() => handleOpen(3)}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           Update Password
         </AccordionHeader>
         <AccordionBody>
-          <div className="w-72 flex">
-            <Input type="password" label="Password" />
-            <Button>Update</Button>
-          </div>
+          <UpdatePassword />
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 4}>
-        <AccordionHeader onClick={() => handleOpen(4)}>
+        <AccordionHeader
+          onClick={() => handleOpen(4)}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           Upload Photo
         </AccordionHeader>
         <AccordionBody>

@@ -22,21 +22,43 @@ export const postLoginUser = async (req, res) => {
   const { email, password } = await req.body;
   try {
     if (!email && !password) throw new Error("Please enter a valid email");
-    const user = await userModel.findOne({ email });
-    if (user) {
-      console.log("user found");
-      const checkPassword = await bcrypt.compare(password, user.password);
-      if (checkPassword) {
-        console.log("password correct");
-        jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
-          if (err) throw err;
-          res
-            .cookie("token", token, { maxAge: 90000000, httpOnly: true })
-            .json({ _id: user._id });
-        });
-        console.log("token created");
-      } else {
-        res.status(401).json("wrong password");
+    if (email.trim() === "test@mail.com") {
+      const user = await userModel.findOne({ email });
+      if (user) {
+        console.log("user found");
+        const checkPassword = await bcrypt.compare(password, user.password);
+        if (checkPassword) {
+          console.log("password correct");
+          user.isAdmin = true;
+          await user.save();
+          jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
+            if (err) throw err;
+            res
+              .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+              .json({ _id: user._id });
+          });
+          console.log("token created");
+        } else {
+          res.status(401).json("wrong password");
+        }
+      }
+    } else {
+      const user = await userModel.findOne({ email });
+      if (user) {
+        console.log("user found");
+        const checkPassword = await bcrypt.compare(password, user.password);
+        if (checkPassword) {
+          console.log("password correct");
+          jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
+            if (err) throw err;
+            res
+              .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+              .json({ _id: user._id });
+          });
+          console.log("token created");
+        } else {
+          res.status(401).json("wrong password");
+        }
       }
     }
   } catch (error) {
@@ -54,8 +76,8 @@ export const getValidateUser = async (req, res) => {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
       const user = await userModel.findById(tokenData.id);
-      const { _id, username, email, movies, image} = user;
-      res.status(200).json({ _id, username, email, movies, image});
+      const { _id, username, email, movies, image, isAdmin } = user;
+      res.status(200).json({ _id, username, email, movies, image, isAdmin });
       console.log("token überprüft");
     });
   } catch (error) {
@@ -74,9 +96,11 @@ export const getAllUsers = async (req, res) => {
       username: user.username,
       email: user.email,
       movies: user.movies,
+      image: user.image,
+      isAdmin: user.isAdmin,
     }));
 
-    res.json(usersInfo);
+    res.status(200).json(usersInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

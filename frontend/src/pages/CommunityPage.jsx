@@ -2,7 +2,7 @@ import { RatingWithComment } from "../components/RatingWithComment";
 
 function CommunityPage() {
   return (
-    <div>
+    <div style={{ marginTop: "50px", width: "100%" }}>
       <RatingWithComment />
     </div>
   );

@@ -17,7 +17,13 @@ const TopRatedMovies = () => {
           options
         );
         const data = await response.json();
-        setTop(data.results);
+
+        // Setze das mediaType-Feld für jeden Film
+        const topWithMediaType = data.results.map((movie) => ({
+          ...movie,
+          mediaType: "movie",
+        }));
+        setTop(topWithMediaType);
       } catch (error) {
         console.error(error);
       }
@@ -48,19 +54,6 @@ const TopRatedMovies = () => {
           margin: "0 auto",
         }}
       >
-        {/* {top.map((movie) => (
-          <Cardcomponent
-            key={movie.id}
-            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-            title={movie.title}
-            date={movie.release_date}
-            link={`/movies-info/${movie.id}`}
-            cardId={movie.id}
-            userId={user?._id}
-            movieTitle={movie.title}
-            imageUrl={movie.poster_path}
-          />
-        ))} */}
         <ElaCard data={filteredMovies} />
       </div>
       <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />

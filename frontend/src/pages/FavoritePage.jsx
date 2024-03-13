@@ -23,7 +23,7 @@ function FavoritePage() {
         `/update-movie/${user._id}/${movieId}`,
         {
           comment: comments[movieId],
-          raiting: raitingValue,
+          raiting: Number(raitingValue),
         }
       );
       if (movieRes.status === 200) {

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
@@ -9,7 +10,7 @@ import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 import { UserContext } from "../context/UserContext.jsx";
 import { UploadContext } from "../context/UploadContext.jsx";
-
+import dayjs from "dayjs";
 function HomePage() {
   const {
     rated,
@@ -214,11 +215,25 @@ function HomePage() {
       {movieVideo && (
         <div className="movie-box">
           {movieInfo && (
-            <div>
-              <h1 className="headline-home">{movieInfo.title}</h1>
-              <p className="home-paragraph">{movieInfo.overview}</p>
+            <div className="right">
+              {/* <h1 className="headline-home">{movieInfo.title}</h1>
+              <p className="home-paragraph">{movieInfo.overview}</p> */}
               {/* <p>{movieInfo.production_companies[0].name}</p> */}
-              <p>{movieInfo.budget} $</p>
+              {/* <p>{movieInfo.budget} $</p> */}
+              <div className="title">{movieInfo.name || movieInfo.title}</div>
+              <div className="subtitle">{movieInfo.tagline}</div>
+              <div>{} </div>
+              <div className="overview">
+                <div className="heading">Overview</div>
+                <div className="description">{movieInfo.overview}</div>
+              </div>
+              <div className="genres">
+                {movieInfo?.genres?.map((g) => g.id).length > 0 ? (
+                  <div className="genre">
+                    {movieInfo?.genres?.map((g) => g.name).join(", ")}
+                  </div>
+                ) : null}
+              </div>
             </div>
           )}
           <div className="home-video">
@@ -227,7 +242,7 @@ function HomePage() {
               playing={true}
               controls
               muted={true}
-              width={"800px"}
+              width={"600px"}
               height={"100%"}
             />
           </div>
