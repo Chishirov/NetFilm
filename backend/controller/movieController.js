@@ -39,9 +39,6 @@ export const addCommentToMovie = async (req, res) => {
     if (movieIndex === -1) {
       return res.status(404).json({ error: "Movie not found" });
     }
-
-    // user.movies[movieIndex].comments.pop({ raiting, comment })
-    // user.movies[movieIndex].comments.push({ raiting, comment });
     user.movies[movieIndex].comments = { raiting, comment };
 
     await user.save();
@@ -52,6 +49,48 @@ export const addCommentToMovie = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+/////
+export const deleteCommentFromMovie = async (req, res) => {
+  try {
+    const { userId, movieId, commentId } = req.params;
+    console.log("userId", userId);
+    console.log("movieId", movieId);
+    console.log("commentId", commentId);
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const movieIndex = user.movies.findIndex(
+      (movie) => movie.movieId === movieId
+    );
+
+    if (movieIndex === -1) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    const movie = user.movies[movieIndex];
+
+    // Check if the comments object exists
+    if (!movie.comments) {
+      return res.status(404).json({ error: "Comments not found" });
+    }
+    console.log(movie.comments);
+
+    // Delete the comments object from the movie object
+    movie.comments = undefined;
+
+    await user.save();
+
+    return res.status(200).json({ message: "Comments deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting comments from movie:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+////
 export const deleteMovie = async (req, res) => {
   try {
     const { movieId, userId } = await req.params;

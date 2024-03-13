@@ -53,6 +53,7 @@ export function SidebarWithBurgerMenu() {
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
+
   const { photo } = useContext(UploadContext)
   const {images, setImages} = useContext(UploadContext)
 
@@ -90,17 +91,21 @@ export function SidebarWithBurgerMenu() {
  
   
 
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
-  
-  const userPfoto = <img style={{width:"50px", height:"50px", borderRadius:"50%"}} src={images} alt="img" />
-  
-  
-  
+
+  const userPfoto = (
+    <img
+      style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+      src={images}
+      alt="img"
+    />
+  );
 
   const userIcon = (
     <svg
@@ -148,31 +153,42 @@ export function SidebarWithBurgerMenu() {
 
       navigate("/");
       setUser("");
-     
     }
   }
 
   return (
     <>
+
       <div className="flex justify-between items-center header-gradieant" style={{color:"white"}}>
         <IconButton variant="text" size="lg" onClick={openDrawer} >
          
+
           {isDrawerOpen ? (
             <XMarkIcon className="h-8 w-8 stroke-2"/>
           ) : (
-            
-            <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "white" }} />
-          
-           
+            <Bars3Icon
+              className="h-8 w-8 stroke-2"
+              style={{ color: "white" }}
+            />
           )}
         </IconButton>
-        <p style={{ position: "absolute", right: "90px", ontSize: "24px", fontSize:"25px" }}> Welcome, {user?.username}!</p>
 
+        <p
+          style={{
+            position: "absolute",
+            right: "90px",
+            ontSize: "24px",
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
+          Welcome {user?.username}
+        </p>
 
 
         <div>
           <Dropdown
-            label={images  ? userPfoto : userIcon}
+            label={images ? userPfoto : userIcon}
             style={{ border: "none" }}
             className="border-none rounded-t-none"
           >
@@ -204,32 +220,28 @@ export function SidebarWithBurgerMenu() {
         open={isDrawerOpen}
         onClose={closeDrawer}
       >
-        {/* 
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
-        {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" style={{ color: "red" }} />
-        )}
-      </IconButton> */}
-        {/* <Drawer className="new-class" open={isDrawerOpen} onClose={closeDrawer}> */}
-
         <Card
-        style={{ color: "white" }}
+          style={{ color: "white" }}
           color="transparent"
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
         >
-          <button onClick={() => navigate("/home")}>
-            <div className="mb-2 flex items-center gap-4 p-4 ">
-              <ListItemPrefix style={{ cursor: "pointer" }} >
-                <HiOutlineHome className="w-6 h-6"/>
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-bold" style={{color:"white"}}>
-                Home
-              </Typography>
-            </div>
-          </button>
+
+          <ListItem className="border-b-0 p-0 ">
+            <button onClick={() => navigate("/home")}>
+              <div className="mt-2 flex items-center gap-4 p-4 ">
+                <ListItemPrefix
+                  style={{ cursor: "pointer", color: "blue-gray" }}
+                >
+                  <HiOutlineHome color="blue-gray" className="w-6 h-6 " />
+                </ListItemPrefix>
+                <Typography color="blue-gray" className="mr-auto font-bold">
+                  Home
+                </Typography>
+              </div>
+            </button>
+          </ListItem>
+
 
           <List style={{color:"white"}}>
             <Accordion

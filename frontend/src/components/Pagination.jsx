@@ -32,6 +32,7 @@ function Pagination({ currentPage, setCurrentPage }) {
   for (let i = startIndex; i <= endIndex; i++) {
     buttons.push(
       <IconButton
+
         key={i}
         {...getItemProps(i)}
       >
@@ -46,6 +47,7 @@ function Pagination({ currentPage, setCurrentPage }) {
         variant="text"
         className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
         onClick={prev}
+
         disabled={currentPage === 1}
       >
         <ArrowLeftIcon
@@ -60,6 +62,7 @@ function Pagination({ currentPage, setCurrentPage }) {
         className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-boldborder-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
         onClick={next}
         disabled={currentPage === maxNumber}
+
       >
         <ArrowRightIcon
           strokeWidth={2}
