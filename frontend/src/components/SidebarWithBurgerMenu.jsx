@@ -58,7 +58,7 @@ export function SidebarWithBurgerMenu() {
   const {images, setImages} = useContext(UploadContext)
 
   console.log("USER IN SEIDBARWITHBURGERMENU", user)
-
+""
   
 
   const getImageById = async () => {
