@@ -16,8 +16,6 @@ import "../styles/communityPage.css";
 import { UserContext } from "../context/UserContext";
 import { Button } from "flowbite-react";
 
-
-
 export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
@@ -28,10 +26,6 @@ export function RatingWithComment() {
   // const [rating, setRating] = useState(0);
   // const [title, setTitle] = useState("");
   let movieIds = [];
-
-  
-
-
 
   useEffect(() => {
     const getAllUser = async () => {
@@ -156,21 +150,24 @@ export function RatingWithComment() {
                     <Typography variant="h6" color="blue">
                       @{movie.title}
                     </Typography>
-                    {/* Assuming rating is a property of movie.comments */}
+
                     <Rating
                       name="read-only"
                       size="small"
-                      value={movie.comments?.raiting || 0} // Corrected 'raiting' to 'rating'
+                      value={movie.comments?.raiting || 0}
                       readOnly
                     />
                   </div>
-                  {/* Assuming comment is a property of movie.comments */}
                   <Typography
                     className="truncate ..."
                     variant="paragraph"
                     color="blue-gray"
                   >
-                    &quot;{movie.comments?.comment}&quot;
+                    &quot;
+                    {movie.comments?.comment
+                      ? movie.comments?.comment
+                      : "comment removed"}
+                    &quot;
                   </Typography>
                 </div>
                 {user?.isAdmin && (

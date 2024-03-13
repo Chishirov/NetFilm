@@ -79,7 +79,7 @@ export const deleteCommentFromMovie = async (req, res) => {
     console.log(movie.comments);
 
     // Delete the comments object from the movie object
-    movie.comments = undefined;
+    movie.comments.comment = undefined;
 
     await user.save();
 
