@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-// import { useSelector } from "react-redux";
-
+import { useState } from "react";
 import "./style.scss";
 
 const Genres = ({ data }) => {
-    //  const { genres } = useSelector((state) => state.home);
-    const [genres, setGenres] = useState("")
-    return (
-        <div className="genres">
-            {data?.map((g) => {
-                if (!genres[g]?.name) return;
-                return (
-                    <div key={g} className="genre">
-                        {genres[g]?.name}
-                    </div>
-                );
-            })}
-        </div>
-    );
+  //  const { genres } = useSelector((state) => state.home);
+  const [genres] = useState("");
+  return (
+    <div className="genres">
+      {data?.map((g) => {
+        if (!genres[g]?.name) return;
+        return (
+          <div key={g} className="genre">
+            {genres[g]?.name}
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Genres;

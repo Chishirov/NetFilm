@@ -1,13 +1,16 @@
-import React from "react";
 import "./App.css";
-import { SidebarWithBurgerMenu } from "./components/SidebarWithBurgerMenu";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router.jsx";
+import axios from "axios";
+import "dotenv";
+
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
 function App() {
   return (
     <div>
       <RouterProvider router={router}></RouterProvider>
-      {/* <SidebarWithBurgerMenu /> */}
     </div>
   );
 }

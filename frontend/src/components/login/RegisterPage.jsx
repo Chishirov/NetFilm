@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./login.scss"; // Corrected import path
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,9 +7,8 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, setLogin] = useState(true);
+  const [setLogin] = useState(true);
   const navigate = useNavigate();
-  const backendUrl = "http://localhost:3000";
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -19,11 +18,7 @@ const RegisterPage = () => {
       password.trim() !== ""
     ) {
       try {
-        await axios.post(
-          `${backendUrl}/register`,
-          { username, email, password },
-          { withCredentials: true }
-        );
+        await axios.post(`/register`, { username, email, password });
         setLogin(true);
         alert("Account created successfully, please ");
         navigate("/");
@@ -35,20 +30,19 @@ const RegisterPage = () => {
   return (
     <div className="login">
       <div className="header">
-          <div className="div-logo">
-            <img className="img-1" src="src/assets/movie-logo.png" alt="" />
-            <img
-              className="img-2"
-              src="src/assets/logo-no-background.svg"
-              alt=""
-            />
-          </div>
-       
+        <div className="div-logo">
+          <img className="img-1" src="src/assets/movie-logo.png" alt="" />
+          <img
+            className="img-2"
+            src="src/assets/logo-no-background.svg"
+            alt=""
+          />
+        </div>
       </div>
       {/* <div className="container opacity-layer"> */}
       <div className="container">
         <div className="background-img">
-        <img src="src/assets/BG-L.png" alt="" />
+          <img src="src/assets/BG-L.png" alt="" />
         </div>
         {/* <div className="opacity-layer"></div> */}
         <form className="login-form">

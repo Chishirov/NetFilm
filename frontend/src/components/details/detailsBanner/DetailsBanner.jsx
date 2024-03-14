@@ -6,6 +6,7 @@ import { PlayIcon } from "../../../components/details/Playbtn.jsx";
 import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
 import PosterFallback from "../../../assets/no-poster.png";
 import "./style.scss";
+import PropTypes from "prop-types";
 
 const DetailsBanner = ({ id, movieInfo, video, crew }) => {
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes > 0 ? minutes + "min" : ""}`;
   };
+
   return (
     <div className="detailsBanner">
       {!loading ? (

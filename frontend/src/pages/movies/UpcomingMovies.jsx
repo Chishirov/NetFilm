@@ -1,30 +1,24 @@
-
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import Pagination from "../../components/Pagination";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Banner from "../../components/banner/Banner";
-import { UserContext } from "../../context/UserContext";
-import Pagination from "../../components/Pagination";
+import { movieUrl, options } from "../../components/fetchData/FetchData";
 
 function UpcomingMovies() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { user } = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredMovies = movies.filter((item) => {
+    const title = item.title || item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const options = {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-          },
-        };
-
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${currentPage}`,
+          `${movieUrl}/movie/upcoming?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
@@ -39,14 +33,8 @@ function UpcomingMovies() {
         console.error(error);
       }
     };
-
     fetchData();
   }, [currentPage]);
-
-  const filteredMovies = movies.filter((item) => {
-    const title = item.title || item.name;
-    return title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
 
   return (
     <div style={{ textAlign: "center" }}>

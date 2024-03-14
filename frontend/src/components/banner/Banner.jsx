@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 // import useFetch from "../../hooks/useFetch.jsx";
-import { useSelector } from "react-redux";
 import Img from "../lazyLoadImage/Img.jsx";
 // import ContentWrapper from "../contentWrapper/ContentWrapper.jsx";
 // import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import "./style.scss";
 
 const Banner = ({ data, searchQuery, setSearchQuery }) => {
   const [background, setBackground] = useState("");
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   // const [searchQuery, setSearchQuery] = useState("");
 
   //  const navigate = useNavigate();

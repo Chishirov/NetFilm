@@ -8,21 +8,17 @@ import {
   Button,
 } from "@material-tailwind/react";
 import axios from "axios";
+
 function FavoritePage() {
   const { user, setUser } = useContext(UserContext);
-
   const deleteHandler = async (movieId) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/delete-movie/${movieId}/${user._id}`
-      );
+      await axios.delete(`/delete-movie/${user._id}/${movieId}`);
 
       if (user?.movies.length !== 0) {
-        console.log("user.movies", user.movies);
         const remainigMovies = user.movies.filter(
           (movie) => movie?.movieId !== movieId
         );
-        console.log("remainigMovies", remainigMovies);
         setUser({ ...user, movies: remainigMovies });
       } else {
         console.error("error with deleted movie");
@@ -31,25 +27,24 @@ function FavoritePage() {
       console.error(error);
     }
   };
-  useEffect(() => {
-    const getAllmovies = async () => {
-      if (user?.movies.length) {
-        try {
-          const moviesRes = await axios.get(
-            `http://localhost:3000/get-movies/${user?._id}`
-          );
-          console.log(moviesRes.data);
-          setUser({ ...user, movies: moviesRes.data });
-        } catch (error) {
-          console.error(error);
-        }
+
+  const getAllmovies = async () => {
+    if (user?.movies.length) {
+      try {
+        const moviesRes = await axios.get(`/get-movies/${user?._id}`);
+        setUser({ ...user, movies: moviesRes.data });
+      } catch (error) {
+        console.error(error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     getAllmovies();
   }, []);
 
   return (
-    <div className="flex flex-col  w-full mt-6">
+    <div className="flex flex-col  w-full mt-6 mx-4">
       {user?.movies
         .filter((movie) => movie.isWatchlist === true)
         .map((movie, index) => (
@@ -74,15 +69,11 @@ function FavoritePage() {
                 color="blue-gray"
                 className="mb-0 sm:mb-2 sm:text-xl text-lg resize-x"
               >
-                {movie.title} movie.title || movie.name
-              </Typography>
-              <Typography className=" h-14 sm:h-16 mb-0 sm:mb-8 sm:text-md text-sm overflow-auto">
-                movie.review || movie.overview
+                {movie.title}
               </Typography>
               <Button
                 onClick={() => deleteHandler(movie.movieId)}
                 color="red"
-                // variant="text"
                 className="m-1 p-3 w-auto text-xs sm:text-sm"
               >
                 remove from watch list
