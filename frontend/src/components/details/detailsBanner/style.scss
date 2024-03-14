@@ -11,7 +11,7 @@
     }
     .backdrop-img {
         width: 100%;
-        height: 90%;
+        height: 92%;
         position: absolute;
         top: 0;
         left: 0;
@@ -106,7 +106,7 @@
                 .description {
                     line-height: 24px;
                     @include md {
-                        padding-right: 100px;
+                        // padding-right: 100px;
                     }
                 }
             }
