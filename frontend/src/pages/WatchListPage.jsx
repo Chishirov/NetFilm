@@ -69,10 +69,7 @@ function FavoritePage() {
                 color="blue-gray"
                 className="mb-0 sm:mb-2 sm:text-xl text-lg resize-x"
               >
-                {movie.title} movie.title || movie.name
-              </Typography>
-              <Typography className=" h-14 sm:h-16 mb-0 sm:mb-8 sm:text-md text-sm overflow-auto">
-                movie.review || movie.overview
+                {movie.title}
               </Typography>
               <Button
                 onClick={() => deleteHandler(movie.movieId)}

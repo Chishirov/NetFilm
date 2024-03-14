@@ -12,34 +12,20 @@ import UpdateEmail from "../components/UpdateEmail";
 function SettingsPage() {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const style = "flex justify-center items-center";
 
   return (
     <div>
       <Accordion open={open === 1}>
-        <AccordionHeader
-          onClick={() => handleOpen(1)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <AccordionHeader onClick={() => handleOpen(1)} className={style}>
           Update Username
         </AccordionHeader>
-
         <AccordionBody>
           <UpdateUsername />
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2}>
-        <AccordionHeader
-          onClick={() => handleOpen(2)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <AccordionHeader onClick={() => handleOpen(2)} className={style}>
           Update Email
         </AccordionHeader>
         <AccordionBody>
@@ -47,14 +33,7 @@ function SettingsPage() {
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 3}>
-        <AccordionHeader
-          onClick={() => handleOpen(3)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <AccordionHeader onClick={() => handleOpen(3)} className={style}>
           Update Password
         </AccordionHeader>
         <AccordionBody>
@@ -62,14 +41,7 @@ function SettingsPage() {
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 4}>
-        <AccordionHeader
-          onClick={() => handleOpen(4)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <AccordionHeader className={style} onClick={() => handleOpen(4)}>
           Upload Photo
         </AccordionHeader>
         <AccordionBody>

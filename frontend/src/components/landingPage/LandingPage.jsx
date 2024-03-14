@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
@@ -13,23 +13,18 @@ import { Navigate } from "react-router-dom";
 // } from "@material-tailwind/react";
 // // _________________________________________________
 const LandingPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        `${backendUrl}/login`,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      const { data } = await axios.post(`/login`, {
+        email,
+        password,
+      });
       if (!data) throw new Error();
       setUser(data);
       setRedirect(true);

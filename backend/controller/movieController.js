@@ -88,7 +88,7 @@ export const deleteCommentFromMovie = async (req, res) => {
 ////
 export const deleteMovie = async (req, res) => {
   try {
-    const { movieId, userId } = await req.params;
+    const { userId, movieId } = await req.params;
     const user = await userModel.findById(userId);
 
     const indexMovie = user.movies.findIndex(

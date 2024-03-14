@@ -8,32 +8,24 @@ import { UserContext } from "../context/UserContext";
 export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
-  const [moviesIds, setMoviesIds] = useState([]);
+  const [movieIds, setMoviesIds] = useState([]);
   const [reviews] = useState([]);
   const [deletedComment, setDeletedcoment] = useState(false);
-  // const [comments, setComents] = useState([]);
-  // const [rating, setRating] = useState(0);
-  // const [title, setTitle] = useState("");
-  let movieIds = [];
 
   useEffect(() => {
     const getAllUser = async () => {
       try {
-        const usersResponse = await axios.get(
-          "http://localhost:3000/getAllUser"
-        );
+        const usersResponse = await axios.get("/getAllUser");
         if (usersResponse.status === 200) {
           usersResponse.data.forEach((user) => {
             user.movies.forEach((movie) => {
               const movieId = movie.movieId;
               if (!movieIds.includes(movieId)) {
                 movieIds.push(movieId);
-                console.log(movieId);
               }
               return movieIds;
             });
           });
-          console.log("movieIds.........", movieIds);
           setUsers(usersResponse.data);
           setMoviesIds(movieIds);
         }
@@ -85,7 +77,7 @@ export function RatingWithComment() {
   const deleteComment = async (userId, movieId, commentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/delete-comment/${userId}/${movieId}/${commentId}`
+        `/delete-comment/${userId}/${movieId}/${commentId}`
       );
       console.log("response", response);
       setDeletedcoment(true);
@@ -93,11 +85,7 @@ export function RatingWithComment() {
       console.error(error);
     }
   };
-  console.log("users", users);
-  console.log("---------moviesIds", moviesIds);
-  console.log("reviews", reviews);
-  console.log(user);
-  console.log(user?.isAdmin);
+
   return (
     <>
       {users.map((userInfo) =>
