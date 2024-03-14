@@ -3,7 +3,7 @@ import { SeriesContext } from "../../context/SeriesContext";
 import ElaCard from "../../components/ElaCard/ElaCard";
 import Pagination from "../../components/Pagination";
 import Banner from "../../components/banner/Banner";
-import { options, movieUrl } from "../../components/fetchData/fetchData.jsx";
+import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
 function AiringTodaySeries() {
   const { aring, setAring } = useContext(SeriesContext);

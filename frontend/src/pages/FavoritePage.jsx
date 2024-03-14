@@ -50,7 +50,7 @@ function FavoritePage() {
   const deleteHandler = async (movieId) => {
     try {
       const response = await axios.delete(
-        `/delete-movie/${movieId}/${user._id}`
+        `/delete-movie/${user._id}/${movieId}`
       );
       if (response) {
         console.log("movie deleted successfully");

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MoviesContext } from "../context/MoviesContext.jsx";
 import { SeriesContext } from "../context/SeriesContext.jsx";
@@ -10,7 +9,8 @@ import MoviesCaruselComponent from "../components/MoviesCaruselComponent.jsx";
 import SeriesCaruselComponent from "../components/SeriesCaruselComponent.jsx";
 import { UserContext } from "../context/UserContext.jsx";
 import { UploadContext } from "../context/UploadContext.jsx";
-import dayjs from "dayjs";
+import { options, movieUrl } from "../components/fetchData/FetchData.jsx";
+
 function HomePage() {
   const {
     rated,
@@ -33,25 +33,12 @@ function HomePage() {
     upComingMovies,
     movieVideo,
     setMovieVideo,
-    fetchPlayingMovies,
-    fetchUpComingMovies,
-    fetchTopRatedMovies,
-    fetchPopularMovies,
-    fetchMovieInfo,
+    fetchMovies,
   } = useContext(MoviesContext);
   const [trail, setTrail] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { setImages } = useContext(UploadContext);
   const navigate = useNavigate();
-  const movieUrl = "https://api.themoviedb.org/3";
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODNiYTg1NjdiMTE2NGRiNGVkNGViMGM5ZjU2NjI2ZCIsInN1YiI6IjY1Y2NhM2NkODk0ZWQ2MDE3YzI3ZWI3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pw8eoYZ5CaNJMj6lQ1SyYpvLFQbJviN9abfhsHQ8ASI",
-    },
-  };
 
   const redirect = async () => {
     try {
@@ -87,43 +74,43 @@ function HomePage() {
     fetchDataAring();
   }, []);
 
-  const fetchDataOnTv = async () => {
+  const fetchData = async (type) => {
+    const urlMap = {
+      onTv: `${movieUrl}/tv/on_the_air`,
+      popular: `${movieUrl}/tv/popular`,
+      rated: `${movieUrl}/tv/top_rated`,
+    };
     try {
       const response = await fetch(
-        `${movieUrl}/tv/on_the_air?language=en-US&page=1`,
+        `${urlMap[type]}?language=en-US&page=1`,
         options
       );
       const data = await response.json();
-      setOnTv(data.results);
+      switch (type) {
+        case "onTv":
+          setOnTv(data.results);
+          break;
+        case "popular":
+          setPopular(data.results);
+          break;
+        case "rated":
+          setRated(data.results);
+          break;
+        default:
+          throw new Error("Invalid type for fetching data");
+      }
     } catch (error) {
-      console.error(error);
+      console.error(`Error fetching ${type}:`, error);
     }
   };
 
-  const fetchDataPopular = async () => {
-    try {
-      const response = await fetch(
-        `${movieUrl}/tv/popular?language=en-US&page=1`,
-        options
-      );
-      const data = await response.json();
-      setPopular(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchDataRated = async () => {
-    try {
-      const response = await fetch(
-        `${movieUrl}/tv/top_rated?language=en-US&page=1`,
-        options
-      );
-      const data = await response.json();
-      setRated(data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // fetchData useEffect
+  useEffect(() => {
+    fetchData("rated");
+    fetchData("popular");
+    fetchData("onTv");
+    // ... other fetch calls
+  }, []);
 
   const fetchSeriesByID = async () => {
     try {
@@ -180,13 +167,10 @@ function HomePage() {
   };
 
   useEffect(() => {
-    fetchDataRated();
-    fetchDataPopular();
-    fetchDataOnTv();
-    fetchPlayingMovies();
-    fetchPopularMovies();
-    fetchTopRatedMovies();
-    fetchUpComingMovies();
+    fetchMovies("nowPlaying");
+    fetchMovies("popular");
+    fetchMovies("topRated");
+    fetchMovies("upcoming");
   }, []);
   //
   useEffect(() => {
@@ -206,7 +190,7 @@ function HomePage() {
     fetchSeriesByID();
   }, [seriesId]);
   useEffect(() => {
-    fetchMovieInfo();
+    fetchMovies("movieInfo", movieId);
     fetchMovieById();
   }, [movieId]);
 

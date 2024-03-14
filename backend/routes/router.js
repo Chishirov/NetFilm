@@ -34,7 +34,7 @@ router
   .post("/favorite-movie", postFavoriteMovie)
   .post("/update-movie/:userId/:movieId", addCommentToMovie)
   .delete("/delete-comment/:userId/:movieId/:commentId", deleteCommentFromMovie)
-  .delete("/delete-movie/:movieId/:userId", deleteMovie)
+  .delete("/delete-movie/:userId/:movieId", deleteMovie)
   .get("/get-movies/:id", getAllMovies);
 
 // Settings Controller
@@ -42,7 +42,6 @@ router
   .put("/update-password", updatePassword)
   .put("/update-username", updateUsername)
   .put("/update-email", updateEmail)
-
   .put("/missing-password", updateMissingPassword);
 
 // Image Controller

@@ -1,26 +1,15 @@
-import {
-  Typography,
-  Avatar,
-  // Rating,
-  Card,
-  List,
-  ListItem,
-  ListItemPrefix,
-  IconButton,
-} from "@material-tailwind/react";
+import { Typography, Avatar, IconButton } from "@material-tailwind/react";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-
 import "../styles/communityPage.css";
 import { UserContext } from "../context/UserContext";
-import { Button } from "flowbite-react";
 
 export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
   const [moviesIds, setMoviesIds] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  const [reviews] = useState([]);
   const [deletedComment, setDeletedcoment] = useState(false);
   // const [comments, setComents] = useState([]);
   // const [rating, setRating] = useState(0);
