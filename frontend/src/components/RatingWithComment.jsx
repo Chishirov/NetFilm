@@ -9,13 +9,13 @@ export function RatingWithComment() {
   const [users, setUsers] = useState([]);
   const { user } = useContext(UserContext);
   const [movieIds, setMoviesIds] = useState([]);
-  const [reviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [deletedComment, setDeletedcoment] = useState(false);
 
   useEffect(() => {
     const getAllUser = async () => {
       try {
-        const usersResponse = await axios.get("/getAllUser");
+        const usersResponse = await axios.get("/get-all");
         if (usersResponse.status === 200) {
           usersResponse.data.forEach((user) => {
             user.movies.forEach((movie) => {
