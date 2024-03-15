@@ -26,6 +26,7 @@ app.use(
     origin: "https://movie-website-w8eb.onrender.com",
   })
 );
+app.set("trust proxy", 1)
 app.use(cookieParser());
 
 // Database connection with error handling
