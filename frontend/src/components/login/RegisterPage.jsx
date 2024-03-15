@@ -7,7 +7,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [setLogin] = useState(true);
+  const [login, setLogin] = useState(true);
   const navigate = useNavigate();
 
   async function handleRegister(e) {

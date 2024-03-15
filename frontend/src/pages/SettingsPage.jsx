@@ -12,7 +12,7 @@ import UpdateEmail from "../components/UpdateEmail";
 function SettingsPage() {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
-  const style = "flex justify-center items-center";
+  const style = "flex justify-center items-center text-white";
 
   return (
     <div>
