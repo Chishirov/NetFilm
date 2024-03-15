@@ -4,7 +4,7 @@ import userModel from "../models/userModel.js";
 const jwtSecret = "movie";
 export const postRegisterUser = async (req, res) => {
   const { username, email, password } = req.body;
-  const salt = bcrypt.genSaltSync(10);
+  const salt = process.env.SALT;
   try {
     const user = await userModel.create({
       username,
