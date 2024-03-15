@@ -8,7 +8,6 @@ import AiringTodaySeries from "../pages/series/AiringTodaySeries.jsx";
 import OnTvSeries from "../pages/series/OnTvSeries.jsx";
 import PopularSeries from "../pages/series/PopularSeries.jsx";
 import TopRatedSeries from "../pages/series/TopRatedSeries.jsx";
-import LoginPage from "../pages/LoginPage.jsx";
 
 import MovieInfo from "../pages/movies/MovieInfo";
 import SeriesInfo from "../pages/series/SeriesInfo";

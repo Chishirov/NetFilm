@@ -1,10 +1,10 @@
 import userModel from "../models/userModel.js";
 
 export const uploadImage = async (req, res) => {
-  const { base64 } = req.body;
-  const { userId } = req.params;
-
   try {
+    const { base64 } = req.body;
+    const { userId } = req.params;
+
     if (!userId) {
       return res
         .status(400)
@@ -31,7 +31,6 @@ export const uploadImage = async (req, res) => {
 export const getImageById = async (req, res) => {
   try {
     const userId = req.params.id;
-    console.log("userId", userId)
     const user = await userModel.findById(userId);
     if (!user) {
       return res.status(404).send("user not found");
@@ -39,7 +38,7 @@ export const getImageById = async (req, res) => {
       res.status(200).json({ status: "success", data: user.image });
     }
   } catch (error) {
-    res.status(404).json("error get all movies");
+    res.status(404).json("Error getting user image");
   }
 };
 
@@ -48,16 +47,15 @@ export const deleteImageById = async (req, res) => {
     const userId = req.params.id;
     const user = await userModel.findById(userId);
     if (!user) {
-      return res.status(404).send("Benutzer nicht gefunden");
+      return res.status(404).send("User not found");
     }
 
     user.image = "";
-
     await user.save();
 
-    res.status(200).send("Bild erfolgreich gelöscht");
+    res.status(200).send("Image successfully deleted");
   } catch (error) {
     console.error(error);
-    res.status(500).json("Fehler beim Löschen des Bildes");
+    res.status(500).json("Error deleting image");
   }
 };

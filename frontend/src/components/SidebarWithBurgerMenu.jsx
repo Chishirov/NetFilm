@@ -1,10 +1,8 @@
 import { Dropdown } from "flowbite-react";
 import {
   HiCog,
-  HiCurrencyDollar,
   HiLogout,
   HiOutlineUser,
-  HiOutlineUserCircle,
   HiOutlineFilm,
   HiOutlineVideoCamera,
   HiOutlineHome,
@@ -16,19 +14,13 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Alert,
-  Input,
   Drawer,
   Card,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
   UserCircleIcon,
   Cog6ToothIcon,
   InboxIcon,
@@ -37,8 +29,6 @@ import {
 import {
   ChevronRightIcon,
   ChevronDownIcon,
-  CubeTransparentIcon,
-  MagnifyingGlassIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -50,24 +40,25 @@ import { UploadContext } from "../context/UploadContext";
 export function SidebarWithBurgerMenu() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
+
 
   const { photo } = useContext(UploadContext);
   const { images, setImages } = useContext(UploadContext);
 
   console.log("USER IN SEIDBARWITHBURGERMENU", user);
-  ("");
+
+
+
+  const { images, setImages } = useContext(UploadContext);
 
   const getImageById = async () => {
-    console.log("user._id", user?._id);
+    // console.log("user._id", user?._id);
     if (user) {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/get-image/${user?._id}`,
-          { withCredentials: true }
-        );
+        const response = await axios.get(`/get-image/${user?._id}`);
+
         setImages(response.data.data);
       } catch (error) {
         console.error("Error fetching images:", error);
@@ -120,7 +111,7 @@ export function SidebarWithBurgerMenu() {
 
   async function redirect() {
     try {
-      const response = await axios.get("http://localhost:3000/validate", {
+      const response = await axios.get("/validate", {
         withCredentials: true,
       });
       const loggedUser = response.data;
@@ -137,11 +128,7 @@ export function SidebarWithBurgerMenu() {
   }, []);
 
   async function signout() {
-    const { data } = await axios.post(
-      "http://localhost:3000/signout",
-      {},
-      { withCredentials: true }
-    );
+    const { data } = await axios.post("/signout", {});
     if (data) {
       alert("You have signed out");
 

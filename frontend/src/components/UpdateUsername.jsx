@@ -1,26 +1,23 @@
-import React, { useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const UpdateUsername = () => {
   const newUsernameRef = useRef(null);
-  const {user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const updateUsername = async () => {
     try {
-      const response = await axios.put(
-        "http://localhost:3000/update-username",
-        {
-          id:user._id,
+      const response = await axios.put("/update-username", {
+        id: user._id,
 
-          username: newUsernameRef.current.value,
-        }
-      );
+        username: newUsernameRef.current.value,
+      });
 
       alert(response.data);
-      console.log()
+      console.log();
 
       newUsernameRef.current.value = "";
       await signout();
@@ -30,24 +27,19 @@ const UpdateUsername = () => {
     }
   };
   async function signout() {
-    const { data } = await axios.post(
-      "http://localhost:3000/signout",
-      {},
-      { withCredentials: true }
-    );
+    const { data } = await axios.post("/signout");
     if (data) {
       alert("You have signed out");
       navigate("/");
       setUser("");
-     
     }
   }
 
   return (
-    <div className='flex flex-col gap-2 items-center'>
+    <div className="flex flex-col gap-2 items-center">
       <div>
         <input
-          style={{ backgroundColor: "transparent",textAlign:"center" }}
+          style={{ backgroundColor: "transparent", textAlign: "center" }}
           className="flex-grow p-3 sm:p-2 border rounded-md"
           type="text"
           placeholder="New Username"

@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
@@ -13,10 +12,12 @@ function Pagination({ currentPage, setCurrentPage }) {
     color: "gray",
     onClick: () => setCurrentPage(index),
 
+
     className: `rounded-full border-2 border-orange-500 text-8md text-orange-500 
     bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold ${
       currentPage === index ? "bg-orange-500 text-white font-bold" : ""
     }`,
+
   });
 
   const next = () => {
@@ -59,7 +60,7 @@ function Pagination({ currentPage, setCurrentPage }) {
       <div className="flex items-center gap-2">{buttons}</div>
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-boldborder-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
+        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-boldborder-2   hover:font-bold"
         onClick={next}
         disabled={currentPage === maxNumber}
       >

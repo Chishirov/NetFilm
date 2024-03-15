@@ -9,30 +9,27 @@ import {
   Rating,
 } from "@material-tailwind/react";
 import axios from "axios";
+
 function FavoritePage() {
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState({});
-  const [klicked, setcklicked] = useState(false); // soll zukunft in context sein damit verwinden wir all comments and zeigen
+  // const [klicked, setcklicked] = useState(false); // soll zukunft in context sein damit verwinden wir all comments and zeigen
   const [clickedComments, setClickedComments] = useState({});
   const [raitingValue, setRaitingValue] = useState(0);
-  // console.log(comments[693134]);
-  console.log("comments", comments);
-  console.log("raitingValue", raitingValue);
+
   const commentHandler = async (movieId) => {
     try {
       const movieRes = await axios.post(
-        `http://localhost:3000/update-movie/${user._id}/${movieId}`,
+        `/update-movie/${user._id}/${movieId}`,
         {
           comment: comments[movieId],
           raiting: Number(raitingValue),
-        },
-        { withCredentials: true }
+        }
       );
       if (movieRes.status === 200) {
         // Check if the movie is already in the user's list
         if (user?.movies?.find((movie) => movie?.movieId === movieId)) {
           // Add the movie to the user's list
-          //prevComments={}={movieid:string},prevComments={movieid:string}
           setComments((prevComments) => ({
             ...prevComments,
             [movieId]: comments[movieId],
@@ -49,20 +46,19 @@ function FavoritePage() {
       console.error(error);
     }
   };
+
   const deleteHandler = async (movieId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/delete-movie/${movieId}/${user._id}`
+        `/delete-movie/${user._id}/${movieId}`
       );
       if (response) {
         console.log("movie deleted successfully");
       }
       if (user?.movies.length !== 0) {
-        console.log("user.movies", user.movies);
         const remainigMovies = user.movies.filter(
           (movie) => movie?.movieId !== movieId
         );
-        console.log("remainigMovies", remainigMovies);
         setUser({ ...user, movies: remainigMovies });
       } else {
         console.error("error with deleted movie");
@@ -129,7 +125,7 @@ function FavoritePage() {
                   <Typography className="h-12 mb-1 md:mb-8 font-normal ">
                     <textarea
                       className="w-full border border-gray-400 text-xs sm:text-sm"
-                      value={comments[movie.movieId] || ""} //comments[693134]
+                      value={comments[movie.movieId] || ""}
                       onChange={(e) =>
                         setComments({
                           ...comments,
@@ -149,7 +145,6 @@ function FavoritePage() {
               <Button
                 onClick={() => deleteHandler(movie.movieId)}
                 color="red"
-                // variant="text"
                 className="m-1 p-3 w-auto md:w-36 text-xs sm:text-sm"
               >
                 delete
