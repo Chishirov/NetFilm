@@ -3,8 +3,6 @@ import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import movieLogo from "../../assets/movie-logo.png";
-import image from "../../assets/logo-no-background.svg";
 
 const LandingPage = () => {
   const { setUser, admin, setAdmin } = useContext(UserContext);
@@ -42,8 +40,12 @@ const LandingPage = () => {
         <div className="opacity-layer"></div>
         <div className="wrapper">
           <div className="logo div-logo">
-            <img className="img-1" src={movieLogo} alt="" />
-            <img className="img-2" src={image} alt="" />
+            <img className="img-1" src="./assets/movie-logo.png" alt="" />
+            <img
+              className="img-2"
+              src="./assets/logo-no-background.svg"
+              alt=""
+            />
           </div>
         </div>
       </div>

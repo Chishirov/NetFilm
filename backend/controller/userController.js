@@ -38,7 +38,7 @@ export const postLoginUser = async (req, res) => {
             (err, token) => {
               if (err) throw err;
               res
-                .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+                .cookie("token", token, { maxAge: 90000000, httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" })
                 .json({ _id: user._id, isAdmin: user.isAdmin });
             }
           );
