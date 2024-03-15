@@ -3,6 +3,8 @@ import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import movieLogo from "../../assets/movie-logo.png";
+import image from "../../assets/logo-no-background.svg";
 
 const LandingPage = () => {
   const { setUser, admin, setAdmin } = useContext(UserContext);
@@ -40,20 +42,13 @@ const LandingPage = () => {
         <div className="opacity-layer"></div>
         <div className="wrapper">
           <div className="logo div-logo">
-            <img className="img-1" src="src/assets/movie-logo.png" alt="" />
-            <img
-              className="img-2"
-              src="src/assets/logo-no-background.svg"
-              alt=""
-            />
+            <img className="img-1" src={movieLogo} alt="" />
+            <img className="img-2" src={image} alt="" />
           </div>
-
-          
         </div>
       </div>
 
       <div className="container">
-  
         {!hasEmail ? (
           <div className="input">
             <input
