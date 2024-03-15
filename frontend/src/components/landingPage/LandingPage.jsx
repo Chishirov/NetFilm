@@ -3,18 +3,9 @@ import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-// // ______________________________________________
-// import {
-//   Card,
-//   CardHeader,
-//   CardBody,
-//   Typography,
-//   Avatar,
-// } from "@material-tailwind/react";
-// // _________________________________________________
-const LandingPage = () => {
 
-  const { setUser } = useContext(UserContext);
+const LandingPage = () => {
+  const { setUser, admin, setAdmin } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
@@ -46,7 +37,7 @@ const LandingPage = () => {
   return (
     <div className="register">
       <div className="header">
-      <div className="opacity-layer"></div>
+        <div className="opacity-layer"></div>
         <div className="wrapper">
           <div className="logo div-logo">
             <img className="img-1" src="src/assets/movie-logo.png" alt="" />
@@ -57,14 +48,12 @@ const LandingPage = () => {
             />
           </div>
 
-          {/* <button className="loginButton">Sign In</button> */}
+          
         </div>
       </div>
 
       <div className="container">
-        {/* <h1>Unlimited movies, TV shows, and more.</h1>
-                <h2>Watch anywhere. Cancel anytime.</h2>
-                <p>Ready to watch? Enter your email to create or restart your membership.</p> */}
+  
         {!hasEmail ? (
           <div className="input">
             <input
