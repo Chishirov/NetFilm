@@ -12,7 +12,11 @@ function Pagination({ currentPage, setCurrentPage }) {
     variant: currentPage === index ? "filled" : "text",
     color: "gray",
     onClick: () => setCurrentPage(index),
-    className: "rounded-full border-2 border-orange-500 text-8md text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold",
+
+    className: `rounded-full border-2 border-orange-500 text-8md text-orange-500 
+    bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold ${
+      currentPage === index ? "bg-orange-500 text-white font-bold" : ""
+    }`,
   });
 
   const next = () => {
@@ -31,23 +35,18 @@ function Pagination({ currentPage, setCurrentPage }) {
   const buttons = [];
   for (let i = startIndex; i <= endIndex; i++) {
     buttons.push(
-      <IconButton
-
-        key={i}
-        {...getItemProps(i)}
-      >
+      <IconButton key={i} {...getItemProps(i)}>
         {i}
       </IconButton>
     );
   }
 
   return (
-    <div className="flex items-center justify-center gap-4 mt-20 ">
+    <div className="flex items-center justify-center gap-4 mt-20 mb-20">
       <Button
         variant="text"
-        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
+        className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold "
         onClick={prev}
-
         disabled={currentPage === 1}
       >
         <ArrowLeftIcon
@@ -56,13 +55,13 @@ function Pagination({ currentPage, setCurrentPage }) {
           // style={{ backgroundColor: "red" }}
         />{" "}
       </Button>
+
       <div className="flex items-center gap-2">{buttons}</div>
       <Button
         variant="text"
         className="flex items-center gap-2 rounded-full border-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-boldborder-2 border-orange-500 text-5xl text-orange-500 bg-transparent hover:bg-orange-500 hover:text-white hover:font-bold"
         onClick={next}
         disabled={currentPage === maxNumber}
-
       >
         <ArrowRightIcon
           strokeWidth={2}

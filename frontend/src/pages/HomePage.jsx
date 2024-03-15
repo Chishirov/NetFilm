@@ -83,7 +83,6 @@ function HomePage() {
     fetchDataAring();
   }, []);
 
-
   console.log("user._id", user?._id);
   const getImageById = async () => {
     console.log("user._id", user?._id);
@@ -93,17 +92,12 @@ function HomePage() {
           `http://localhost:3000/get-image/${user?._id}`,
           { withCredentials: true }
         );
-        console.log("response.data.data", response.data.data);
         setImages(response.data.data);
       } catch (error) {
         console.error("Error fetching images:", error);
       }
     }
   };
-
- 
-
-
 
   useEffect(() => {
     if (user?._id) {

@@ -13,11 +13,12 @@ import { Navigate } from "react-router-dom";
 // } from "@material-tailwind/react";
 // // _________________________________________________
 const LandingPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, redirect, setRedirect, admin, setAdmin } =
+    useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+
   const backendUrl = "http://localhost:3000"; //! --------- app.jsx axios.default
   async function handleLogin(e) {
     e.preventDefault();
@@ -31,6 +32,9 @@ const LandingPage = () => {
         { withCredentials: true }
       );
       if (!data) throw new Error();
+      if (data.isAdmin === true) {
+        setAdmin(true);
+      }
       setUser(data);
       setRedirect(true);
     } catch (error) {
@@ -40,6 +44,8 @@ const LandingPage = () => {
   }
   if (redirect) {
     return <Navigate to={"/home"} />;
+  } else {
+    <Navigate to={"/"} />;
   }
   return (
     <div className="register">

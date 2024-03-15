@@ -11,11 +11,11 @@ export const postRegisterUser = async (req, res) => {
       email,
       password: bcrypt.hashSync(password, salt),
     });
-    res.json(user);
+    res.status(201).json(user);
     console.log("registration successful");
   } catch (error) {
     console.error(error);
-    res.status(422).json(error);
+    res.status(500).json(error);
   }
 };
 export const postLoginUser = async (req, res) => {
@@ -31,12 +31,17 @@ export const postLoginUser = async (req, res) => {
           console.log("password correct");
           user.isAdmin = true;
           await user.save();
-          jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
-            if (err) throw err;
-            res
-              .cookie("token", token, { maxAge: 90000000, httpOnly: true })
-              .json({ _id: user._id });
-          });
+          jwt.sign(
+            { id: user._id, isAdmin: user.isAdmin },
+            jwtSecret,
+            {},
+            (err, token) => {
+              if (err) throw err;
+              res
+                .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+                .json({ _id: user._id, isAdmin: user.isAdmin });
+            }
+          );
           console.log("token created");
         } else {
           res.status(401).json("wrong password");
@@ -49,12 +54,17 @@ export const postLoginUser = async (req, res) => {
         const checkPassword = await bcrypt.compare(password, user.password);
         if (checkPassword) {
           console.log("password correct");
-          jwt.sign({ id: user._id }, jwtSecret, {}, (err, token) => {
-            if (err) throw err;
-            res
-              .cookie("token", token, { maxAge: 90000000, httpOnly: true })
-              .json({ _id: user._id });
-          });
+          jwt.sign(
+            { id: user._id, isAdmin: user.isAdmin },
+            jwtSecret,
+            {},
+            (err, token) => {
+              if (err) throw err;
+              res
+                .cookie("token", token, { maxAge: 90000000, httpOnly: true })
+                .json({ _id: user._id, isAdmin: user.isAdmin });
+            }
+          );
           console.log("token created");
         } else {
           res.status(401).json("wrong password");
@@ -91,14 +101,17 @@ export const getAllUsers = async (req, res) => {
       return res.status(404).json({ message: "Keine Benutzer gefunden" });
     }
 
-    const usersInfo = allUsers.map((user) => ({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      movies: user.movies,
-      image: user.image,
-      isAdmin: user.isAdmin,
-    }));
+    const usersInfo = allUsers
+      .filter((user) => user.isAdmin === false)
+      .map((user) => ({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        movies: user.movies,
+        image: user.image,
+        isAdmin: user.isAdmin,
+        createdAt: user.createdAt,
+      }));
 
     res.status(200).json(usersInfo);
   } catch (error) {
