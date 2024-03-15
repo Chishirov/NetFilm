@@ -5,6 +5,7 @@ import Banner from "../../components/banner/Banner";
 import { options, movieUrl } from "../../components/fetchData/FetchData.jsx";
 
 const TopRatedMovies = () => {
+  const [movies, setMovies] = useState([]);
   const [top, setTop] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,11 +14,11 @@ const TopRatedMovies = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${movieUrl}/movie/top-rated?language=en-US&page=${currentPage}`,
+          `${movieUrl}/movie/top_rated?language=en-US&page=${currentPage}`,
           options
         );
         const data = await response.json();
-
+        console.log("data", data);
         // Setze das mediaType-Feld für jeden Film
         const topWithMediaType = data.results.map((movie) => ({
           ...movie,
@@ -31,7 +32,7 @@ const TopRatedMovies = () => {
 
     fetchData();
   }, [currentPage]);
-
+  console.log("top", top);
   const filteredMovies = top.filter((item) => {
     const title = item.title || item.name;
     return title.toLowerCase().includes(searchQuery.toLowerCase());
