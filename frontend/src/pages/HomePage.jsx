@@ -48,12 +48,26 @@ function HomePage() {
     } catch (error) {
       navigate("/");
     }
-  };
+
+  }
+  console.log("USER FROM HOME PAGE", user);
+  useEffect(() => {
+    if (!user?.username) {
+      redirect();
+    }
+  }, []);
+  useEffect(() => {
+    fetchDataAring();
+  }, []);
+
+
 
   const getImageById = async () => {
     if (user) {
       try {
+
         const response = await axios.get(`/get-image/${user?._id}`);
+
         setImages(response.data.data);
       } catch (error) {
         console.error("Error fetching images:", error);

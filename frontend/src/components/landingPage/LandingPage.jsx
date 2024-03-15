@@ -13,11 +13,13 @@ import { Navigate } from "react-router-dom";
 // } from "@material-tailwind/react";
 // // _________________________________________________
 const LandingPage = () => {
+
   const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
   const [redirect, setRedirect] = useState(false);
+
   async function handleLogin(e) {
     e.preventDefault();
     try {
@@ -26,6 +28,9 @@ const LandingPage = () => {
         password,
       });
       if (!data) throw new Error();
+      if (data.isAdmin === true) {
+        setAdmin(true);
+      }
       setUser(data);
       setRedirect(true);
     } catch (error) {
@@ -35,6 +40,8 @@ const LandingPage = () => {
   }
   if (redirect) {
     return <Navigate to={"/home"} />;
+  } else {
+    <Navigate to={"/"} />;
   }
   return (
     <div className="register">

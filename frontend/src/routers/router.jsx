@@ -22,6 +22,7 @@ import SettingsPage from "../pages/SettingsPage.jsx";
 import RegisterPage from "../components/login/RegisterPage.jsx";
 import LandingPage from "../components/landingPage/LandingPage.jsx";
 import CommunityPage from "../pages/CommunityPage.jsx";
+import AdminPage from "../pages/AdminPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
+      },
+      {
+        path: "/admin-page",
+        element: <AdminPage />,
       },
     ],
   },

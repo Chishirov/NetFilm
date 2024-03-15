@@ -42,6 +42,15 @@ export function SidebarWithBurgerMenu() {
   const [open, setOpen] = React.useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
+
+
+  const { photo } = useContext(UploadContext);
+  const { images, setImages } = useContext(UploadContext);
+
+  console.log("USER IN SEIDBARWITHBURGERMENU", user);
+
+
+
   const { images, setImages } = useContext(UploadContext);
 
   const getImageById = async () => {
@@ -49,6 +58,7 @@ export function SidebarWithBurgerMenu() {
     if (user) {
       try {
         const response = await axios.get(`/get-image/${user?._id}`);
+
         setImages(response.data.data);
       } catch (error) {
         console.error("Error fetching images:", error);
@@ -71,7 +81,12 @@ export function SidebarWithBurgerMenu() {
 
   const userPfoto = (
     <img
-      style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+      style={{
+        width: "40px",
+        height: "40px",
+        objectFit: "cover",
+        borderRadius: "50%",
+      }}
       src={images}
       alt="img"
     />
@@ -173,6 +188,12 @@ export function SidebarWithBurgerMenu() {
             <Dropdown.Item onClick={() => navigate("/settings")} icon={HiCog}>
               Settings
             </Dropdown.Item>
+            {user?.isAdmin && (
+              <Dropdown.Item onClick={() => navigate("/admin-page")}>
+                <i className="pr-1 fa-solid fa-toolbox"></i>
+                Admin
+              </Dropdown.Item>
+            )}
             <hr />
             <Dropdown.Item onClick={signout} icon={HiLogout}>
               Sign out
