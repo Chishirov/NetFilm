@@ -2,8 +2,7 @@ import { useState } from "react";
 import "./style.scss";
 
 const Genres = ({ data }) => {
-  //  const { genres } = useSelector((state) => state.home);
-  const [genres] = useState("");
+  const [genres, setGenres] = useState("");
   return (
     <div className="genres">
       {data?.map((g) => {

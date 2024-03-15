@@ -11,12 +11,13 @@
   }
   .backdrop-img {
     width: 100%;
-    height: 100%;
+    height: 92%;
     position: absolute;
-    top: 70px;
+    top: 0;
     left: 0;
     opacity: 0.1;
     overflow: hidden;
+    margin-top: 55px;
     .lazy-load-image-background {
       width: 100%;
       height: 100%;
@@ -59,7 +60,6 @@
     }
     .right {
       color: white;
-      padding-top: 0;
       .title {
         font-size: 28px;
         line-height: 40px;
@@ -82,8 +82,8 @@
       .genres {
         margin-bottom: 25px;
         flex-flow: row wrap;
-        display: flex;
-        gap: 5px;
+        // display: flex;
+        // gap: 5px;
         .genre {
           background-color: var(--pink);
           padding: 10px;
@@ -93,10 +93,6 @@
           white-space: nowrap;
         }
       }
-      // .genres {
-      //     margin-bottom: 25px;
-      //     flex-flow: row wrap;
-      // }
       .overview {
         margin-bottom: 25px;
         .heading {
@@ -106,7 +102,7 @@
         .description {
           line-height: 24px;
           @include md {
-            padding-right: 100px;
+            // padding-right: 100px;
           }
         }
       }

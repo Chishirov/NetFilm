@@ -46,6 +46,7 @@ const LandingPage = () => {
   return (
     <div className="register">
       <div className="header">
+      <div className="opacity-layer"></div>
         <div className="wrapper">
           <div className="logo div-logo">
             <img className="img-1" src="src/assets/movie-logo.png" alt="" />

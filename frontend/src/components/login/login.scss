@@ -132,7 +132,7 @@
             align-items: center;
             justify-content: center;
             gap: 25px;
-            margin-bottom:80px;
+            margin-bottom:120px;
             padding-top: 100px;
             z-index: 999;
             @include md {
@@ -140,6 +140,7 @@
                 padding-top: 100px;
                 width: 350px;
                 gap: 20px;
+                margin-bottom:130px;
             }
 
             input {

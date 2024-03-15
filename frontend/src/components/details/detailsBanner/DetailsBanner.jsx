@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper.jsx";
 import CircleRating from "../../../components/circleRating/CircleRating.jsx";
 import { PlayIcon } from "../../../components/details/Playbtn.jsx";
-import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
+import VideoPopup from "../videoPopup/VideoPopup.jsx";
 import PosterFallback from "../../../assets/no-poster.png";
 import "./style.scss";
 import PropTypes from "prop-types";
@@ -23,7 +23,6 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes > 0 ? minutes + "min" : ""}`;
   };
-
   return (
     <div className="detailsBanner">
       {!loading ? (
@@ -59,12 +58,15 @@ const DetailsBanner = ({ id, movieInfo, video, crew }) => {
                     </div>
                     <div className="subtitle">{movieInfo.tagline}</div>
                     <div className="genres">
-                      {movieInfo?.genres?.map((g) => g.id).length > 0 ? (
-                        <div className="genre">
-                          {movieInfo?.genres?.map((g) => g.name).join(", ")}
-                        </div>
-                      ) : null}
+                      {movieInfo?.genres?.length > 0
+                        ? movieInfo.genres.map((genre) => (
+                            <div key={genre.id} className="genre">
+                              {genre.name}
+                            </div>
+                          ))
+                        : null}
                     </div>
+
                     <div className="row">
                       <CircleRating
                         rating={
