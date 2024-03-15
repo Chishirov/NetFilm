@@ -43,15 +43,10 @@ export function SidebarWithBurgerMenu() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
 
-
   const { photo } = useContext(UploadContext);
   const { images, setImages } = useContext(UploadContext);
 
   console.log("USER IN SEIDBARWITHBURGERMENU", user);
-
-
-
-  const { images, setImages } = useContext(UploadContext);
 
   const getImageById = async () => {
     // console.log("user._id", user?._id);
