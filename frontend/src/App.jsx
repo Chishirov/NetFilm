@@ -2,7 +2,6 @@ import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router.jsx";
 import axios from "axios";
-import "dotenv";
 
 axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
