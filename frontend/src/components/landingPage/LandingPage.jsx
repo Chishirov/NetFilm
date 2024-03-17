@@ -2,7 +2,8 @@ import { useState, useContext } from "react";
 import "./register.scss";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 
 const LandingPage = () => {
   const { setUser, admin, setAdmin } = useContext(UserContext);
@@ -10,7 +11,7 @@ const LandingPage = () => {
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
   const [redirect, setRedirect] = useState(false);
-
+  const navigate = useNavigate();
   async function handleLogin(e) {
     e.preventDefault();
     try {
@@ -18,8 +19,9 @@ const LandingPage = () => {
         email,
         password,
       });
+      console.log("Data", data);
       if (!data) throw new Error();
-      if (data.isAdmin === true) {
+      if (data?.isAdmin === true) {
         setAdmin(true);
       }
       setUser(data);
@@ -51,6 +53,12 @@ const LandingPage = () => {
       </div>
 
       <div className="container">
+        <div>
+          <h1>
+            Don't have an account please{" "}
+            <Button onClick={() => navigate("/register")}>Regitser</Button>
+          </h1>
+        </div>
         {!hasEmail ? (
           <div className="input">
             <input
