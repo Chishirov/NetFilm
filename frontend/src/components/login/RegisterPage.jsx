@@ -23,7 +23,7 @@ const RegisterPage = () => {
         alert("Account created successfully, please ");
         navigate("/");
       } catch (error) {
-        console.log("Error registering", error);
+        console.error("Error registering", error);
       }
     }
   }
