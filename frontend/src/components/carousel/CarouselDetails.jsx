@@ -116,7 +116,7 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
         },
         tablet: {
             breakpoint: { max: 800, min: 464 },
-            items: 2,
+            items: 4,
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
@@ -141,48 +141,52 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
 
         return data.map((item, index) => (
             <div
+                className=" shadow-lg cursor-pointer transition-all
+            duration-300 ease-in-out hover:shadow-2xl
+            hover:scale-105 shrink-0
+            md:w-72 w-72 md:h-96 h-64 relative "
                 key={item.id}
                 onClick={() => navigate(`/${item.media_type || endpoint}/${item.id}`)}
                 style={{
                     filter: openMenu ? "blur(4px)" : "none",
                     display: "flex",
+
                     flexDirection: "column",
 
-                    // backgroundColor:"red",
-                    width: "calc(100% - 20px)",
-                    height: "450px",
+                    width: "calc(100% - 10px)",
+
                     position: "relative",
-                    marginRight: "20px",
-                    marginTop: "10px",
-                    marginBottom: "0px",
+
                     cursor: "pointer",
                 }}
             >
                 <div
+                    className="md:h-72 h-44 w-[calc(100%)]
+                                relative flex-shrink-0 md:w-[calc(100%-15px)] lg:w-[calc(100%-16px)] "
                     style={{
+                        margin: "0px auto",
+
                         display: "flex",
                         flexDirection: "column",
+
                         position: "relative",
-                        width: "100%",
-                        height: "60%",
                     }}
                 >
                     <img
-                        className="posterBlock w-full h-full object-cover object-center absolute rounded-2xl"
-                        style={{ width: "405px", height: "345px" }}
+                        className="posterBlock  object-cover object-center
+                         absolute rounded-2xl "
+                        style={{ width: "100%", height: "100%" }}
                         src={`https://image.tmdb.org/t/p/original${
                             item.poster_path || PosterFallback
                         }`}
                         alt={item.name}
                     />
                     <div
+                        className="sm:mt-56 md:mt-80 w-10 h-10 md:w-12 md:h-12"
                         style={{
-                            width: "50px",
-                            height: "50px",
-                            marginTop: "380px",
                             position: "relative",
                             bottom: "70px",
-                            left: "10px",
+                            left: "7px",
                             borderRadius: "50%",
                         }}
                     >
@@ -273,16 +277,15 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
                         </MenuList>
                     </Menu>
                 </div>
-                <div className="textBlock flex flex-col mt-28 mb-0 w-52 ml-2 relative">
+                <div
+                    className="textBlock flex flex-col mt-5 mb-0  ml-2 md:mt-3 md:ml-2 
+                                relative overflow-hidden whitespace-nowrap overflow-ellipsis"
+                >
                     <span
-                        className="text-sm text-orange-300 mt-0 mb-1"
+                        className="text-sm text-orange-300 mt-0 mb-1 md:text-lg"
                         style={{
-                            fontSize: "1.2rem",
                             fontWeight: "bold",
-                            color: "#e9bf6c",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            textOverflow: "ellipsis",
+                            //  color: "#e9bf6c",
                         }}
                     >
                         {item.title || item.name}
@@ -297,34 +300,19 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
     };
 
     return (
-        <div
-            className="carousel"
-            // style={{
-            //     width: "80%",
-            //     display: "flex",
-            //     flexDirection: "column",
-            //     gap: "30px",
-            //     justifyContent: "center",
-            //     margin: "0 auto",
-            // }}
-        >
+        <div className="carousel">
             <ContentWrapper>
                 {title && (
                     <div
-                        className="text-white text-3xl"
-                        style={{ marginTop: title === "Similar Movie" ? "0px" : "10px" }}
+                        className="text-white text-3xl mb-2"
+                        style={{ marginTop: title === "Similar Movie" ? "0px" : "20px" }}
                     >
                         {title}
                     </div>
                 )}
 
                 {!loading ? (
-                    <Carousel
-                        responsive={responsive}
-                        // infinite={true} autoPlay={true} autoPlaySpeed={5000} customTransition="all .5"
-                    >
-                        {renderData()}
-                    </Carousel>
+                    <Carousel responsive={responsive}>{renderData()}</Carousel>
                 ) : (
                     <div className="loadingSkeleton">
                         {[...Array(5)].map((_, index) => (
