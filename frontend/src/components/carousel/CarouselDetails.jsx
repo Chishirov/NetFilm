@@ -282,7 +282,7 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
                                 relative overflow-hidden whitespace-nowrap overflow-ellipsis"
                 >
                     <span
-                        className="text-sm mt-0 mb-1 md:text-lg"
+                        className="text-sm mt-0 mb-1 md:text-lg overflow-hidden whitespace-nowrap overflow-ellipsis"
                         style={{
                             fontWeight: "bold",
                               color: "#e9bf6c",
