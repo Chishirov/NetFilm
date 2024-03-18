@@ -207,7 +207,7 @@ const CarouselDitails = ({ data, loading, endpoint, title }) => {
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
-                                    className="w-6 h-6 md:w-9 md:h-9 border-2 text-5xl font-bold text-orange-700 border-orange-700 rounded-full p-1 bg-transparent hover:bg-orange-700 hover:text-white hover:font-bold transition-all duration-300 ease-in-out sm:mb-7 md:ml-3 md:mb-3 sm:ml-6"
+                                    className="w-6 h-6 md:w-9 md:h-9 border-2 text-5xl font-bold text-orange-700 border-orange-700 rounded-full p-1 bg-transparent hover: mt-3 hover:bg-orange-700 hover:text-white hover:font-bold transition-all duration-300 ease-in-out sm:mb-7 md:ml-3 md:mb-3 sm:ml-6"
                                     onClick={() => handleClick()}
                                 >
                                     <path
