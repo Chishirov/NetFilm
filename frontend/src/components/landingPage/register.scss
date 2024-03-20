@@ -10,7 +10,7 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 1) 100%
     ),
-    url("Mask group.png");
+    url("../../assets/Mask group.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -147,4 +147,7 @@
       }
     }
   }
+}
+a {
+  color: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
 }

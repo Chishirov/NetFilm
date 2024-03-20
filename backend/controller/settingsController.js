@@ -11,7 +11,7 @@ export const updatePassword = async (req, res) => {
     if (!checkPassword) {
       return res.status(500).send("Invalid password")
     }
-    const newPasswordHashed = bcrypt.hashSync(newPassword, salt);
+    const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
     user.password = newPasswordHashed;
     await user.save();
     res.status(201).send("Password was updated");

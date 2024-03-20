@@ -46,7 +46,7 @@ export function SidebarWithBurgerMenu() {
   const { photo } = useContext(UploadContext);
   const { images, setImages } = useContext(UploadContext);
 
-  console.log("USER IN SEIDBARWITHBURGERMENU", user);
+  // console.log("USER IN SEIDBARWITHBURGERMENU", user);
 
   const getImageById = async () => {
     // console.log("user._id", user?._id);
@@ -207,22 +207,18 @@ export function SidebarWithBurgerMenu() {
           shadow={false}
           className="h-[calc(100vh-2rem)] w-full p-4  "
         >
-          <ListItem className="border-b-0 p-0 ">
-            <button onClick={() => navigate("/home")}>
-              <div className="mt-2 flex items-center gap-4 p-4 ">
-                <ListItemPrefix
-                  style={{ cursor: "pointer", color: "blue-gray" }}
-                >
-                  <HiOutlineHome color="blue-gray" className="w-6 h-6 " />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-bold">
-                  Home
-                </Typography>
-              </div>
-            </button>
-          </ListItem>
-
           <List style={{ color: "white" }}>
+            <ListItem onClick={() => navigate("/home")}>
+              <ListItemPrefix>
+                <HiOutlineHome className="h-6 w-6 " />
+              </ListItemPrefix>
+              <Typography
+                color="blue-gray"
+                className="mr-auto font-bold text-blue-gray-50"
+              >
+                Home
+              </Typography>
+            </ListItem>
             <Accordion
               open={open === 1}
               icon={

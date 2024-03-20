@@ -39,15 +39,19 @@ const UpdateUsername = () => {
     <div className="flex flex-col gap-2 items-center">
       <div>
         <input
-          style={{ backgroundColor: "transparent", textAlign: "center" }}
-          className="flex-grow p-3 sm:p-2 border rounded-md"
+          style={{
+            backgroundColor: "transparent",
+            textAlign: "center",
+            color: "white",
+          }}
+          className="flex-grow p-3 sm:p-2 border rounded-md font-bold text-lg"
           type="text"
           placeholder="New Username"
           ref={newUsernameRef}
         />
       </div>
       <button
-        className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer"
+        className="px-8 py-3 rounded-lg size-xxl bg-pink-900  text-white cursor-pointer text-lg"
         onClick={updateUsername}
       >
         UPDATE USERNAME

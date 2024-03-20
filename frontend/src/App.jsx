@@ -2,8 +2,8 @@ import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router.jsx";
 import axios from "axios";
-
-axios.defaults.baseURL = "https://movie-website-backend-9uyz.onrender.com";
+import url from "../config/config.js";
+axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
 
 function App() {
