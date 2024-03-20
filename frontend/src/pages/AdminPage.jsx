@@ -14,6 +14,10 @@ import {
   Button,
   CardBody,
   Chip,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
   CardFooter,
   Tabs,
   Avatar,
@@ -41,12 +45,23 @@ function AdminPage() {
   const [moviesIds, setMoviesIds] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [klick, setklick] = useState(false);
+  const [delUser, setDeleteUser] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   let movieIds = [];
-
+  const deleteUser = async (id) => {
+    try {
+      const response = await axios.delete(`/delete-user/${user?._id}/${id}`);
+      if (response) {
+        setDeleteUser(!delUser);
+        console.log("movie deleted successfully");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
     const getAllUser = async () => {
       try {
@@ -69,7 +84,7 @@ function AdminPage() {
       }
     };
     getAllUser();
-  }, [klick]);
+  }, [klick, delUser]);
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -198,31 +213,31 @@ function AdminPage() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => {
+            {users.map((dataUser, index) => {
               const isLast = index === TABLE_ROWS.length - 1;
               const classes = isLast
                 ? "p-4"
                 : "p-4 border-b border-blue-gray-50";
 
               return (
-                <tr key={user._id}>
+                <tr key={dataUser._id}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
-                      <Avatar src={user.image || img} size="sm" />
+                      <Avatar src={dataUser.image || img} size="sm" />
                       <div className="flex flex-col">
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {user.username}
+                          {dataUser.username}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
                         >
-                          {user.email}
+                          {dataUser.email}
                         </Typography>
                       </div>
                     </div>
@@ -234,7 +249,7 @@ function AdminPage() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {new Date(user.createdAt).toLocaleDateString("de")}
+                        {new Date(dataUser.createdAt).toLocaleDateString("de")}
                       </Typography>
                       <Typography
                         variant="small"
@@ -245,7 +260,7 @@ function AdminPage() {
                   </td>
                   <td className={classes}>
                     <div className="w-max">
-                      {user.movies.map((movie) => movie.title).join(", ")}
+                      {dataUser.movies.map((movie) => movie.title).join(", ")}
                     </div>
                   </td>
                   <td className={classes}>
@@ -254,15 +269,36 @@ function AdminPage() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {user._id}
+                      {dataUser._id}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Tooltip content="Edit User">
-                      <IconButton variant="text">
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
+                    <Menu
+                      animate={{
+                        mount: { y: 0 },
+                        unmount: { y: 25 },
+                      }}
+                    >
+                      <MenuHandler>
+                        <button>
+                          <Tooltip content="Edit User">
+                            <IconButton variant="text">
+                              <PencilIcon className="h-4 w-4" />
+                            </IconButton>
+                          </Tooltip>
+                        </button>
+                      </MenuHandler>
+                      <MenuList>
+                        {console.log(dataUser._id)}
+                        <MenuItem
+                          onClick={() => deleteUser(dataUser._id)}
+                          style={{ color: "red" }}
+                        >
+                          Delete user
+                        </MenuItem>
+                        <MenuItem>Block user</MenuItem>
+                      </MenuList>
+                    </Menu>
                   </td>
                 </tr>
               );

@@ -6,6 +6,7 @@ import {
   postRegisterUser,
   getValidateUser,
   getAllUsers,
+  deleteUser,
 } from "../controller/userController.js";
 import {
   addCommentToMovie,
@@ -15,9 +16,17 @@ import {
   postFavoriteMovie,
 } from "../controller/movieController.js";
 
-
-import { updateEmail, updateMissingPassword, updatePassword, updateUsername } from "../controller/settingsController.js";
-import { deleteImageById, getImageById, uploadImage } from "../controller/imageController.js";
+import {
+  updateEmail,
+  updateMissingPassword,
+  updatePassword,
+  updateUsername,
+} from "../controller/settingsController.js";
+import {
+  deleteImageById,
+  getImageById,
+  uploadImage,
+} from "../controller/imageController.js";
 
 export const router = Router();
 
@@ -27,7 +36,8 @@ router
   .post("/login", postLoginUser)
   .get("/validate", getValidateUser)
   .post("/signout", postSignoutUser)
-  .get("/get-all", getAllUsers);
+  .get("/get-all", getAllUsers)
+  .delete("/delete-user/:adminId/:userId", deleteUser);
 
 // Movie Controller
 router
@@ -48,4 +58,4 @@ router
 router
   .post("/upload/:userId", uploadImage)
   .get("/get-image/:id", getImageById)
-  .delete("/delete/:id", deleteImageById)
+  .delete("/delete/:id", deleteImageById);

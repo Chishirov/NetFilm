@@ -15,18 +15,19 @@ const LandingPage = () => {
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const response = await axios.post(`/login`, {
+      const { data } = await axios.post(`/login`, {
         email,
         password,
       });
-      if (!response.data) throw new Error();
-      if (response.statusText === "ok" && response.data?.isAdmin === true) {
+      console.log("Data", data);
+      if (!data) throw new Error();
+      if (data && data?.isAdmin === true) {
         setAdmin(true);
       }
-      setUser(response.data);
+      setUser(data);
       setRedirect(true);
     } catch (error) {
-      console.log("Login failed", error);
+      console.log("Login failed", error.response.data);
       alert("Login failed");
     }
   }

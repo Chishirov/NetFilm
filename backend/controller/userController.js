@@ -38,7 +38,13 @@ export const postLoginUser = async (req, res) => {
             (err, token) => {
               if (err) throw err;
               res
-                .cookie("token", token, { maxAge: 90000000, httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" })
+                .cookie("token", token, {
+                  maxAge: 90000000,
+                  httpOnly: true,
+                  sameSite:
+                    process.env.NODE_ENV === "production" ? "None" : "Lax",
+                  secure: process.env.NODE_ENV === "production",
+                })
                 .json({ _id: user._id, isAdmin: user.isAdmin });
             }
           );
@@ -61,7 +67,13 @@ export const postLoginUser = async (req, res) => {
             (err, token) => {
               if (err) throw err;
               res
-                .cookie("token", token, { maxAge: 90000000, httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" })
+                .cookie("token", token, {
+                  maxAge: 90000000,
+                  httpOnly: true,
+                  sameSite:
+                    process.env.NODE_ENV === "production" ? "None" : "Lax",
+                  secure: process.env.NODE_ENV === "production",
+                })
                 .json({ _id: user._id, isAdmin: user.isAdmin });
             }
           );
@@ -76,7 +88,10 @@ export const postLoginUser = async (req, res) => {
   }
 };
 export const postSignoutUser = async (req, res) => {
-  res.clearCookie("token", { sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" });
+  res.clearCookie("token", {
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   res.send("signout user");
 };
 export const getValidateUser = async (req, res) => {
@@ -116,5 +131,24 @@ export const getAllUsers = async (req, res) => {
     res.status(200).json(usersInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { adminId, userId } = await req.params;
+  console.log("adminId", adminId);
+  console.log("userId", userId);
+  try {
+    const admin = await userModel.findById(adminId);
+    if (admin.isAdmin === true) {
+      const deletedUser = await userModel.findByIdAndDelete(userId);
+      if (!deletedUser) {
+        res.status(404).send("user not fund");
+      } else {
+        res.status(200).json(deletedUser);
+      }
+    }
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
