@@ -27,7 +27,7 @@ const LandingPage = () => {
       setUser(data);
       setRedirect(true);
     } catch (error) {
-      console.log("Login failed", error.response.data);
+      console.log("Login failed", error);
       alert("Login failed");
     }
   }
