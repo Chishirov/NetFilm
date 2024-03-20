@@ -20,7 +20,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const img =
   "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg";
 const TABLE_HEAD = ["User", "CreatedAt", "Movies", "ID", ""];
@@ -37,34 +37,30 @@ const TABLE_ROWS = [
 ];
 function AdminPage() {
   const [users, setUsers] = useState([]);
-  const { user, admin, setAdmin } = useContext(UserContext);
+  const { user, setUser, admin, setAdmin } = useContext(UserContext);
   const [moviesIds, setMoviesIds] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [klick, setklick] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   let movieIds = [];
 
   useEffect(() => {
     const getAllUser = async () => {
       try {
-        const usersResponse = await axios.get(
-          "http://localhost:3000/getAllUser"
-        );
+        const usersResponse = await axios.get("http://localhost:3000/get-all");
         if (usersResponse.status === 200) {
-          console.log(usersResponse.data);
           usersResponse.data.forEach((user) => {
             user.movies.forEach((movie) => {
               const movieId = movie.movieId;
               if (!movieIds.includes(movieId)) {
                 movieIds.push(movieId);
-                console.log(movieId);
               }
               return movieIds;
             });
           });
-          console.log("movieIds.........", movieIds);
           setUsers(usersResponse.data);
           setMoviesIds(movieIds);
         }
@@ -74,7 +70,6 @@ function AdminPage() {
     };
     getAllUser();
   }, [klick]);
-  const backendUrl = "http://localhost:3000";
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -86,7 +81,7 @@ function AdminPage() {
     ) {
       try {
         const response = await axios.post(
-          `${backendUrl}/register`,
+          `/register`,
           { username, email, password },
           { withCredentials: true }
         );
@@ -107,7 +102,25 @@ function AdminPage() {
       }
     }
   }
-  if (!user?.isAdmin) {
+  async function redirect() {
+    try {
+      const response = await axios.get("/validate", {
+        withCredentials: true,
+      });
+      const loggedUser = response.data;
+      setUser(loggedUser);
+    } catch (error) {
+      console.log("useEffect weiter leitung");
+      navigate("/");
+    }
+  }
+  useEffect(() => {
+    if (!user) {
+      redirect();
+    }
+  }, []);
+  console.log(user);
+  if (user && !user?.isAdmin) {
     return <Navigate to={"/home"} />;
   }
   return (

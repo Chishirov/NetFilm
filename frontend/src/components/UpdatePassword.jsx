@@ -41,7 +41,7 @@ const UpdatePassword = () => {
       <div>
         <input
           style={{ backgroundColor: "transparent", textAlign: "center" }}
-          className="flex-grow p-3 sm:p-2 border rounded-md"
+          className="flex-grow p-3 sm:p-2 border rounded-md text-white font-bold text-lg"
           type="password"
           placeholder="Current Password"
           ref={currentPasswordRef}
@@ -50,14 +50,14 @@ const UpdatePassword = () => {
       <div>
         <input
           style={{ backgroundColor: "transparent", textAlign: "center" }}
-          className="flex-grow p-3 sm:p-2 border rounded-md"
+          className="flex-grow p-3 sm:p-2 border rounded-md text-white font-bold text-lg"
           type="password"
           placeholder="New Password"
           ref={newPasswordRef}
         />
       </div>
       <button
-        className="px-8 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer"
+        className="px-8 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer text-lg"
         onClick={updatePassword}
       >
         UPDATE PASSWORD

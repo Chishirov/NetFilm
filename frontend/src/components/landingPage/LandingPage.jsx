@@ -4,9 +4,9 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-
+import bg_logo from "../../assets/Mask group.png";
 const LandingPage = () => {
-  const { setUser, admin, setAdmin } = useContext(UserContext);
+  const { user, setUser, admin, setAdmin } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hasEmail, setHasEmail] = useState(false);
@@ -31,13 +31,28 @@ const LandingPage = () => {
       alert("Login failed");
     }
   }
+  console.log("user", user);
   if (redirect) {
     return <Navigate to={"/home"} />;
   } else {
     <Navigate to={"/"} />;
   }
   return (
-    <div className="register">
+    <div
+      className="register"
+      style={{
+        background: `linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 100%
+    ), url(${bg_logo})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+        position: "fixed",
+      }}
+    >
       <div className="header">
         <div className="opacity-layer"></div>
         <div className="wrapper">
@@ -54,10 +69,19 @@ const LandingPage = () => {
 
       <div className="container">
         <div>
-          <h1>
+          <h2>
             Don't have an account please{" "}
-            <Button onClick={() => navigate("/register")}>Regitser</Button>
-          </h1>
+            {/* <a onClick={() => navigate("/register")}>Regitser</a> */}
+            <a
+              href="/register"
+              className=" hover:text-blue-500 transition-colors 	text-decoration: underline"
+              style={{
+                color: "#f89e00",
+              }}
+            >
+              Sign up
+            </a>
+          </h2>
         </div>
         {!hasEmail ? (
           <div className="input">

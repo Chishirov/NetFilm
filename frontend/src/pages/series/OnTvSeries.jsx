@@ -9,10 +9,7 @@ function OnTvSeries() {
   const { onTv, setOnTv } = useContext(SeriesContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredShow = onTv.filter((item) => {
-    const title = item.title || item.name;
-    return title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +24,7 @@ function OnTvSeries() {
           ...serie,
           mediaType: "tv",
         }));
+
         setOnTv(onTvWithMediaType);
       } catch (error) {
         console.error(error);
@@ -35,7 +33,11 @@ function OnTvSeries() {
 
     fetchData();
   }, [currentPage]);
-
+  const filteredShow = onTv.filter((item) => {
+    const title = item.name;
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+  console.log(onTv);
   return (
     <div style={{ textAlign: "center" }}>
       <Banner

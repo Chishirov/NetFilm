@@ -103,12 +103,13 @@ function FavoritePage() {
               />
               {!clickedComments[movie.movieId] ? (
                 <>
-                  <Typography className=" h-14 sm:h-16 mb-0 md:mb-8 sm:text-md text-sm overflow-auto">
+                  <Typography className=" h-14 sm:h-16 mb-0 md:mb-8 sm:text-md font-bold text-lg overflow-auto">
                     {comments[movie.movieId]
                       ? comments[movie.movieId]
-                      : "No Comment..."}
+                      : "Write a comment ..."}
                   </Typography>
                   <Button
+                    color="blue"
                     className="m-1 p-3 w-auto md:w-36 text-xs sm:text-sm"
                     onClick={() =>
                       setClickedComments({
@@ -124,7 +125,7 @@ function FavoritePage() {
                 <>
                   <Typography className="h-12 mb-1 md:mb-8 font-normal ">
                     <textarea
-                      className="w-full border border-gray-400 text-xs sm:text-sm"
+                      className="w-full border border-gray-400 font-bold font-bold text-lg sm:text-sm"
                       value={comments[movie.movieId] || ""}
                       onChange={(e) =>
                         setComments({
