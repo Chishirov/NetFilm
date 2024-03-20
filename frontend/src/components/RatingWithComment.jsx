@@ -35,45 +35,7 @@ export function RatingWithComment() {
     };
     getAllUser();
   }, [deletedComment]);
-  // useEffect(() => {
-  //   // Function to fetch reviews for a movie
-  //   const fetchReviewsForMovie = async (movieId) => {
-  //     const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`;
-  //     const options = {
-  //       method: "GET",
-  //       headers: {
-  //         accept: "application/json",
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzdlMDBkMTIyZDg0MmZlZTYwYzFlNWY1MzUwZWVkNCIsInN1YiI6IjY1MmE2Yjk5MWYzZTYwMDExYzRhMmNmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.27Of1P9G1YQOX5RsHqMkoga3b6WelSSkdIblIqP19YY",
-  //       },
-  //     };
 
-  //     try {
-  //       const response = await fetch(url, options);
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         console.log("Reviews for movie ID", movieId, ":", data.results);
-  //         setReviews((prevReviews) => [
-  //           ...prevReviews,
-  //           { movieId: movieId, data: data.results },
-  //         ]);
-  //       } else {
-  //         console.error("Failed to fetch reviews for movie ID", movieId);
-  //       }
-  //     } catch (error) {
-  //       console.error(
-  //         "Error fetching reviews for movie ID",
-  //         movieId,
-  //         ":",
-  //         error
-  //       );
-  //     }
-  //   };
-
-  //   moviesIds.forEach((movieId) => {
-  //     fetchReviewsForMovie(movieId);
-  //   });
-  // }, [moviesIds]);
   const deleteComment = async (userId, movieId, commentId) => {
     try {
       const response = await axios.delete(
@@ -125,7 +87,7 @@ export function RatingWithComment() {
                     }}
                   >
                     <Typography variant="h6" color="blue">
-                      @{movie.title}
+                      @{movie.title || movie.name}
                     </Typography>
 
                     <Rating
@@ -170,59 +132,3 @@ export function RatingWithComment() {
     </>
   );
 }
-
-// <div style={{ margin: "50px" }}>
-//   {reviews.map((review) =>
-//     review.data.map((rewiewer) => (
-//       <div key={rewiewer.author}>
-//         <Card
-//           style={{ width: "70%", margin: "10px" }}
-//           key={rewiewer.author}
-//         >
-//           <List>
-//             <ListItem>
-//               <ListItemPrefix>
-//                 <Avatar
-//                   variant="circular"
-//                   //  alt={user.username}
-//                   src="https://docs.material-tailwind.com/img/face-3.jpg"
-//                 />
-//                 <Typography variant="h6" color="blue-gray">
-//                   {/* {user.username} */}
-//                   {rewiewer.author}
-//                 </Typography>
-//               </ListItemPrefix>
-//               <div>
-//                 <ListItemPrefix>
-//                   <Typography variant="h6" color="blue-gray">
-//                     {/* {movie.title} */}
-//                   </Typography>
-//                   <Rating
-//                     name="read-only"
-//                     size="small"
-//                     value={rewiewer.author_details.rating}
-//                     readOnly
-//                   />
-//                 </ListItemPrefix>
-//               </div>
-//               <div>
-//                 <Typography
-//                   className="ext-clip overflow-hidden ..."
-//                   variant="paragraph"
-//                   color="blue-gray"
-//                   // style={{
-//                   //   whiteSpace: "nowrap",
-//                   //   overflow: "hidden",
-//                   //   textOverflow: "ellipsis",
-//                   // }}
-//                 >
-//                   &quot;{rewiewer.content.slice(0, 300)}&quot;
-//                 </Typography>
-//               </div>
-//             </ListItem>
-//           </List>
-//         </Card>
-//       </div>
-//     ))
-//   )}
-// </div>

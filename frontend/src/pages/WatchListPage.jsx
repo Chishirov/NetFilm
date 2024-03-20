@@ -44,13 +44,13 @@ function FavoritePage() {
   }, []);
 
   return (
-    <div className="flex flex-col  w-full mt-6 mx-4">
+    <div className="flex flex-col   w-full mt-6 mx-4">
       {user?.movies
         .filter((movie) => movie.isWatchlist === true)
         .map((movie, index) => (
           <Card
             key={index}
-            className="min-w-80 h-48 sm:h-60 md:w-full flex-row mb-2 md:mb-4 max-w-4xl place-self-center"
+            className="min-w-80 h-48 sm:h-60 md:w-full flex-row mb-2 md:mb-4 max-w-4xl place-self-center "
           >
             <CardHeader
               shadow={false}
@@ -63,7 +63,7 @@ function FavoritePage() {
                 className="h-1/2 sm:h-full object-fill"
               />
             </CardHeader>
-            <CardBody>
+            <CardBody className="flex flex-col justify-between">
               <Typography
                 variant="h4"
                 color="blue-gray"
@@ -71,13 +71,22 @@ function FavoritePage() {
               >
                 {movie.title}
               </Typography>
-              <Button
-                onClick={() => deleteHandler(movie.movieId)}
-                color="red"
-                className="m-1 p-3 w-auto text-xs sm:text-sm"
-              >
-                remove from watch list
-              </Button>
+              <div>
+                <Button
+                  onClick={() => deleteHandler(movie.movieId)}
+                  color="green"
+                  className="m-1 p-3 w-auto text-xs sm:text-sm"
+                >
+                  Move to favorite
+                </Button>
+                <Button
+                  onClick={() => deleteHandler(movie.movieId)}
+                  color="red"
+                  className="m-1 p-3 w-auto text-xs sm:text-sm"
+                >
+                  Remove 
+                </Button>
+              </div>
             </CardBody>
           </Card>
         ))}

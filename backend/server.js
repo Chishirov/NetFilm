@@ -23,7 +23,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(
   cors({
     credentials: true,
-    origin: "https://movie-website-mqnf.onrender.com",
+    origin: "http://localhost:5173",
   })
 );
 app.set("trust proxy", 1);

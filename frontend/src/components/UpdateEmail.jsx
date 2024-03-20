@@ -39,14 +39,14 @@ const UpdateEmail = () => {
       <div>
         <input
           style={{ backgroundColor: "transparent", textAlign: "center" }}
-          className="flex-grow p-3 sm:p-2 border rounded-md"
+          className="flex-grow p-3 sm:p-2 border rounded-md text-white font-bold text-lg"
           type="email"
           placeholder="New Email"
           ref={emailRef}
         />
       </div>
       <button
-        className="px-12 py-3 rounded-lg size-xxl bg-gray-900 text-white cursor-pointer"
+        className="px-12 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer text-lg"
         onClick={updateEmail}
       >
         UPDATE EMAIL

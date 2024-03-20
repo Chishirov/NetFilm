@@ -6,7 +6,10 @@ export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [redirect, setRedirect] = useState(false);
   const [admin, setAdmin] = useState(false);
-  console.log(admin);
+  if (redirect) {
+    console.log("user", user);
+    console.log(admin);
+  }
   //const [movies,setmovies]=use
 
   // console.log("movies in context", user?.movies);

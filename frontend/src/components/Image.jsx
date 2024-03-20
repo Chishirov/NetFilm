@@ -11,7 +11,6 @@ export const Images = () => {
   const { setImages } = useContext(UploadContext);
 
   const getImageById = async () => {
-    console.log("user._id", user?._id);
     if (user) {
       try {
         const response = await axios.get(`get-image/${user?._id}`);

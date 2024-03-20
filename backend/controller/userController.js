@@ -9,7 +9,7 @@ export const postRegisterUser = async (req, res) => {
     const user = await userModel.create({
       username,
       email,
-      password: bcrypt.hashSync(password, salt),
+      password: bcrypt.hashSync(password, 10),
     });
     res.status(201).json(user);
     console.log("registration successful");

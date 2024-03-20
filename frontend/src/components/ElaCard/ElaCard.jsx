@@ -19,10 +19,8 @@ const ElaCard = ({ data, mediaType }) => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // console.log(data);
-
   const handleClick = () => {
-    // console.log("clicked");
+    
     setOpenMenu(!openMenu);
   };
   const favoriteHanlder = async (movieTitle, cardId, userId, imageUrl) => {
@@ -151,7 +149,7 @@ const ElaCard = ({ data, mediaType }) => {
                       <MenuItem
                         onClick={() =>
                           favoriteHanlder(
-                            item.title,
+                            item.title || item.name,
                             item.id,
                             user?._id,
                             item.poster_path
@@ -177,7 +175,7 @@ const ElaCard = ({ data, mediaType }) => {
                       <MenuItem
                         onClick={() =>
                           watchlistHandler(
-                            item.title,
+                            item.title || item.name,
                             item.id,
                             user?._id,
                             item.poster_path
