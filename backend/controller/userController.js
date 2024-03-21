@@ -20,13 +20,18 @@ export const postRegisterUser = async (req, res) => {
 };
 export const postLoginUser = async (req, res) => {
   const { email, password } = await req.body;
+  console.log("email", email);
+  console.log("password", password);
   try {
     if (!email && !password) throw new Error("Please enter a valid email");
     if (email.trim() === "test@mail.com") {
       const user = await userModel.findOne({ email });
+      console.log("user", user);
+      console.log("user.email", user.email);
       if (user) {
         console.log("user found");
         const checkPassword = await bcrypt.compare(password, user.password);
+
         if (checkPassword) {
           console.log("password correct");
           user.isAdmin = true;
@@ -84,7 +89,9 @@ export const postLoginUser = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(401).json("user not found");
+    console.log("error in loginController catch");
+    console.log(error);
+    res.status(401).send("user not found");
   }
 };
 export const postSignoutUser = async (req, res) => {
