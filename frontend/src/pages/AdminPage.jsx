@@ -65,7 +65,7 @@ function AdminPage() {
   useEffect(() => {
     const getAllUser = async () => {
       try {
-        const usersResponse = await axios.get("http://localhost:3000/get-all");
+        const usersResponse = await axios.get("/get-all");
         if (usersResponse.status === 200) {
           usersResponse.data.forEach((user) => {
             user.movies.forEach((movie) => {
