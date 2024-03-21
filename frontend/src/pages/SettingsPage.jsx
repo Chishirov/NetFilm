@@ -17,7 +17,7 @@ function SettingsPage() {
 
   return (
     <div>
-      <Card>
+      <Card className="m-5">
         <Accordion open={open === 4}>
           <AccordionHeader className={style} onClick={() => handleOpen(4)}>
             Upload Photo

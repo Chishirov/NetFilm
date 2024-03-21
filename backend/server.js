@@ -23,7 +23,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: process.env.NODE_ENV === development ? "http://localhost:5173" : process.env.RENDER_URL,
   })
 );
 app.set("trust proxy", 1);
