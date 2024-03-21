@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { UploadContext } from "../context/UploadContext";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import { GoTrash } from "react-icons/go";
 import { useEffect } from "react";
 export const PhotoUpload = ({ onImageUpload }) => {
   const { photo, setPhoto } = useContext(UploadContext);
@@ -22,15 +23,11 @@ export const PhotoUpload = ({ onImageUpload }) => {
       const imageData = JSON.stringify({ base64: photo });
       console.log("USERID FROM PHOTOUPLOAD", user._id);
       try {
-        const response = await axios.post(
-          `http://localhost:3000/upload/${user._id}`,
-          imageData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.post(`/upload/${user._id}`, imageData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         alert("Image uploaded successfully");
         onImageUpload();
         console.timeEnd("Upload");
@@ -44,9 +41,7 @@ export const PhotoUpload = ({ onImageUpload }) => {
   }
   async function deleteImage() {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/delete/${user._id}`
-      );
+      const response = await axios.delete(`/delete/${user._id}`);
       console.log(response.data);
       alert("Image deleted successfully");
       onImageUpload();
@@ -59,6 +54,13 @@ export const PhotoUpload = ({ onImageUpload }) => {
   };
   return (
     <>
+      <div className="flex justify-center my-4">
+        {user?.image ? (
+          <img className="h-24 items-center" src={user.image} />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="flex flex-col gap-2 items-center">
         <input
           className=" p-3 sm:p-2 border rounded-md"
@@ -76,8 +78,11 @@ export const PhotoUpload = ({ onImageUpload }) => {
           />
         )}
         <button
-          className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
+          className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl text-white cursor-pointer"
           onClick={uploadImage}
+          style={{
+            backgroundColor: "#da2f68",
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +90,7 @@ export const PhotoUpload = ({ onImageUpload }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-5 h-5"
           >
             <path
               strokeLinecap="round"
@@ -96,27 +101,20 @@ export const PhotoUpload = ({ onImageUpload }) => {
           UPLOAD
         </button>
         <button
-          className="flex justify-center gap-2 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
+          style={{
+            backgroundColor: "#da2f68",
+          }}
+          className="flex justify-center gap-2 px-24 py-3 rounded-lg size-xxl text-white cursor-pointer"
           onClick={deleteImage}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75"
-            />
-          </svg>
+          <GoTrash className="w-5 h-5" />
           DELETE
         </button>
         <button
-          className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
+          style={{
+            backgroundColor: "#da2f68",
+          }}
+          className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl text-white cursor-pointer"
           onClick={cancel}
         >
           <svg
@@ -125,7 +123,7 @@ export const PhotoUpload = ({ onImageUpload }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-5 h-5"
           >
             <path
               strokeLinecap="round"
