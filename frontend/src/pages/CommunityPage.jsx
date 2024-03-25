@@ -1,9 +1,8 @@
-import React from "react";
 import { RatingWithComment } from "../components/RatingWithComment";
 
 function CommunityPage() {
   return (
-    <div>
+    <div className="mt-12 w-full">
       <RatingWithComment />
     </div>
   );
