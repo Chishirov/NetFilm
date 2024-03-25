@@ -78,6 +78,9 @@ export const PhotoUpload = ({ onImageUpload }) => {
         <button
           className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
           onClick={uploadImage}
+          style={{
+            backgroundColor: "#da2f68",
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +101,9 @@ export const PhotoUpload = ({ onImageUpload }) => {
         <button
           className="flex justify-center gap-2 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
           onClick={deleteImage}
+          style={{
+            backgroundColor: "#da2f68",
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +124,9 @@ export const PhotoUpload = ({ onImageUpload }) => {
         <button
           className="flex justify-center gap-1 px-24 py-3 rounded-lg size-xxl bg-pink-900 text-white cursor-pointer"
           onClick={cancel}
+          style={{
+            backgroundColor: "#da2f68",
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
