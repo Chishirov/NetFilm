@@ -24,14 +24,19 @@ export const postRegisterUser = async (req, res) => {
 };
 
 export const postLoginUser = async (req, res) => {
-  const { email, password } = req.body;
+
+  const { email, password } = await req.body;
+
   try {
     if (!email && !password) throw new Error("Please enter a valid email");
     if (email.trim() === "test@mail.com") {
       const user = await userModel.findOne({ email });
+      console.log("user", user);
+      console.log("user.email", user.email);
       if (user) {
         console.log("user found");
         const checkPassword = await bcrypt.compare(password, user.password);
+
         if (checkPassword) {
           console.log("password correct");
           user.isAdmin = true;
@@ -43,7 +48,14 @@ export const postLoginUser = async (req, res) => {
             (err, token) => {
               if (err) throw err;
               res
-                .cookie("token", token, header, { maxAge: 90000000, httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" })
+      .cookie("token", token, {
+                  maxAge: 90000000,
+                  httpOnly: true,
+                  sameSite:
+                    process.env.NODE_ENV === "production" ? "None" : "Lax",
+                  secure: process.env.NODE_ENV === "production",
+                })
+
                 .json({ _id: user._id, isAdmin: user.isAdmin });
             }
           );
@@ -66,7 +78,13 @@ export const postLoginUser = async (req, res) => {
             (err, token) => {
               if (err) throw err;
               res
-                .cookie("token", token, { maxAge: 90000000, httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" })
+                .cookie("token", token, {
+                  maxAge: 90000000,
+                  httpOnly: true,
+                  sameSite:
+                    process.env.NODE_ENV === "production" ? "None" : "Lax",
+                  secure: process.env.NODE_ENV === "production",
+                })
                 .json({ _id: user._id, isAdmin: user.isAdmin });
             }
           );
@@ -77,13 +95,18 @@ export const postLoginUser = async (req, res) => {
       }
     }
   } catch (error) {
+
     console.error(error.message);
     res.status(401).json(error.message);
+
   }
 };
 
 export const postSignoutUser = async (req, res) => {
-  res.clearCookie("token", { sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", secure: process.env.NODE_ENV === "production" });
+  res.clearCookie("token", {
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   res.send("signout user");
 };
 
@@ -126,5 +149,24 @@ export const getAllUsers = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { adminId, userId } = await req.params;
+  console.log("adminId", adminId);
+  console.log("userId", userId);
+  try {
+    const admin = await userModel.findById(adminId);
+    if (admin.isAdmin === true) {
+      const deletedUser = await userModel.findByIdAndDelete(userId);
+      if (!deletedUser) {
+        res.status(404).send("user not fund");
+      } else {
+        res.status(200).json(deletedUser);
+      }
+    }
+  } catch (error) {
+    res.status(500).send(error);
   }
 };

@@ -102,11 +102,7 @@ export function RatingWithComment() {
                     variant="paragraph"
                     color="blue-gray"
                   >
-                    &quot;
-                    {movie.comments?.comment
-                      ? movie.comments?.comment
-                      : "comment removed"}
-                    &quot;
+                    &quot; {movie.comments?.comment} &quot;
                   </Typography>
                 </div>
                 {user?.isAdmin && (

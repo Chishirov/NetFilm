@@ -21,13 +21,13 @@ const LandingPage = () => {
       });
       console.log("Data", data);
       if (!data) throw new Error();
-      if (data?.isAdmin === true) {
+      if (data && data?.isAdmin === true) {
         setAdmin(true);
       }
       setUser(data);
       setRedirect(true);
     } catch (error) {
-      console.log("Login failed", error.response.data);
+      console.log("Login failed", error);
       alert("Login failed");
     }
   }

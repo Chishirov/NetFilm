@@ -27,5 +27,5 @@ const UserModel = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//"todo" : admin mode verpessern 
 export default mongoose.model("user", UserModel);
