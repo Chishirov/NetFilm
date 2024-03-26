@@ -43,9 +43,8 @@ const UpdateUsername = () => {
           style={{
             backgroundColor: "transparent",
             textAlign: "center",
-            color: "white",
           }}
-          className="flex-grow p-3 sm:p-2 border rounded-md mb-4 font-bold text-lg"
+          className="flex-grow p-3 sm:p-2 border rounded-md text-black mb-4 font-bold text-lg"
           type="text"
           placeholder="New Username"
           ref={newUsernameRef}
